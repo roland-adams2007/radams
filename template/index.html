@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adams Roland — Full-Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100;0,9..144,300;0,9..144,400;1,9..144,100;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        :root {
+            --bg: #0A0908;
+            --bg2: #111009;
+            --card: #141210;
+            --border: #2A2520;
+            --ink: #EDE8DF;
+            --muted: #6B6560;
+            --rust: #C4532A;
+            --rust2: #E0652F;
+            --sage: #4E6E4E;
+            --gold: #B8943A;
+            --cream: #EDE8DF;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'DM Mono', monospace;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .cursor {
+            width: 10px;
+            height: 10px;
+            background: var(--rust2);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform .15s ease;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-ring {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--rust);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: width .2s, height .2s, opacity .2s;
+            mix-blend-mode: screen;
+        }
+
+        .cursor-ring.hovered {
+            width: 52px;
+            height: 52px;
+            opacity: .4;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+
+            .cursor,
+            .cursor-ring {
+                display: none;
+            }
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            opacity: .035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 200px;
+        }
+
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .024) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .024) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(36px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleX {
+            from {
+                transform: scaleX(0);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .4;
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px #C4532A40;
+            }
+
+            50% {
+                box-shadow: 0 0 40px #C4532A80;
+            }
+        }
+
+        @keyframes menuSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes overlayFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .afu {
+            animation: fadeUp .9s cubic-bezier(.23, 1, .32, 1) both;
+        }
+
+        .afi {
+            animation: fadeIn .9s ease both;
+        }
+
+        .d1 {
+            animation-delay: .12s;
+        }
+
+        .d2 {
+            animation-delay: .24s;
+        }
+
+        .d3 {
+            animation-delay: .36s;
+        }
+
+        .d4 {
+            animation-delay: .48s;
+        }
+
+        .d5 {
+            animation-delay: .60s;
+        }
+
+        .hero-line {
+            overflow: hidden;
+        }
+
+        .hero-line span {
+            display: block;
+            animation: fadeUp 1s cubic-bezier(.23, 1, .32, 1) both;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            transform-origin: left;
+            animation: scaleX 1s cubic-bezier(.23, 1, .32, 1) .5s both;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 11px;
+            border: 1px solid currentColor;
+            border-radius: 999px;
+            font-size: 10px;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+        }
+
+        .section-num {
+            font-size: 11px;
+            color: var(--rust);
+            letter-spacing: .15em;
+        }
+
+        .nav-link {
+            position: relative;
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color .25s;
+        }
+
+        .nav-link:hover {
+            color: var(--ink);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--rust);
+            transition: width .3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ── Mobile Menu ── */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(10, 9, 8, .97);
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mobile-menu-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 80px 32px 48px;
+            justify-content: space-between;
+        }
+
+        .mobile-nav-link {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(36px, 10vw, 56px);
+            font-weight: 300;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: -.02em;
+            display: block;
+            transition: color .25s;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateX(20px);
+        }
+
+        .mobile-menu-overlay.open .mobile-nav-link {
+            animation: slideIn .45s cubic-bezier(.23, 1, .32, 1) both;
+        }
+
+        .mobile-nav-link:hover {
+            color: var(--ink);
+        }
+
+        .mobile-nav-link span {
+            font-size: 11px;
+            font-family: 'DM Mono', monospace;
+            color: var(--rust);
+            letter-spacing: .1em;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            z-index: 300;
+            position: relative;
+        }
+
+        .hamburger-line {
+            width: 22px;
+            height: 1px;
+            background: var(--ink);
+            transition: transform .3s cubic-bezier(.23, 1, .32, 1), opacity .3s, width .3s;
+            transform-origin: center;
+            display: block;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .hamburger.open .hamburger-line:nth-child(2) {
+            opacity: 0;
+            width: 0;
+        }
+
+        .hamburger.open .hamburger-line:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-desktop {
+                display: none !important;
+            }
+
+            .nav-socials {
+                display: none !important;
+            }
+        }
+
+        /* ── Project cards ── */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 3px;
+            border: 1px solid var(--border);
+            transition: transform .4s cubic-bezier(.23, 1, .32, 1), border-color .3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #3A3530;
+        }
+
+        .project-card .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 9, 8, .93);
+            opacity: 0;
+            transition: opacity .35s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .project-card .ov-inner {
+            text-align: center;
+            transform: translateY(14px);
+            transition: transform .35s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .project-card:hover .ov-inner {
+            transform: translateY(0);
+        }
+
+        /* ── Project pagination ── */
+        .projects-page {
+            display: none;
+        }
+
+        .projects-page.active {
+            display: grid;
+        }
+
+        .page-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            background: var(--card);
+            cursor: pointer;
+            transition: border-color .25s, background .25s, transform .25s;
+            color: var(--muted);
+        }
+
+        .page-arrow:hover {
+            border-color: var(--rust);
+            color: var(--rust);
+            background: #C4532A0D;
+            transform: scale(1.05);
+        }
+
+        .page-arrow:disabled {
+            opacity: .25;
+            pointer-events: none;
+        }
+
+        .page-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background .25s, transform .25s;
+            cursor: pointer;
+        }
+
+        .page-dot.active {
+            background: var(--rust);
+            transform: scale(1.3);
+        }
+
+        /* ── Skill bars ── */
+        .skill-fill {
+            height: 2px;
+            background: var(--rust);
+            transform-origin: left;
+            transform: scaleX(0);
+            transition: transform 1s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .skill-fill.on {
+            transform: scaleX(1);
+        }
+
+        .mq-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 26s linear infinite;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .8s cubic-bezier(.23, 1, .32, 1), transform .8s cubic-bezier(.23, 1, .32, 1);
+        }
+
+        .reveal.on {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--rust);
+            color: var(--cream);
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 12px 24px;
+            border: none;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+            transition: color .3s;
+            text-decoration: none;
+        }
+
+        @media (max-width:768px) {
+            .btn {
+                cursor: pointer;
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .btn:hover::before {
+            opacity: .1;
+        }
+
+        .btn span,
+        .btn i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--ink);
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 11px 23px;
+            border: 1px solid var(--border);
+            cursor: none;
+            text-decoration: none;
+            transition: border-color .3s, color .3s;
+        }
+
+        @media (max-width:768px) {
+            .btn-outline {
+                cursor: pointer;
+            }
+        }
+
+        .btn-outline:hover {
+            border-color: var(--rust);
+            color: var(--rust);
+        }
+
+        .ci {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            outline: none;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            color: var(--ink);
+            width: 100%;
+            padding: 10px 0;
+            transition: border-color .3s;
+        }
+
+        .ci:focus {
+            border-color: var(--rust);
+        }
+
+        .ci::placeholder {
+            color: var(--muted);
+        }
+
+        .exp-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--rust);
+            flex-shrink: 0;
+            margin-top: 5px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .exp-line {
+            width: 1px;
+            background: var(--border);
+            flex: 1;
+            min-height: 40px;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            color: var(--muted);
+            text-decoration: none;
+            transition: border-color .25s, color .25s, background .25s;
+        }
+
+        .social-icon:hover {
+            border-color: var(--rust);
+            color: var(--rust);
+            background: #C4532A10;
+        }
+
+        .float-badge {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .avail-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--sage);
+            flex-shrink: 0;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .img-placeholder {
+            background: linear-gradient(135deg, #1C1815 0%, #161210 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-placeholder::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 40%, #C4532A18 0%, transparent 60%);
+        }
+
+        @media (max-width:640px) {
+            .float-badge {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise"></div>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <div>
+                <nav style="display:flex;flex-direction:column;gap:4px;">
+                    <a href="#work" class="mobile-nav-link" style="animation-delay:.05s;"
+                        onclick="closeMobileMenu()"><span>01</span>Work</a>
+                    <a href="#about" class="mobile-nav-link" style="animation-delay:.10s;"
+                        onclick="closeMobileMenu()"><span>02</span>About</a>
+                    <a href="#experience" class="mobile-nav-link" style="animation-delay:.15s;"
+                        onclick="closeMobileMenu()"><span>03</span>Experience</a>
+                    <a href="#skills" class="mobile-nav-link" style="animation-delay:.20s;"
+                        onclick="closeMobileMenu()"><span>04</span>Skills</a>
+                    <a href="#contact" class="mobile-nav-link" style="animation-delay:.25s;"
+                        onclick="closeMobileMenu()"><span>05</span>Contact</a>
+                </nav>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <div style="height:1px;background:var(--border);"></div>
+                <div class="flex gap-3">
+                    <a href="https://github.com/adamsroland" target="_blank" class="social-icon">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="social-icon">
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/" target="_blank" class="social-icon">
+                        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a href="mailto:hello@adamsroland.dev" class="social-icon">
+                        <i data-lucide="mail" style="width:15px;height:15px;"></i>
+                    </a>
+                </div>
+                <p style="font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;">
+                    hello@adamsroland.dev</p>
+            </div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-5"
+        style="background:rgba(10,9,8,.85); backdrop-filter:blur(16px); border-bottom:1px solid #1E1C18;">
+        <div class="afi">
+            <span style="font-family:'Fraunces',serif; font-size:20px; font-weight:300; color:var(--ink);">AR</span>
+        </div>
+        <div class="nav-desktop flex gap-8 afi d1">
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#skills" class="nav-link">Skills</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="nav-socials afi d2 flex gap-2">
+            <a href="https://github.com/adamsroland" target="_blank" class="social-icon" title="GitHub">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                </svg>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="social-icon" title="X / Twitter">
+                <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+            </a>
+            <a href="https://linkedin.com/" target="_blank" class="social-icon" title="LinkedIn">
+                <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+            </a>
+        </div>
+        <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+    </nav>
+
+    <section class="min-h-screen flex flex-col justify-end px-8 pb-16 pt-32 relative overflow-hidden">
+        <div class="grid-bg"></div>
+        <div
+            style="position:absolute; top:20%; left:40%; width:600px; height:600px; background:radial-gradient(circle, #C4532A18 0%, transparent 70%); pointer-events:none;">
+        </div>
+
+        <div class="absolute top-32 right-8 float-badge afi d4">
+            <div class="tag flex items-center gap-2"
+                style="color:#4E9A4E; border-color:#4E9A4E50; background:#4E9A4E10;">
+                <span class="avail-dot"></span>
+                Available for work
+            </div>
+        </div>
+
+        <div class="max-w-6xl w-full relative z-10">
+            <p class="section-num mb-6 afi d1">01 — Introduction</p>
+
+            <h1
+                style="font-family:'Fraunces',serif; font-size:clamp(52px,9vw,116px); font-weight:300; line-height:.98; letter-spacing:-.025em;">
+                <div class="hero-line"><span style="animation-delay:.05s;">Crafting digital</span></div>
+                <div class="hero-line"><span
+                        style="animation-delay:.15s; font-style:italic; color:var(--rust);">experiences</span></div>
+                <div class="hero-line"><span style="animation-delay:.25s;">that endure.</span></div>
+            </h1>
+
+            <div class="divider mt-10 mb-8" style="animation-delay:.5s;"></div>
+
+            <div class="flex flex-wrap items-end justify-between gap-6">
+                <p class="afu d5 max-w-md" style="font-size:13px; line-height:1.9; color:var(--muted);">
+                    Full-stack web developer based in Lagos, Nigeria. Building fast, polished web products across React,
+                    Laravel, PHP and more — one year in, already shipping real things.
+                </p>
+                <div class="afu d5 flex gap-8"
+                    style="font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);">
+                    <div>
+                        <div
+                            style="font-size:30px; font-family:'Fraunces',serif; font-weight:300; color:var(--ink); letter-spacing:-.02em; line-height:1;">
+                            1yr</div>
+                        <span>Experience</span>
+                    </div>
+                    <div>
+                        <div
+                            style="font-size:30px; font-family:'Fraunces',serif; font-weight:300; color:var(--ink); letter-spacing:-.02em; line-height:1;">
+                            7+</div>
+                        <span>Projects</span>
+                    </div>
+                    <div>
+                        <div
+                            style="font-size:30px; font-family:'Fraunces',serif; font-weight:300; color:var(--ink); letter-spacing:-.02em; line-height:1;">
+                            5+</div>
+                        <span>Technologies</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-10 afu d5">
+                <a href="#work" class="btn"><span>View Work</span><i data-lucide="arrow-down"
+                        style="width:14px;height:14px;"></i></a>
+                <a href="#contact" class="btn-outline"><span>Let's Talk</span></a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-8 right-8 afi d5 flex items-center gap-2"
+            style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);">
+            Scroll <i data-lucide="arrow-down" style="width:13px;height:13px;"></i>
+        </div>
+    </section>
+
+    <div class="overflow-hidden border-t border-b py-4" style="border-color:var(--border);">
+        <div class="mq-track"
+            style="font-family:'Fraunces',serif; font-size:13px; font-style:italic; color:var(--muted); letter-spacing:.05em;">
+            <span class="px-8">React</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">Laravel</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">PHP</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">Tailwind CSS</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">MySQL</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">REST APIs</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">JavaScript</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">MVC Architecture</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">React</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">Laravel</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">PHP</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">Tailwind CSS</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">MySQL</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">REST APIs</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">JavaScript</span><span class="px-4" style="color:var(--rust);">·</span>
+            <span class="px-8">MVC Architecture</span><span class="px-4" style="color:var(--rust);">·</span>
+        </div>
+    </div>
+
+    <section id="work" class="px-8 py-24">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-end justify-between mb-14 reveal">
+                <div>
+                    <p class="section-num mb-3">02 — Selected Work</p>
+                    <h2
+                        style="font-family:'Fraunces',serif; font-size:clamp(30px,5vw,54px); font-weight:300; letter-spacing:-.025em; line-height:1.1;">
+                        Projects that<br><em>matter.</em>
+                    </h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="page-arrow" id="prevBtn" onclick="changePage(-1)" disabled>
+                        <i data-lucide="arrow-left" style="width:18px;height:18px;"></i>
+                    </button>
+                    <div class="flex gap-2 items-center" id="pageDots">
+                        <div class="page-dot active" onclick="goToPage(0)"></div>
+                        <div class="page-dot" onclick="goToPage(1)"></div>
+                    </div>
+                    <button class="page-arrow" id="nextBtn" onclick="changePage(1)">
+                        <i data-lucide="arrow-right" style="width:18px;height:18px;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="projectsPage0" class="projects-page active grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="project-card reveal" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
+                            alt="SwiftForge code" style="width:100%;height:100%;object-fit:cover;opacity:.45;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:var(--rust); border-color:var(--rust)50;">PHP
+                                Framework</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">01</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                SwiftForge</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Custom PHP framework
+                                inspired by Laravel — elegant routing, .env config, migration support, and MySQL
+                                backend.</p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner">
+                            <i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p
+                                style="font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card reveal d1" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80"
+                            alt="Job Board" style="width:100%;height:100%;object-fit:cover;opacity:.40;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:#4E9A6E; border-color:#4E9A6E50;">Full-Stack</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">02</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                Job Board Platform</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Full-stack job board with
+                                employer credits, role management, and a complete job listing system built on Laravel.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card reveal d2" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80"
+                            alt="University Chat" style="width:100%;height:100%;object-fit:cover;opacity:.38;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:#7B9EC4; border-color:#7B9EC450;">Real-time App</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">03</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                University Chat App</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Zoom-like system for
+                                UNILORIN — course rep group chats, lecturer tools, video grid, and modal-based group
+                                info.</p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card reveal d3" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&q=80"
+                            alt="URL Shortener" style="width:100%;height:100%;object-fit:cover;opacity:.38;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:var(--gold); border-color:var(--gold)50;">Laravel</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">04</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                URL Shortener</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Clean link-shortening
+                                service built with Laravel, featuring working redirects and link management.</p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projectsPage1" class="projects-page grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="project-card" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" alt="E-commerce"
+                            style="width:100%;height:100%;object-fit:cover;opacity:.40;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:#C49A3A; border-color:#C49A3A50;">In Progress</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">05</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                E-Commerce Store</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Full-stack e-commerce
+                                platform with React frontend, Laravel backend, cart management, and payment integration.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Dashboard"
+                            style="width:100%;height:100%;object-fit:cover;opacity:.38;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:#7B9EC4; border-color:#7B9EC450;">React</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">06</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                Analytics Dashboard</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Data visualization dashboard
+                                with real-time charts, filtering, and export features built in React with a REST API
+                                backend.</p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80"
+                            alt="Blog CMS" style="width:100%;height:100%;object-fit:cover;opacity:.38;" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:#4E9A6E; border-color:#4E9A6E50;">Full-Stack</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">07</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                Blog CMS</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Content management system
+                                with rich text editor, tagging, author roles, and a clean public-facing blog interface.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" style="aspect-ratio:4/3; background:var(--card);">
+                    <div class="img-placeholder" style="height:55%; border-bottom:1px solid var(--border);">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80"
+                            alt="Portfolio"
+                            style="width:100%;height:100%;object-fit:cover;opacity:.35;filter:grayscale(30%);" />
+                        <div
+                            style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,var(--card) 100%);">
+                        </div>
+                    </div>
+                    <div class="p-6 flex flex-col justify-between" style="height:45%;">
+                        <div class="flex justify-between items-start">
+                            <span class="tag" style="color:var(--rust); border-color:var(--rust)50;">HTML/CSS/JS</span>
+                            <span
+                                style="font-family:'Fraunces',serif; font-size:40px; font-weight:100; color:#ffffff06; letter-spacing:-.05em;">08</span>
+                        </div>
+                        <div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:22px; font-weight:300; color:var(--ink); margin-bottom:6px;">
+                                This Portfolio</h3>
+                            <p style="font-size:11px; color:var(--muted); line-height:1.7;">Designed and built from
+                                scratch — custom cursor, scroll animations, dark aesthetic, and fully responsive layout.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="overlay">
+                        <div class="ov-inner"><i data-lucide="arrow-up-right"
+                                style="width:28px;height:28px;stroke:var(--cream);margin-bottom:8px;"></i>
+                            <p style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);">
+                                View Case Study</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center gap-4 mt-8 reveal">
+                <span style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);"
+                    id="pageLabel">Page 1 of 2</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="px-8 py-24 border-t" style="border-color:var(--border);">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="reveal">
+                <p class="section-num mb-6">03 — About Me</p>
+                <h2
+                    style="font-family:'Fraunces',serif; font-size:clamp(26px,4vw,46px); font-weight:300; line-height:1.15; letter-spacing:-.02em; margin-bottom:24px;">
+                    Design is a conversation<br>between <em style="color:var(--rust);">intent</em> and form.
+                </h2>
+                <p style="font-size:13px; line-height:2; color:var(--muted); margin-bottom:16px;">
+                    I'm Adams Roland — a full-stack web developer based in Lagos, Nigeria. I've been building for about
+                    a year, and in that time I've shipped everything from custom PHP frameworks to real-time chat apps.
+                </p>
+                <p style="font-size:13px; line-height:2; color:var(--muted);">
+                    I learn by building real things, not watching tutorials. My stack is React on the front, Laravel or
+                    plain PHP on the back, Tailwind for styling, and MySQL for data. I work freelance and take on
+                    projects through Fiverr.
+                </p>
+                <div class="flex gap-3 mt-8 flex-wrap">
+                    <a href="#" class="btn"><span>Download CV</span><i data-lucide="download"
+                            style="width:13px;height:13px;"></i></a>
+                    <div class="flex gap-2 items-center">
+                        <a href="https://github.com/adamsroland" target="_blank" class="social-icon"><svg width="16"
+                                height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                            </svg></a>
+                        <a href="https://linkedin.com/" target="_blank" class="social-icon"><svg width="15" height="15"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg></a>
+                        <a href="https://twitter.com/" target="_blank" class="social-icon"><svg width="14" height="14"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg></a>
+                        <a href="mailto:hello@adamsroland.dev" class="social-icon"><i data-lucide="mail"
+                                style="width:15px;height:15px;"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal d2 relative">
+                <div
+                    style="aspect-ratio:3/4; border-radius:3px; overflow:hidden; border:1px solid var(--border); position:relative;">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+                        alt="Adams Roland"
+                        style="width:100%;height:100%;object-fit:cover;opacity:.6;filter:grayscale(30%);" />
+                    <div
+                        style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 50%, var(--bg) 100%);">
+                    </div>
+                    <div style="position:absolute;bottom:0;left:0;right:0;padding:24px;">
+                        <div
+                            style="background:rgba(20,18,16,.9); backdrop-filter:blur(12px); border:1px solid var(--border); padding:20px; border-radius:3px;">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="avail-dot" style="background:var(--sage);"></span>
+                                <span
+                                    style="font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:#4E9A4E;">Currently
+                                    working on</span>
+                            </div>
+                            <p
+                                style="font-family:'Fraunces',serif; font-size:15px; font-weight:300; line-height:1.5; color:var(--ink);">
+                                Building a full-stack e-commerce store with React frontend and Laravel backend.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tag float-badge"
+                    style="position:absolute; top:-14px; right:-14px; background:var(--gold); border-color:var(--gold); color:var(--bg); font-size:10px;">
+                    <i data-lucide="map-pin" style="width:10px;height:10px;"></i>
+                    Lagos, NG 🇳🇬
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="px-8 py-24 border-t" style="border-color:var(--border); background:var(--bg2);">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal">
+                <p class="section-num mb-3">04 — Experience</p>
+                <h2
+                    style="font-family:'Fraunces',serif; font-size:clamp(28px,4vw,50px); font-weight:300; line-height:1.1; letter-spacing:-.02em; margin-bottom:56px;">
+                    The road<br><em>so far.</em>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-0">
+                <div class="reveal d1 space-y-0">
+                    <div class="flex gap-6">
+                        <div class="flex flex-col items-center">
+                            <div class="exp-dot"></div>
+                            <div class="exp-line"></div>
+                        </div>
+                        <div class="pb-10">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span
+                                    style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--rust);">2024
+                                    — Present</span>
+                            </div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:20px; font-weight:300; color:var(--ink); margin-bottom:4px;">
+                                Freelance Full-Stack Developer</h3>
+                            <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Self-employed · Fiverr &
+                                Direct Clients</p>
+                            <p style="font-size:12px; line-height:1.9; color:var(--muted);">
+                                Building and delivering web applications for clients across Nigeria and internationally.
+                                Specialising in Laravel backends, React frontends, and custom PHP solutions.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">Laravel</span>
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">React</span>
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">PHP</span>
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">MySQL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6">
+                        <div class="flex flex-col items-center">
+                            <div
+                                style="width:8px;height:8px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;margin-top:5px;background:var(--bg2);">
+                            </div>
+                            <div class="exp-line"></div>
+                        </div>
+                        <div class="pb-10">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span
+                                    style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);">2023
+                                    — 2024</span>
+                            </div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:20px; font-weight:300; color:var(--ink); margin-bottom:4px;">
+                                Independent Developer</h3>
+                            <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Personal Projects ·
+                                Lagos, Nigeria</p>
+                            <p style="font-size:12px; line-height:1.9; color:var(--muted);">
+                                Self-taught development through hands-on project building. Created SwiftForge, a URL
+                                shortener, and began learning React and the Laravel ecosystem from scratch.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-4">
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">PHP</span>
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">HTML/CSS</span>
+                                <span class="tag"
+                                    style="color:var(--muted); border-color:var(--border); font-size:9px;">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6">
+                        <div class="flex flex-col items-center">
+                            <div
+                                style="width:8px;height:8px;border-radius:50%;border:1px solid var(--border);flex-shrink:0;margin-top:5px;background:var(--bg2);">
+                            </div>
+                        </div>
+                        <div class="pb-4">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span
+                                    style="font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted);">2022</span>
+                            </div>
+                            <h3
+                                style="font-family:'Fraunces',serif; font-size:20px; font-weight:300; color:var(--ink); margin-bottom:4px;">
+                                Started Coding Journey</h3>
+                            <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">University of Ilorin
+                                (UNILORIN)</p>
+                            <p style="font-size:12px; line-height:1.9; color:var(--muted);">
+                                Began exploring web development and programming. Built first projects for university
+                                peers, including the UNILORIN chat application used by students and lecturers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal d2 space-y-5">
+                    <div
+                        style="border:1px solid var(--border); border-radius:3px; padding:24px; background:var(--card);">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="code-2" style="width:18px;height:18px;stroke:var(--rust);"></i>
+                            <span
+                                style="font-size:10px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase;">Highlight</span>
+                        </div>
+                        <div
+                            style="font-family:'Fraunces',serif; font-size:36px; font-weight:300; color:var(--ink); letter-spacing:-.02em; line-height:1;">
+                            7+</div>
+                        <p style="font-size:12px; color:var(--muted); margin-top:6px; line-height:1.7;">Projects shipped
+                            across PHP frameworks, real-time apps, SaaS platforms, and developer tools.</p>
+                    </div>
+                    <div
+                        style="border:1px solid var(--border); border-radius:3px; padding:24px; background:var(--card);">
+                        <div class="flex items-center justify-between mb-4">
+                            <i data-lucide="zap" style="width:18px;height:18px;stroke:var(--gold);"></i>
+                            <span
+                                style="font-size:10px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase;">Philosophy</span>
+                        </div>
+                        <p
+                            style="font-family:'Fraunces',serif; font-size:17px; font-style:italic; font-weight:300; color:var(--ink); line-height:1.6;">
+                            "I learn by shipping. Every project is a classroom."
+                        </p>
+                        <p style="font-size:11px; color:var(--muted); margin-top:12px;">— Adams Roland</p>
+                    </div>
+                    <div
+                        style="border:1px solid var(--border); border-radius:3px; padding:24px; background:var(--card);">
+                        <img src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?w=200&q=80" alt="workspace"
+                            style="width:100%; height:120px; object-fit:cover; border-radius:2px; opacity:.6; filter:grayscale(20%); margin-bottom:12px;" />
+                        <p style="font-size:12px; color:var(--muted); line-height:1.7;">Based in Lagos, building
+                            globally. Open to remote contracts and freelance engagements.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="px-8 py-24 border-t" style="border-color:var(--border);">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal">
+                <p class="section-num mb-3">05 — Expertise</p>
+                <h2
+                    style="font-family:'Fraunces',serif; font-size:clamp(28px,4vw,50px); font-weight:300; line-height:1.1; letter-spacing:-.02em; margin-bottom:48px;">
+                    What I bring<br>to the <em>table.</em>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 reveal d1">
+                <div style="border:1px solid var(--border); border-radius:3px; padding:28px; background:var(--card);">
+                    <div class="flex items-center gap-3 mb-8">
+                        <i data-lucide="pen-tool" style="width:18px;height:18px;stroke:var(--rust);"></i>
+                        <h3 style="font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink);">
+                            Frontend</h3>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:20px;">
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>React / JavaScript</span><span>85%</span></div>
+                            <div style="height:2px;background:var(--border);border-radius:1px;">
+                                <div class="skill-fill" style="width:85%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>Tailwind CSS</span><span>90%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:90%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>HTML & CSS</span><span>95%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:95%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>Bootstrap</span><span>80%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--border); border-radius:3px; padding:28px; background:var(--card);">
+                    <div class="flex items-center gap-3 mb-8">
+                        <i data-lucide="code-2" style="width:18px;height:18px;stroke:var(--rust);"></i>
+                        <h3 style="font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink);">
+                            Backend</h3>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:20px;">
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);"><span>PHP
+                                    / Laravel</span><span>88%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:88%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>MySQL</span><span>82%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:82%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);">
+                                <span>REST APIs</span><span>80%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:80%;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2" style="font-size:11px; color:var(--muted);"><span>MVC
+                                    Architecture</span><span>85%</span></div>
+                            <div style="height:2px;background:var(--border);">
+                                <div class="skill-fill" style="width:85%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="border:1px solid var(--border); border-radius:3px; padding:28px; background:var(--card);">
+                    <div class="flex items-center gap-3 mb-8">
+                        <i data-lucide="layers" style="width:18px;height:18px;stroke:var(--rust);"></i>
+                        <h3 style="font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink);">
+                            Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag" style="color:var(--muted); border-color:var(--border); font-size:9px;">Git &
+                            GitHub</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">Figma</span>
+                        <span class="tag" style="color:var(--muted); border-color:var(--border); font-size:9px;">VS
+                            Code</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">Fiverr</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">SwiftForge</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">Tailwind</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">Laravel</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">Composer</span>
+                        <span class="tag"
+                            style="color:var(--muted); border-color:var(--border); font-size:9px;">npm</span>
+                    </div>
+                    <div class="mt-8 p-5"
+                        style="border:1px solid var(--border); border-radius:2px; background:var(--bg);">
+                        <div class="flex items-start gap-3">
+                            <i data-lucide="quote"
+                                style="width:14px;height:14px;stroke:var(--rust);flex-shrink:0;margin-top:3px;"></i>
+                            <p
+                                style="font-family:'Fraunces',serif; font-size:14px; font-style:italic; font-weight:300; color:#6B6560; line-height:1.8;">
+                                "Design is not just what it looks like. Design is how it works."
+                            </p>
+                        </div>
+                        <p
+                            style="font-size:10px; letter-spacing:.1em; color:var(--border); margin-top:10px; text-align:right; text-transform:uppercase;">
+                            — Steve Jobs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="px-8 py-24 border-t" style="border-color:var(--border); background:var(--bg2);">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+                <div class="reveal">
+                    <p class="section-num mb-6">06 — Let's Talk</p>
+                    <h2
+                        style="font-family:'Fraunces',serif; font-size:clamp(32px,5vw,64px); font-weight:300; line-height:1.0; letter-spacing:-.025em; margin-bottom:24px;">
+                        Have a project<br>in <em style="color:var(--rust);">mind?</em>
+                    </h2>
+                    <p style="font-size:13px; line-height:2; color:var(--muted); max-width:340px;">
+                        I'm selective about what I take on, which means everything I touch gets my full attention. Let's
+                        build something worth remembering.
+                    </p>
+
+                    <div class="mt-10" style="display:flex;flex-direction:column;gap:14px;">
+                        <a href="mailto:hello@adamsroland.dev" class="flex items-center gap-3"
+                            style="font-size:13px; color:var(--muted); text-decoration:none; transition:color .25s;"
+                            onmouseenter="this.style.color='var(--ink)'" onmouseleave="this.style.color='var(--muted)'">
+                            <i data-lucide="mail" style="width:15px;height:15px;stroke:var(--rust);"></i>
+                            hello@adamsroland.dev
+                        </a>
+                        <div class="flex items-center gap-3" style="font-size:13px; color:var(--muted);">
+                            <i data-lucide="map-pin" style="width:15px;height:15px;stroke:var(--rust);"></i>
+                            Lagos, Nigeria
+                        </div>
+                        <div class="flex items-center gap-3" style="font-size:13px; color:var(--muted);">
+                            <i data-lucide="clock" style="width:15px;height:15px;stroke:var(--rust);"></i>
+                            Response within 24 hours
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3 mt-10">
+                        <a href="https://github.com/adamsroland" target="_blank" class="social-icon"><svg width="16"
+                                height="16" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                            </svg></a>
+                        <a href="https://linkedin.com/" target="_blank" class="social-icon"><svg width="15" height="15"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg></a>
+                        <a href="https://twitter.com/" target="_blank" class="social-icon"><svg width="14" height="14"
+                                fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                            </svg></a>
+                        <a href="mailto:hello@adamsroland.dev" class="social-icon"><i data-lucide="mail"
+                                style="width:15px;height:15px;"></i></a>
+                    </div>
+                </div>
+
+                <div class="reveal d2">
+                    <div style="display:flex;flex-direction:column;gap:20px;">
+                        <div>
+                            <label
+                                style="font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted);">Your
+                                Name</label>
+                            <input type="text" placeholder="Jane Smith" class="ci" />
+                        </div>
+                        <div>
+                            <label
+                                style="font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted);">Email
+                                Address</label>
+                            <input type="email" placeholder="jane@company.com" class="ci" />
+                        </div>
+                        <div>
+                            <label
+                                style="font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted);">Project
+                                Type</label>
+                            <input type="text" placeholder="Branding, Web Design, Development…" class="ci" />
+                        </div>
+                        <div>
+                            <label
+                                style="font-size:10px; letter-spacing:.15em; text-transform:uppercase; color:var(--muted);">Tell
+                                me about your project</label>
+                            <textarea placeholder="I'm working on…" class="ci" rows="4" style="resize:none;"></textarea>
+                        </div>
+                        <button class="btn w-full justify-center mt-2" style="cursor:pointer;">
+                            <span>Send Message</span>
+                            <i data-lucide="arrow-right" style="width:15px;height:15px;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="px-8 py-8 border-t" style="border-color:var(--border);">
+        <div class="max-w-6xl mx-auto flex flex-wrap gap-4 items-center justify-between"
+            style="font-size:10px; color:var(--muted); letter-spacing:.09em; text-transform:uppercase;">
+            <span
+                style="font-family:'Fraunces',serif; font-size:16px; font-weight:300; color:var(--ink); letter-spacing:-.01em; text-transform:none;">Adams
+                Roland</span>
+            <div class="flex gap-3">
+                <a href="https://github.com/adamsroland" target="_blank" class="social-icon"
+                    style="width:30px;height:30px;"><svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg></a>
+                <a href="https://linkedin.com/" target="_blank" class="social-icon" style="width:30px;height:30px;"><svg
+                        width="13" height="13" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg></a>
+                <a href="https://twitter.com/" target="_blank" class="social-icon" style="width:30px;height:30px;"><svg
+                        width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg></a>
+                <a href="mailto:hello@adamsroland.dev" class="social-icon" style="width:30px;height:30px;"><i
+                        data-lucide="mail" style="width:13px;height:13px;"></i></a>
+            </div>
+            <span>© 2025 — All rights reserved</span>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursorRing');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+        document.addEventListener('mousemove', e => {
+            mx = e.clientX; my = e.clientY;
+            cursor.style.left = mx - 5 + 'px';
+            cursor.style.top = my - 5 + 'px';
+        });
+        (function animateRing() {
+            rx += (mx - rx - 16) * 0.12;
+            ry += (my - ry - 16) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+            requestAnimationFrame(animateRing);
+        })();
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
+        });
+
+        let menuOpen = false;
+        function toggleMobileMenu() {
+            menuOpen = !menuOpen;
+            const menu = document.getElementById('mobileMenu');
+            const btn = document.getElementById('hamburger');
+            menu.classList.toggle('open', menuOpen);
+            btn.classList.toggle('open', menuOpen);
+            document.body.style.overflow = menuOpen ? 'hidden' : '';
+        }
+        function closeMobileMenu() {
+            menuOpen = false;
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('hamburger').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        let currentPage = 0;
+        const totalPages = 2;
+
+        function updatePageUI() {
+            document.querySelectorAll('.projects-page').forEach((el, i) => {
+                el.classList.toggle('active', i === currentPage);
+            });
+            document.querySelectorAll('.page-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPage);
+            });
+            document.getElementById('prevBtn').disabled = currentPage === 0;
+            document.getElementById('nextBtn').disabled = currentPage === totalPages - 1;
+            document.getElementById('pageLabel').textContent = 'Page ' + (currentPage + 1) + ' of ' + totalPages;
+        }
+
+        function changePage(dir) {
+            const next = currentPage + dir;
+            if (next >= 0 && next < totalPages) {
+                currentPage = next;
+                updatePageUI();
+                document.getElementById('work').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function goToPage(n) {
+            currentPage = n;
+            updatePageUI();
+        }
+
+        const revealObs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        const skillObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.skill-fill').forEach((bar, i) => {
+                        setTimeout(() => bar.classList.add('on'), i * 100);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('#skills').forEach(el => skillObs.observe(el));
+    </script>
+</body>
+
+</html>
