@@ -2,17 +2,17 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0A0908;
-  --bg2: #111009;
-  --card: #141210;
-  --border: #2A2520;
-  --ink: #EDE8DF;
-  --muted: #6B6560;
-  --rust: #C4532A;
-  --rust2: #E0652F;
-  --sage: #4E6E4E;
-  --gold: #B8943A;
-  --cream: #EDE8DF;
+  --bg: #0A0A0A;
+  --bg2: #111111;
+  --card: #141414;
+  --border: #252525;
+  --ink: #EDEDED;
+  --muted: #666666;
+  --rust: #888888;
+  --rust2: #AAAAAA;
+  --sage: #5A5A5A;
+  --gold: #999999;
+  --cream: #EDEDED;
 }
 
 *,
@@ -32,13 +32,6 @@ body {
   color: var(--ink);
   font-family: 'DM Mono', monospace;
   overflow-x: hidden;
-  cursor: none;
-}
-
-@media (max-width: 768px) {
-  body {
-    cursor: auto;
-  }
 }
 
 .noise {
@@ -52,21 +45,11 @@ body {
   will-change: opacity;
 }
 
-.grid-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-
 .hero-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 80% 60% at 50% 100%, transparent 40%, rgba(10,9,8,.7) 100%);
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, transparent 40%, rgba(10,10,10,.7) 100%);
 }
 
 .orb {
@@ -82,7 +65,7 @@ body {
   height: 500px;
   top: 10%;
   left: 35%;
-  background: radial-gradient(circle, #C4532A14 0%, transparent 70%);
+  background: radial-gradient(circle, #88888814 0%, transparent 70%);
   animation: orbFloat 12s ease-in-out infinite;
 }
 
@@ -91,7 +74,7 @@ body {
   height: 320px;
   bottom: 15%;
   right: 10%;
-  background: radial-gradient(circle, #B8943A0C 0%, transparent 70%);
+  background: radial-gradient(circle, #9999990C 0%, transparent 70%);
   animation: orbFloat 18s ease-in-out infinite reverse;
 }
 
@@ -100,7 +83,7 @@ body {
   height: 600px;
   top: -100px;
   right: -100px;
-  background: radial-gradient(circle, #C4532A10 0%, transparent 65%);
+  background: radial-gradient(circle, #88888810 0%, transparent 65%);
   animation: orbFloat 15s ease-in-out infinite;
 }
 
@@ -109,8 +92,8 @@ body {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(196, 83, 42, .04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196, 83, 42, .04) 1px, transparent 1px);
+    linear-gradient(rgba(136, 136, 136, .04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(136, 136, 136, .04) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 70% 70% at 80% 20%, black 0%, transparent 70%);
 }
@@ -121,53 +104,14 @@ body {
   66% { transform: translate(20px, -20px) scale(0.97); }
 }
 
-.cursor {
-  width: 10px;
-  height: 10px;
-  background: var(--rust2);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: screen;
-  left: 0;
-  top: 0;
-  will-change: transform;
-}
-
-.cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--rust);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  mix-blend-mode: screen;
-  left: 0;
-  top: 0;
-  will-change: transform;
-  transition: width .2s, height .2s, opacity .2s;
-}
-
-.cursor-ring.hovered {
-  width: 52px;
-  height: 52px;
-  opacity: .4;
-}
-
-@media (max-width: 768px) {
-  .cursor, .cursor-ring { display: none; }
-}
-
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: .4; }
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px #C4532A40; }
-  50% { box-shadow: 0 0 40px #C4532A80; }
+  0%, 100% { box-shadow: 0 0 20px #88888840; }
+  50% { box-shadow: 0 0 40px #88888880; }
 }
 
 @keyframes float {
@@ -185,12 +129,11 @@ body {
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-
 .avail-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--sage);
+  background: #5A8A5A;
   flex-shrink: 0;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -250,9 +193,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px 32px;
-  background: rgba(10, 9, 8, .85);
+  background: rgba(10, 10, 10, .85);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid #1E1C18;
+  border-bottom: 1px solid #1E1E1E;
 }
 
 .nav-bar::after {
@@ -335,22 +278,18 @@ body {
   align-items: center;
   gap: 8px;
   background: var(--rust);
-  color: var(--cream);
+  color: var(--bg);
   font-family: 'DM Mono', monospace;
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
   padding: 12px 24px;
   border: none;
-  cursor: none;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: color .3s;
   text-decoration: none;
-}
-
-@media (max-width: 768px) {
-  .btn { cursor: pointer; }
 }
 
 .btn::before {
@@ -378,13 +317,9 @@ body {
   text-transform: uppercase;
   padding: 11px 23px;
   border: 1px solid var(--border);
-  cursor: none;
+  cursor: pointer;
   text-decoration: none;
   transition: border-color .3s, color .3s;
-}
-
-@media (max-width: 768px) {
-  .btn-outline { cursor: pointer; }
 }
 
 .btn-outline:hover {
@@ -409,7 +344,7 @@ body {
 .social-icon:hover {
   border-color: var(--rust);
   color: var(--rust);
-  background: #C4532A10;
+  background: #88888810;
 }
 
 .desktop-rail {
@@ -443,7 +378,7 @@ body {
 }
 
 .desktop-rail-card:hover {
-  border-color: #3A3530;
+  border-color: #303030;
 }
 
 .desktop-rail-card:hover img {
@@ -473,7 +408,7 @@ body {
   transition: transform .35s cubic-bezier(.23, 1, .32, 1);
 }
 
-.service-tile:hover { background: #1A1714; }
+.service-tile:hover { background: #1A1A1A; }
 
 .service-tile:hover::before { transform: scaleY(1); }
 
@@ -521,14 +456,14 @@ body {
   transition: transform .45s cubic-bezier(.23, 1, .32, 1);
 }
 
-.skill-card:hover { border-color: #3A3530; }
+.skill-card:hover { border-color: #303030; }
 
 .skill-card:hover::before { transform: scaleX(1); }
 
 .terminal-card {
   border: 1px solid var(--border);
   border-radius: 3px;
-  background: #0D0C0A;
+  background: #0D0D0D;
   overflow: hidden;
 }
 
@@ -538,7 +473,7 @@ body {
   gap: 6px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--border);
-  background: #111009;
+  background: #111111;
 }
 
 .t-dot {
@@ -586,7 +521,7 @@ body {
   width: 160px;
   height: 160px;
   border-radius: 50%;
-  border: 1px solid #C4532A30;
+  border: 1px solid #88888830;
   transform: translate(-50%, -50%);
   animation: spin-slow 24s linear infinite;
 }
@@ -599,7 +534,7 @@ body {
   width: 240px;
   height: 240px;
   border-radius: 50%;
-  border: 1px dashed #2A252060;
+  border: 1px dashed #25252060;
   transform: translate(-50%, -50%);
 }
 
@@ -612,7 +547,7 @@ body {
   background: var(--rust);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 20px #C4532A80;
+  box-shadow: 0 0 20px #88888880;
   animation: glow 3s ease-in-out infinite;
 }
 
@@ -622,7 +557,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  background: rgba(10, 9, 8, .85);
+  background: rgba(10, 10, 10, .85);
   border: 1px solid var(--border);
   border-radius: 3px;
   padding: 12px 16px;
@@ -636,7 +571,7 @@ body {
   text-transform: uppercase;
   color: var(--muted);
   font-family: 'DM Mono', monospace;
-  background: rgba(10, 9, 8, .7);
+  background: rgba(10, 10, 10, .7);
   padding: 4px 10px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -653,9 +588,9 @@ body {
 }
 
 .contact-card-link:hover {
-  border-color: #3A3530;
+  border-color: #303030;
   transform: translateY(-3px);
-  background: #1A1714;
+  background: #1A1A1A;
 }
 
 .contact-card-arrow {
@@ -708,7 +643,7 @@ body {
 .card-link-btn:hover {
   border-color: var(--rust);
   color: var(--rust);
-  background: #C4532A0D;
+  background: #8888880D;
 }
 
 .card-link-btn-live {
@@ -718,5 +653,5 @@ body {
 .card-link-btn-live:hover {
   border-color: var(--gold);
   color: var(--gold);
-  background: #B8943A0D;
+  background: #9999990D;
 }

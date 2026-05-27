@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
@@ -6,6 +5,7 @@ import {
     Download, Mail, Clock, PenTool, Code2,
     Layers, Quote, Zap, X, Terminal, ExternalLink, Copy, Check
 } from "lucide-react";
+import hero from "../assets/hero.png"
 
 const GitHubIcon = () => (
     <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
@@ -27,10 +27,10 @@ const LinkedInIcon = () => (
 
 const SocialLinks = ({ size = "38px" }) => (
     <div style={{ display: "flex", gap: 8 }}>
-        <a href="https://github.com/adamsroland" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><GitHubIcon /></a>
-        <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><XIcon /></a>
-        <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><LinkedInIcon /></a>
-        <a href="mailto:hello@adamsroland.dev" className="social-icon" style={{ width: size, height: size }}><Mail size={15} /></a>
+        <a href="https://github.com/roland-adams2007" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><GitHubIcon /></a>
+        <a href="https://x.com/R_coredev" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><XIcon /></a>
+        <a href="https://www.linkedin.com/in/roland-adams-045965315" target="_blank" rel="noreferrer" className="social-icon" style={{ width: size, height: size }}><LinkedInIcon /></a>
+        <a href="mailto:adamsrolly7@gmail.com" className="social-icon" style={{ width: size, height: size }}><Mail size={15} /></a>
     </div>
 );
 
@@ -62,14 +62,14 @@ function RevealOnScroll({ children, delay = 0 }) {
 }
 
 const allProjects = [
-    { id: "01", title: "SwiftForge", tag: "PHP Framework", tagColor: "var(--rust)", img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80", desc: "Custom PHP framework inspired by Laravel — elegant routing, .env config, migration support, and MySQL backend.", github: "https://github.com/adamsroland", live: null },
-    { id: "02", title: "Job Board Platform", tag: "Full-Stack", tagColor: "#4E9A6E", img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", desc: "Full-stack job board with employer credits, role management, and a complete job listing system built on Laravel.", github: "https://github.com/adamsroland", live: "https://adamsroland.dev" },
-    { id: "03", title: "University Chat App", tag: "Real-time App", tagColor: "#7B9EC4", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", desc: "Zoom-like system for UNILORIN — course rep group chats, lecturer tools, video grid, and modal-based group info.", github: "https://github.com/adamsroland", live: null },
-    { id: "04", title: "URL Shortener", tag: "Laravel", tagColor: "var(--gold)", img: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&q=80", desc: "Clean link-shortening service built with Laravel, featuring working redirects and link management.", github: "https://github.com/adamsroland", live: "https://adamsroland.dev" },
-    { id: "05", title: "E-Commerce Store", tag: "In Progress", tagColor: "#C49A3A", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80", desc: "Full-stack e-commerce platform with React frontend, Laravel backend, cart management, and payment integration.", github: null, live: null },
-    { id: "06", title: "Analytics Dashboard", tag: "React", tagColor: "#7B9EC4", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", desc: "Data visualization dashboard with real-time charts, filtering, and export features built in React with a REST API backend.", github: "https://github.com/adamsroland", live: "https://adamsroland.dev" },
-    { id: "07", title: "Blog CMS", tag: "Full-Stack", tagColor: "#4E9A6E", img: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80", desc: "Content management system with rich text editor, tagging, author roles, and a clean public-facing blog interface.", github: "https://github.com/adamsroland", live: null },
-    { id: "08", title: "This Portfolio", tag: "HTML/CSS/JS", tagColor: "var(--rust)", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80", desc: "Designed and built from scratch — custom cursor, scroll animations, dark aesthetic, and fully responsive layout.", github: "https://github.com/adamsroland", live: "https://adamsroland.dev" },
+    { id: "01", title: "Tixkarios", tag: "SaaS · Full-Stack", tagColor: "var(--rust)", img: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80", desc: "Digital ticketing platform — event organizers create, manage, and sell tickets online. Built end-to-end with React, Laravel, payment integration, and real-time attendee tracking.", github: "https://github.com/roland-adams2007", live: null },
+    { id: "02", title: "Job Board Platform", tag: "Full-Stack", tagColor: "#5A8A6A", img: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&q=80", desc: "Full-stack job board with employer credits, role management, and a complete job listing system built on Laravel.", github: "https://github.com/roland-adams2007", live: "https://adamsroland.dev" },
+    { id: "03", title: "University Chat App", tag: "Real-time App", tagColor: "#7B8EC4", img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80", desc: "Zoom-like system for UNILORIN — course rep group chats, lecturer tools, video grid, and modal-based group info.", github: "https://github.com/roland-adams2007", live: null },
+    { id: "04", title: "URL Shortener", tag: "Laravel", tagColor: "var(--gold)", img: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=800&q=80", desc: "Clean link-shortening service built with Laravel, featuring working redirects and link management.", github: "https://github.com/roland-adams2007", live: "https://adamsroland.dev" },
+    { id: "05", title: "E-Commerce Store", tag: "In Progress", tagColor: "#999999", img: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80", desc: "Full-stack e-commerce platform with React frontend, Laravel backend, cart management, and payment integration.", github: null, live: null },
+    { id: "06", title: "Analytics Dashboard", tag: "React", tagColor: "#7B8EC4", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80", desc: "Data visualization dashboard with real-time charts, filtering, and export features built in React with a REST API backend.", github: "https://github.com/roland-adams2007", live: "https://adamsroland.dev" },
+    { id: "07", title: "Blog CMS", tag: "Full-Stack", tagColor: "#5A8A6A", img: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80", desc: "Content management system with rich text editor, tagging, author roles, and a clean public-facing blog interface.", github: "https://github.com/roland-adams2007", live: null },
+    { id: "08", title: "This Portfolio", tag: "React · Laravel", tagColor: "var(--rust)", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80", desc: "Designed and built from scratch — custom cursor, scroll animations, dark aesthetic, and fully responsive layout.", github: "https://github.com/roland-adams2007", live: "https://adamsroland.dev" },
 ];
 
 function useIsMobile() {
@@ -140,7 +140,7 @@ function MobileSwipeDeck() {
                                 zIndex: visibleCount - i,
                                 borderRadius: 4,
                                 overflow: "hidden",
-                                border: isTop ? "1px solid #3A3530" : "1px solid var(--border)",
+                                border: isTop ? "1px solid #303030" : "1px solid var(--border)",
                                 background: "var(--card)",
                                 cursor: isTop ? (isDragging ? "grabbing" : "grab") : "default",
                                 transformOrigin: "bottom center",
@@ -357,43 +357,43 @@ function OrbitVisual() {
             >
                 <defs>
                     <radialGradient id="orbGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#C4532A" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#C4532A" stopOpacity="0" />
+                        <stop offset="0%" stopColor="#888888" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="#888888" stopOpacity="0" />
                     </radialGradient>
                 </defs>
-                <circle cx="230" cy="200" r="55" fill="none" stroke="#C4532A22" strokeWidth="1" />
-                <circle cx="230" cy="200" r="110" fill="none" stroke="#2A252044" strokeWidth="1" strokeDasharray="4 6" />
-                <circle cx="230" cy="200" r="148" fill="none" stroke="#2A252028" strokeWidth="1" />
-                <motion.circle cx="230" cy="200" r="55" fill="none" stroke="#C4532A55" strokeWidth="1.5" strokeDasharray="20 180" animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
-                <motion.circle cx="230" cy="200" r="110" fill="none" stroke="#B8943A33" strokeWidth="1" strokeDasharray="12 80" animate={{ rotate: -360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
+                <circle cx="230" cy="200" r="55" fill="none" stroke="#88888822" strokeWidth="1" />
+                <circle cx="230" cy="200" r="110" fill="none" stroke="#25252044" strokeWidth="1" strokeDasharray="4 6" />
+                <circle cx="230" cy="200" r="148" fill="none" stroke="#25252028" strokeWidth="1" />
+                <motion.circle cx="230" cy="200" r="55" fill="none" stroke="#88888855" strokeWidth="1.5" strokeDasharray="20 180" animate={{ rotate: 360 }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
+                <motion.circle cx="230" cy="200" r="110" fill="none" stroke="#99999933" strokeWidth="1" strokeDasharray="12 80" animate={{ rotate: -360 }} transition={{ duration: 14, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
                 {stackLabels.map(({ label, angle: baseAngle, radius }) => {
                     const totalAngle = ((baseAngle + angle) * Math.PI) / 180;
                     const x = 230 + Math.cos(totalAngle) * radius;
                     const y = 200 + Math.sin(totalAngle) * radius;
                     return (
                         <g key={label}>
-                            <line x1="230" y1="200" x2={x} y2={y} stroke="#C4532A18" strokeWidth="1" />
-                            <circle cx={x} cy={y} r="3" fill="#C4532A66" />
-                            <rect x={x - 28} y={y - 12} width="56" height="22" rx="11" fill="#0D0C0A" stroke="#2A2520" strokeWidth="1" />
-                            <text x={x} y={y + 4} textAnchor="middle" fill="#9A958E" fontSize="9" fontFamily="'DM Mono', monospace" letterSpacing="1.5" style={{ textTransform: "uppercase" }}>{label.toUpperCase()}</text>
+                            <line x1="230" y1="200" x2={x} y2={y} stroke="#88888818" strokeWidth="1" />
+                            <circle cx={x} cy={y} r="3" fill="#88888866" />
+                            <rect x={x - 28} y={y - 12} width="56" height="22" rx="11" fill="#0D0D0D" stroke="#252525" strokeWidth="1" />
+                            <text x={x} y={y + 4} textAnchor="middle" fill="#9A9A9A" fontSize="9" fontFamily="'DM Mono', monospace" letterSpacing="1.5" style={{ textTransform: "uppercase" }}>{label.toUpperCase()}</text>
                         </g>
                     );
                 })}
                 <circle cx="230" cy="200" r="28" fill="url(#orbGlow)" />
-                <motion.circle cx="230" cy="200" r="6" fill="#C4532A" animate={{ r: [6, 8, 6], opacity: [1, 0.6, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} />
-                <circle cx="230" cy="200" r="14" fill="none" stroke="#C4532A40" strokeWidth="1" />
-                <motion.circle cx={230 + 55} cy={200} r="3" fill="#B8943A" animate={{ rotate: 360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
+                <motion.circle cx="230" cy="200" r="6" fill="#888888" animate={{ r: [6, 8, 6], opacity: [1, 0.6, 1] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} />
+                <circle cx="230" cy="200" r="14" fill="none" stroke="#88888840" strokeWidth="1" />
+                <motion.circle cx={230 + 55} cy={200} r="3" fill="#999999" animate={{ rotate: 360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
             </svg>
             <div className="about-stat-chip" style={{ top: "10%", left: "6%" }}>
-                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>7+</span>
+                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>8+</span>
                 <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted)", marginTop: 2 }}>Projects</span>
             </div>
             <div className="about-stat-chip" style={{ top: "10%", right: "6%" }}>
-                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>1yr</span>
+                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>2yr+</span>
                 <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted)", marginTop: 2 }}>Experience</span>
             </div>
             <div className="about-stat-chip" style={{ bottom: "10%", left: "50%", transform: "translateX(-50%)" }}>
-                <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#4E9A4E", display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "#5A8A5A", display: "flex", alignItems: "center", gap: 6 }}>
                     <span className="avail-dot" />Open to work
                 </span>
             </div>
@@ -406,7 +406,7 @@ function TerminalCard() {
         { cmd: "whoami", out: "Adams Roland — Full-Stack Developer" },
         { cmd: "status", out: "✓ Available for new projects" },
         { cmd: "response_time", out: "< 24 hours" },
-        { cmd: "preferred_stack", out: "React · Laravel · PHP · MySQL" },
+        { cmd: "preferred_stack", out: "React · Laravel · PHP · MySQL · Node.js" },
     ];
     const [visible, setVisible] = useState(0);
     useEffect(() => {
@@ -427,7 +427,7 @@ function TerminalCard() {
                     <div key={i} style={{ marginBottom: 10 }}>
                         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                             <span style={{ color: "var(--rust)", fontSize: 11 }}>❯</span>
-                            <span style={{ color: "#7B9EC4", fontSize: 11, fontFamily: "'DM Mono', monospace" }}>{line.cmd}</span>
+                            <span style={{ color: "#7B8EC4", fontSize: 11, fontFamily: "'DM Mono', monospace" }}>{line.cmd}</span>
                         </div>
                         <div style={{ marginLeft: 20, fontSize: 11, color: "var(--ink)", fontFamily: "'DM Mono', monospace", lineHeight: 1.8 }}>{line.out}</div>
                     </div>
@@ -445,7 +445,7 @@ function TerminalCard() {
 
 function CopyEmail() {
     const [copied, setCopied] = useState(false);
-    const email = "hello@adamsroland.dev";
+    const email = "adamsrolly7@gmail.com";
     const copy = () => {
         navigator.clipboard.writeText(email);
         setCopied(true);
@@ -454,7 +454,7 @@ function CopyEmail() {
     return (
         <button onClick={copy} className="copy-email-btn">
             <span>{email}</span>
-            <span style={{ marginLeft: 8, color: copied ? "#4E9A4E" : "var(--muted)", transition: "color .3s" }}>
+            <span style={{ marginLeft: 8, color: copied ? "#5A8A5A" : "var(--muted)", transition: "color .3s" }}>
                 {copied ? <Check size={12} /> : <Copy size={12} />}
             </span>
         </button>
@@ -463,31 +463,6 @@ function CopyEmail() {
 
 export default function Homepage() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const cursorDotRef = useRef(null);
-    const cursorRingRef = useRef(null);
-
-    useEffect(() => {
-        const dot = cursorDotRef.current;
-        const ring = cursorRingRef.current;
-        if (!dot || !ring) return;
-        const pos = { x: 0, y: 0 };
-        const mouse = { x: 0, y: 0 };
-        let raf;
-        const onMove = (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            dot.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
-        };
-        const animate = () => {
-            pos.x += (mouse.x - pos.x - 16) * 0.12;
-            pos.y += (mouse.y - pos.y - 16) * 0.12;
-            ring.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-            raf = requestAnimationFrame(animate);
-        };
-        window.addEventListener("mousemove", onMove, { passive: true });
-        raf = requestAnimationFrame(animate);
-        return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
-    }, []);
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -502,160 +477,308 @@ export default function Homepage() {
         { href: "#contact", label: "Contact", num: "05" },
     ];
 
-    const ho = {
-        onMouseEnter: () => cursorRingRef.current?.classList.add("hovered"),
-        onMouseLeave: () => cursorRingRef.current?.classList.remove("hovered"),
-    };
-
     return (
         <>
             <div className="noise" />
-            <div className="cursor" ref={cursorDotRef} />
-            <div className="cursor-ring" ref={cursorRingRef} />
+            <style>{`
+                .mobile-fab { display: none !important; }
+                @media (max-width: 768px) {
+                    .mobile-fab { display: flex !important; }
+                    .hero-split { padding-left: 24px !important; padding-right: 24px !important; }
+                    .hero-split > div { grid-template-columns: 1fr !important; }
+                    .hero-image-col { display: none !important; }
+                }
+            `}</style>
 
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div
                         key="mobile-menu"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-                        style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(10,9,8,.97)", backdropFilter: "blur(20px)" }}
+                        initial={{ opacity: 0, y: 16, scale: 0.97 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 16, scale: 0.97 }}
+                        transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                        style={{
+                            position: "fixed",
+                            bottom: 88,
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            zIndex: 198,
+                            background: "rgba(20,20,20,.96)",
+                            backdropFilter: "blur(20px)",
+                            border: "1px solid var(--border)",
+                            borderRadius: 16,
+                            padding: "8px 6px",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                            minWidth: 200,
+                        }}
                     >
-                        <button onClick={() => setMenuOpen(false)} style={{ position: "absolute", top: 20, right: 24, zIndex: 10, background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: 8 }}>
-                            <X size={22} color="var(--ink)" />
-                        </button>
-                        <div style={{ display: "flex", flexDirection: "column", height: "100%", padding: "80px 32px 48px", justifyContent: "space-between" }}>
-                            <nav style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                                {navLinks.map((link, i) => (
-                                    <motion.a
-                                        key={link.href}
-                                        href={link.href}
-                                        onClick={() => setMenuOpen(false)}
-                                        initial={{ opacity: 0, x: 20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.45, delay: i * 0.05 + 0.05, ease: [0.23, 1, 0.32, 1] }}
-                                        style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(32px, 9vw, 52px)", fontWeight: 300, color: "var(--muted)", textDecoration: "none", letterSpacing: "-.02em", lineHeight: 1.2, display: "block" }}
-                                        onMouseEnter={(e) => (e.currentTarget.style.color = "var(--ink)")}
-                                        onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-                                    >
-                                        <span style={{ fontSize: 11, fontFamily: "'DM Mono', monospace", color: "var(--rust)", letterSpacing: ".1em", marginRight: 12, verticalAlign: "middle" }}>{link.num}</span>
-                                        {link.label}
-                                    </motion.a>
-                                ))}
-                            </nav>
-                            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                <div style={{ height: 1, background: "var(--border)" }} />
-                                <SocialLinks />
-                                <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: ".1em", textTransform: "uppercase" }}>hello@adamsroland.dev</p>
-                            </div>
+                        {navLinks.map((link, i) => (
+                            <motion.a
+                                key={link.href}
+                                href={link.href}
+                                onClick={() => setMenuOpen(false)}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.25, delay: i * 0.04 }}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 12,
+                                    padding: "12px 16px",
+                                    borderRadius: 10,
+                                    textDecoration: "none",
+                                    color: "var(--muted)",
+                                    fontFamily: "'DM Mono', monospace",
+                                    fontSize: 13,
+                                    letterSpacing: ".06em",
+                                    transition: "background .2s, color .2s",
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.background = "#88888814"; e.currentTarget.style.color = "var(--ink)"; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--muted)"; }}
+                            >
+                                <span style={{ fontSize: 9, color: "var(--rust)", letterSpacing: ".12em", fontFamily: "'DM Mono', monospace", minWidth: 20 }}>{link.num}</span>
+                                {link.label}
+                            </motion.a>
+                        ))}
+                        <div style={{ height: 1, background: "var(--border)", margin: "4px 16px" }} />
+                        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px" }}>
+                            <a href="https://github.com/roland-adams2007" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", display: "flex", textDecoration: "none", transition: "color .2s", padding: 4 }} onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"} onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}><GitHubIcon /></a>
+                            <a href="https://x.com/R_coredev" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", display: "flex", textDecoration: "none", transition: "color .2s", padding: 4 }} onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"} onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}><XIcon /></a>
+                            <a href="https://www.linkedin.com/in/roland-adams-045965315" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", display: "flex", textDecoration: "none", transition: "color .2s", padding: 4 }} onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"} onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}><LinkedInIcon /></a>
                         </div>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <nav className="nav-bar">
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9 }}>
-                    <span style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>AR</span>
-                </motion.div>
-                <motion.div className="nav-desktop-links" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9, delay: 0.12 }}>
-                    {navLinks.map((link) => (
-                        <a key={link.href} href={link.href} className="nav-link" {...ho}>{link.label}</a>
-                    ))}
-                </motion.div>
-                <motion.div className="nav-desktop-socials" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9, delay: 0.24 }}>
-                    <a href="https://github.com/adamsroland" target="_blank" rel="noreferrer" className="social-icon" {...ho}><GitHubIcon /></a>
-                    <a href="https://twitter.com/" target="_blank" rel="noreferrer" className="social-icon" {...ho}><XIcon /></a>
-                    <a href="https://linkedin.com/" target="_blank" rel="noreferrer" className="social-icon" {...ho}><LinkedInIcon /></a>
-                </motion.div>
-                <button className="nav-hamburger" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu">
-                    <motion.span className="ham-line" animate={menuOpen ? { y: 6, rotate: 45 } : { y: 0, rotate: 0 }} transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }} />
-                    <motion.span className="ham-line" animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }} transition={{ duration: 0.3 }} />
-                    <motion.span className="ham-line" animate={menuOpen ? { y: -6, rotate: -45 } : { y: 0, rotate: 0 }} transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }} />
-                </button>
-            </nav>
+            <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                onClick={() => setMenuOpen(v => !v)}
+                aria-label="Toggle menu"
+                style={{
+                    position: "fixed",
+                    bottom: 28,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    zIndex: 199,
+                    display: "none",
+                    alignItems: "center",
+                    gap: 10,
+                    background: menuOpen ? "var(--rust)" : "rgba(20,20,20,.92)",
+                    backdropFilter: "blur(16px)",
+                    border: `1px solid ${menuOpen ? "var(--rust)" : "var(--border)"}`,
+                    borderRadius: 999,
+                    padding: "12px 22px",
+                    cursor: "pointer",
+                    transition: "background .3s, border-color .3s",
+                }}
+                className="mobile-fab"
+            >
+                <span style={{ fontFamily: "'Fraunces', serif", fontSize: 15, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.01em" }}>AR</span>
+                <div style={{ width: 1, height: 14, background: menuOpen ? "#ffffff40" : "var(--border)" }} />
+                <div style={{ display: "flex", flexDirection: "column", gap: menuOpen ? 0 : 4, transition: "gap .3s" }}>
+                    <span style={{ display: "block", width: 16, height: 1, background: "var(--ink)", transformOrigin: "center", transform: menuOpen ? "translateY(0.5px) rotate(45deg)" : "none", transition: "transform .3s ease" }} />
+                    <span style={{ display: "block", width: 16, height: 1, background: "var(--ink)", transform: menuOpen ? "translateY(-0.5px) rotate(-45deg)" : "none", opacity: menuOpen ? 1 : 1, transition: "transform .3s ease, opacity .3s" }} />
+                </div>
+            </motion.button>
 
-            <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "flex-end", padding: "128px 32px 64px", position: "relative", overflow: "hidden" }}>
-                <div className="grid-bg" />
-                <div className="orb orb-1" />
-                <div className="orb orb-2" />
-                <div className="hero-vignette" />
+            <section className="hero-split" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 32px", position: "relative", overflow: "hidden" }}>
 
-                <motion.div
-                    className="float-badge"
-                    style={{ position: "absolute", top: 128, right: 32 }}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ duration: 0.9, delay: 0.48 }}
-                >
-                    <div className="tag" style={{ display: "inline-flex", alignItems: "center", gap: 8, color: "#4E9A4E", borderColor: "#4E9A4E50", background: "#4E9A4E10" }}>
-                        <span className="avail-dot" />
-                        Available for work
-                    </div>
-                </motion.div>
+                <div style={{ maxWidth: 1152, width: "100%", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", position: "relative", zIndex: 10 }}>
 
-                <div style={{ maxWidth: 1152, width: "100%", position: "relative", zIndex: 10 }}>
-                    <FadeUp delay={0.12}>
-                        <p className="section-num" style={{ marginBottom: 24 }}>01 — Introduction</p>
-                    </FadeUp>
+                    <div className="hero-text-col" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <div style={{ overflow: "hidden", lineHeight: 0.92, marginBottom: 2 }}>
+                            <motion.h1
+                                initial={{ y: "105%" }} animate={{ y: 0 }}
+                                transition={{ duration: 1, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+                                style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "var(--ink)", margin: 0 }}
+                            >
+                                Adams
+                            </motion.h1>
+                        </div>
+                        <div style={{ overflow: "hidden", lineHeight: 0.92, marginBottom: 36 }}>
+                            <motion.h1
+                                initial={{ y: "105%" }} animate={{ y: 0 }}
+                                transition={{ duration: 1, delay: 0.18, ease: [0.23, 1, 0.32, 1] }}
+                                style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "#303030", margin: 0 }}
+                            >
+                                Roland
+                            </motion.h1>
+                        </div>
 
-                    <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(52px, 9vw, 116px)", fontWeight: 300, lineHeight: 0.98, letterSpacing: "-.025em" }}>
-                        {[
-                            { text: "Crafting digital", delay: 0.05, italic: false, colored: false },
-                            { text: "experiences", delay: 0.15, italic: true, colored: true },
-                            { text: "that endure.", delay: 0.25, italic: false, colored: false },
-                        ].map((line) => (
-                            <div key={line.text} style={{ overflow: "hidden" }}>
-                                <motion.span
-                                    style={{ display: "block", fontStyle: line.italic ? "italic" : "normal", color: line.colored ? "var(--rust)" : "inherit" }}
-                                    initial={{ y: "100%" }} animate={{ y: 0 }}
-                                    transition={{ duration: 1, delay: line.delay, ease: [0.23, 1, 0.32, 1] }}
+                        <motion.div
+                            initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.7, delay: 0.42, ease: [0.23, 1, 0.32, 1] }}
+                            style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}
+                        >
+                            <div style={{ width: 28, height: 1, background: "var(--muted)", flexShrink: 0 }} />
+                            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: "var(--muted)", letterSpacing: ".04em" }}>
+                                Noir_
+                                <span style={{ display: "inline-block", width: 7, height: 13, background: "var(--ink)", marginLeft: 1, verticalAlign: "middle", animation: "blink 1s step-end infinite" }} />
+                            </span>
+                        </motion.div>
+
+                        <motion.p
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.52 }}
+                            style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: "var(--muted)", lineHeight: 1.8, marginBottom: 28, maxWidth: 400 }}
+                        >
+                            I build products, not just pages.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.62 }}
+                            style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 36 }}
+                        >
+                            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "var(--muted)", letterSpacing: ".06em" }}>using</span>
+                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+
+                                <div
+                                    title="React"
+                                    style={{
+                                        width: 32,
+                                        height: 32,
+                                        borderRadius: 6,
+                                        background: "#61DAFB12",
+                                        border: "1px solid #61DAFB30",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
                                 >
-                                    {line.text}
-                                </motion.span>
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="-11.5 -10.23174 23 20.46348"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <circle r="2.05" fill="#61DAFB" />
+                                        <g stroke="#61DAFB" strokeWidth="1" fill="none">
+                                            <ellipse rx="11" ry="4.2" />
+                                            <ellipse rx="11" ry="4.2" transform="rotate(60)" />
+                                            <ellipse rx="11" ry="4.2" transform="rotate(120)" />
+                                        </g>
+                                    </svg>
+                                </div>
+
+                                <div
+                                    title="PHP"
+                                    style={{
+                                        width: 32,
+                                        height: 32,
+                                        borderRadius: 6,
+                                        background: "#777BB312",
+                                        border: "1px solid #777BB330",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <svg
+                                        width="22"
+                                        height="14"
+                                        viewBox="0 0 128 64"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <ellipse cx="64" cy="32" rx="63" ry="31" fill="#777BB3" />
+                                        <text
+                                            x="64"
+                                            y="39"
+                                            textAnchor="middle"
+                                            fontSize="24"
+                                            fontFamily="Arial, sans-serif"
+                                            fontWeight="bold"
+                                            fill="white"
+                                            letterSpacing="2"
+                                        >
+                                            PHP
+                                        </text>
+                                    </svg>
+                                </div>
+
+                                <div
+                                    title="Laravel"
+                                    style={{
+                                        width: 32,
+                                        height: 32,
+                                        borderRadius: 6,
+                                        background: "#FF2D2012",
+                                        border: "1px solid #FF2D2030",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 50 52"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fill="#FF2D20"
+                                            d="M49.626 11.564a.809.809 0 0 1 .028.209v10.972a.8.8 0 0 1-.402.694l-9.209 5.302v10.509a.8.8 0 0 1-.402.694l-19.223 11.066a.813.813 0 0 1-.093.039.816.816 0 0 1-.246.04.816.816 0 0 1-.246-.04.813.813 0 0 1-.093-.039L.402 40.942A.8.8 0 0 1 0 40.248V8.578a.809.809 0 0 1 .028-.209c.013-.049.036-.094.059-.138.014-.028.014-.057.033-.084L.192 8.1l.012-.012c.02-.028.043-.056.065-.08.027-.027.053-.05.08-.074.02-.019.037-.04.059-.054l.059-.03L20.684.142a.804.804 0 0 1 .636 0l20.21 9.274h.029c.02.014.039.03.059.054.028.024.053.047.08.074l.066.08.011.012.072.147c.02.027.02.056.033.084.024.044.047.089.059.138zM25 1.788l-8.972 4.117 20.19 9.246 8.97-4.118L25 1.789zM15.405 7.217l-8.966 4.116 20.187 9.245 8.968-4.118-20.189-9.243zM1.6 10.187v30.48L20.8 50.614V20.133L1.6 10.187zm23.4 40.427l18.4-10.593V9.544l-8.4 3.849v10.512a.8.8 0 0 1-.402.694L25 29.903v20.71z"
+                                        />
+                                    </svg>
+                                </div>
                             </div>
-                        ))}
-                    </h1>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.72 }}
+                            style={{ display: "flex", alignItems: "center", gap: 8 }}
+                        >
+                            {[
+                                { label: "Projects", href: "#work" },
+                                { label: "Resume", href: "#" },
+                            ].map((link, i) => (
+                                <span key={link.label} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                    {i > 0 && <span style={{ color: "#252525", fontSize: 13 }}>/</span>}
+                                    <a
+                                        href={link.href}
+                                        style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "var(--ink)", textDecoration: "none", letterSpacing: ".04em", transition: "color .2s" }}
+                                        onMouseEnter={e => e.currentTarget.style.color = "var(--rust)"}
+                                        onMouseLeave={e => e.currentTarget.style.color = "var(--ink)"}
+                                    >
+                                        {link.label}
+                                    </a>
+                                </span>
+                            ))}
+                        </motion.div>
+                    </div>
 
                     <motion.div
-                        style={{ height: 1, background: "linear-gradient(90deg, var(--rust), var(--gold), transparent)", transformOrigin: "left", marginTop: 40, marginBottom: 32 }}
-                        initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
-                        transition={{ duration: 1, delay: 0.5, ease: [0.23, 1, 0.32, 1] }}
-                    />
+                        className="hero-image-col"
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                        transition={{ duration: 1.4, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+                        style={{ position: "relative", display: "flex", alignItems: "flex-end", justifyContent: "center", overflow: "hidden", minHeight: 480 }}
+                    >
+                        <img
+                            src={hero}
+                            alt="Adams Roland"
+                            style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain",
+                                objectPosition: "top center",
+                                filter: "grayscale(100%) brightness(0.72) contrast(1.1)",
+                                maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.95) 55%, rgba(0,0,0,0) 100%)",
+                                WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.95) 55%, rgba(0,0,0,0) 100%)",
+                                display: "block",
+                                position: "absolute",
+                                inset: 0,
+                            }}
+                        />
+                    </motion.div>
 
-                    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 24 }}>
-                        <FadeUp delay={0.6}>
-                            <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--muted)", maxWidth: 420 }}>
-                                Full-stack web developer building fast, polished web products across React, Laravel, PHP and more — one year in, already shipping real things.
-                            </p>
-                        </FadeUp>
-                        <FadeUp delay={0.6}>
-                            <div style={{ display: "flex", gap: 32, fontSize: 11, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted)" }}>
-                                {[{ val: "1yr", label: "Experience" }, { val: "7+", label: "Projects" }, { val: "5+", label: "Technologies" }].map((s) => (
-                                    <div key={s.label}>
-                                        <div style={{ fontSize: 30, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", letterSpacing: "-.02em", lineHeight: 1 }}>{s.val}</div>
-                                        <span>{s.label}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </FadeUp>
-                    </div>
-
-                    <FadeUp delay={0.6}>
-                        <div style={{ display: "flex", gap: 12, marginTop: 40 }}>
-                            <a href="#work" className="btn" {...ho}><span>View Work</span><ArrowDown size={14} /></a>
-                            <a href="#contact" className="btn-outline" {...ho}><span>Let's Talk</span></a>
-                        </div>
-                    </FadeUp>
                 </div>
 
-                <motion.div
-                    style={{ position: "absolute", bottom: 32, right: 32, display: "flex", alignItems: "center", gap: 8, fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--muted)" }}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                    transition={{ duration: 0.9, delay: 0.6 }}
-                >
-                    Scroll <ArrowDown size={13} />
-                </motion.div>
             </section>
 
             <section id="work" style={{ padding: "96px 32px" }}>
@@ -667,9 +790,9 @@ export default function Homepage() {
                                 <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(30px, 5vw, 54px)", fontWeight: 300, letterSpacing: "-.025em", lineHeight: 1.1 }}>
                                     Projects that<br /><em>matter.</em>
                                 </h2>
-                                <p style={{ fontSize: 12, color: "var(--muted)", maxWidth: 260, lineHeight: 1.7 }}>
-                                    Browse all {allProjects.length} projects.
-                                </p>
+                                <a href="https://github.com/roland-adams2007" target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.7, textDecoration: "none", display: "flex", alignItems: "center", gap: 6, transition: "color .25s" }} onMouseEnter={e => e.currentTarget.style.color = "var(--rust)"} onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}>
+                                    <GitHubIcon /> View all on GitHub <ArrowUpRight size={12} />
+                                </a>
                             </div>
                         </div>
                     </RevealOnScroll>
@@ -689,13 +812,10 @@ export default function Homepage() {
                             Design is a conversation<br />between <em style={{ color: "var(--rust)" }}>intent</em> and form.
                         </h2>
                         <p style={{ fontSize: 13, lineHeight: 2, color: "var(--muted)", marginBottom: 16 }}>
-                            I'm Adams Roland — a full-stack web developer. I've been building for about a year, and in that time I've shipped everything from custom PHP frameworks to real-time chat apps.
-                        </p>
-                        <p style={{ fontSize: 13, lineHeight: 2, color: "var(--muted)" }}>
-                            I learn by building real things, not watching tutorials. My stack is React on the front, Laravel or plain PHP on the back, Tailwind for styling, and MySQL for data.
+                            Hi, I’m Adams Roland, a Full Stack Developer with 2+ years of hands-on experience. I enjoy building real-world web applications that are simple, functional, and user-focused. I like turning ideas into clean, working systems that solve real problems and get things done.
                         </p>
                         <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap", alignItems: "center" }}>
-                            <a href="#" className="btn" {...ho}><span>Download CV</span><Download size={13} /></a>
+                            <a href="#" className="btn"><span>Download CV</span><Download size={13} /></a>
                             <SocialLinks />
                         </div>
                     </RevealOnScroll>
@@ -717,16 +837,19 @@ export default function Homepage() {
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))", gap: "0 64px" }}>
                         <RevealOnScroll delay={0.1}>
                             {[
-                                { period: "2024 — Present", color: "var(--rust)", dotType: "filled", title: "Freelance Full-Stack Developer", sub: "Self-employed · Fiverr & Direct Clients", desc: "Building and delivering web applications for clients across Nigeria and internationally. Specialising in Laravel backends, React frontends, and custom PHP solutions.", tags: ["Laravel", "React", "PHP", "MySQL"] },
-                                { period: "2023 — 2024", color: "var(--muted)", dotType: "outline", title: "Independent Developer", sub: "Personal Projects", desc: "Self-taught development through hands-on project building. Created SwiftForge, a URL shortener, and began learning React and the Laravel ecosystem from scratch.", tags: ["PHP", "HTML/CSS", "JavaScript"] },
-                                { period: "2022", color: "var(--muted)", dotType: "outline", title: "Started Coding Journey", sub: "University of Ilorin (UNILORIN)", desc: "Began exploring web development and programming. Built first projects for university peers, including the UNILORIN chat application used by students and lecturers.", tags: [] },
-                            ].map((exp, i) => (
+                                { period: "Dec 2025 — Present", color: "var(--rust)", dotType: "filled", title: "Founder & Full-Stack Developer", sub: "Tixkarios · Full-time", desc: "Founded and built Tixkarios, a digital ticketing platform enabling event organizers to create, manage, and sell tickets online. Handled end-to-end development — frontend, backend, system architecture, and payment integration. Led product decisions, improved UX, and supported early users through onboarding and iteration.", tags: ["React", "Laravel", "Node.js", "MySQL", "Payment Integration"] },
+                                { period: "Nov 2025 — Present", color: "var(--rust)", dotType: "filled", title: "Junior Community & Content Specialist", sub: "Apodissi · Part-time", desc: "Managing community engagement and creating content strategies. Developing and implementing content plans across various platforms. Fostering community growth and maintaining brand presence through effective communication and engagement initiatives.", tags: ["Community Management", "Content Strategy", "Social Media", "Brand Engagement"] },
+                                { period: "Feb 2025 — Feb 2026", color: "var(--muted)", dotType: "outline", title: "Team Leader", sub: "3jstech", desc: "Led development teams and managed project deliveries. Responsible for code reviews, team coordination, and ensuring best practices across multiple projects. Mentored junior developers and drove technical decisions. Successfully completed tenure after delivering key projects and building strong team processes.", tags: ["Team Leadership", "Project Management", "Code Review", "Mentoring"] },
+                                { period: "2024 — Present", color: "var(--muted)", dotType: "outline", title: "University Student", sub: "University of Ilorin", desc: "Pursuing a degree while balancing academic excellence with professional growth. Applying theoretical knowledge to real-world projects and continuously expanding understanding of computer science fundamentals.", tags: ["Computer Science", "Software Engineering", "Data Structures"] },
+                                { period: "Feb 2024 — Jun 2024", color: "var(--muted)", dotType: "outline", title: "Full-Stack Development Bootcamp", sub: "MOAT Academy · Certificate Earned", desc: "Intensive bootcamp focusing on modern web development technologies starting February 12th, 2024. Gained hands-on experience with front-end and back-end development, working on real-world projects and learning industry best practices.", tags: ["JavaScript", "React", "Node.js", "PHP", "Laravel", "MySQL"] },
+                                { period: "2023", color: "var(--muted)", dotType: "outline", title: "Programming Journey Begins", sub: "Self-Learning & Exploration", desc: "Started the journey into programming and web development through self-study. Discovered a passion for creating digital solutions and built foundational knowledge that prepared for formal training and professional opportunities.", tags: [] },
+                            ].map((exp, i, arr) => (
                                 <div key={i} style={{ display: "flex", gap: 24 }}>
                                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                                         {exp.dotType === "filled"
                                             ? <div className="exp-dot" />
                                             : <div style={{ width: 8, height: 8, borderRadius: "50%", border: "1px solid var(--border)", flexShrink: 0, marginTop: 5, background: "var(--bg2)" }} />}
-                                        {i < 2 && <div className="exp-line" />}
+                                        {i < arr.length - 1 && <div className="exp-line" />}
                                     </div>
                                     <div style={{ paddingBottom: 40 }}>
                                         <div style={{ marginBottom: 8 }}>
@@ -754,8 +877,8 @@ export default function Homepage() {
                                         <Code2 size={18} color="var(--rust)" />
                                         <span style={{ fontSize: 10, color: "var(--muted)", letterSpacing: ".1em", textTransform: "uppercase" }}>Highlight</span>
                                     </div>
-                                    <div style={{ fontFamily: "'Fraunces', serif", fontSize: 36, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.02em", lineHeight: 1 }}>7+</div>
-                                    <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, lineHeight: 1.7 }}>Projects shipped across PHP frameworks, real-time apps, SaaS platforms, and developer tools.</p>
+                                    <div style={{ fontFamily: "'Fraunces', serif", fontSize: 36, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.02em", lineHeight: 1 }}>8+</div>
+                                    <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, lineHeight: 1.7 }}>Projects shipped across full-stack apps, SaaS platforms, real-time systems, and ticketing infrastructure.</p>
                                 </div>
                                 <div style={{ border: "1px solid var(--border)", borderRadius: 3, padding: 24, background: "var(--card)" }}>
                                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
@@ -789,7 +912,7 @@ export default function Homepage() {
                                     <h3 style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--ink)" }}>Frontend</h3>
                                 </div>
                                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                                    {["React", "JavaScript", "Tailwind CSS", "HTML & CSS", "Bootstrap", "Framer Motion", "Vite"].map((t) => (
+                                    {["React", "JavaScript", "Tailwind CSS", "HTML & CSS", "Bootstrap", "Framer Motion", "Vite", "Zustand"].map((t) => (
                                         <span key={t} className="tag" style={{ color: "var(--muted)", borderColor: "var(--border)", fontSize: 9 }}>{t}</span>
                                     ))}
                                 </div>
@@ -800,7 +923,7 @@ export default function Homepage() {
                                     <h3 style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--ink)" }}>Backend</h3>
                                 </div>
                                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                                    {["PHP", "Laravel", "MySQL", "REST APIs", "MVC Architecture", "WebSockets", "Composer"].map((t) => (
+                                    {["PHP", "Laravel", "MySQL", "Node.js", "Express", "Prisma", "Firebase", "Supabase", "PostgreSQL", "REST APIs", "MVC Architecture", "WebSockets", "Composer"].map((t) => (
                                         <span key={t} className="tag" style={{ color: "var(--muted)", borderColor: "var(--border)", fontSize: 9 }}>{t}</span>
                                     ))}
                                 </div>
@@ -811,7 +934,7 @@ export default function Homepage() {
                                     <h3 style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--ink)" }}>Tools</h3>
                                 </div>
                                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                                    {["Git & GitHub", "Figma", "VS Code", "Fiverr", "SwiftForge", "npm", "XAMPP", "Postman"].map((t) => (
+                                    {["Git & GitHub", "Docker", "CI/CD Pipeline", "VS Code", "npm", "XAMPP", "Postman"].map((t) => (
                                         <span key={t} className="tag" style={{ color: "var(--muted)", borderColor: "var(--border)", fontSize: 9 }}>{t}</span>
                                     ))}
                                 </div>
@@ -844,7 +967,7 @@ export default function Homepage() {
                                     <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--muted)", maxWidth: 480, marginBottom: 32 }}>
                                         Open to freelance projects, full-time opportunities, and collaborations. If you have an idea or need help bringing your vision to life, let's talk.
                                     </p>
-                                    <a href="mailto:hello@adamsroland.dev" className="btn contact-cta-btn" {...ho}>
+                                    <a href="mailto:adamsrolly7@gmail.com" className="btn">
                                         <Mail size={14} />
                                         <span>Get In Touch</span>
                                         <ArrowUpRight size={14} />
@@ -855,10 +978,10 @@ export default function Homepage() {
                                     <p style={{ fontSize: 10, letterSpacing: ".15em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20 }}>Connect Online</p>
                                     <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
                                         {[
-                                            { icon: <XIcon />, label: "Twitter", href: "https://twitter.com/" },
-                                            { icon: <LinkedInIcon />, label: "LinkedIn", href: "https://linkedin.com/" },
-                                            { icon: <GitHubIcon />, label: "GitHub", href: "https://github.com/adamsroland" },
-                                            { icon: <Mail size={16} />, label: "Email", href: "mailto:hello@adamsroland.dev" },
+                                            { icon: <XIcon />, label: "Twitter", href: "https://x.com/R_coredev" },
+                                            { icon: <LinkedInIcon />, label: "LinkedIn", href: "https://www.linkedin.com/in/roland-adams-045965315" },
+                                            { icon: <GitHubIcon />, label: "GitHub", href: "https://github.com/roland-adams2007" },
+                                            { icon: <Mail size={16} />, label: "Email", href: "mailto:adamsrolly7@gmail.com" },
                                         ].map((item) => (
                                             <a
                                                 key={item.label}
