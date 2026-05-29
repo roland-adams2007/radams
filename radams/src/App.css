@@ -1,18 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100;0,9..144,300;0,9..144,400;1,9..144,100;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg: #0A0A0A;
-  --bg2: #111111;
-  --card: #141414;
-  --border: #252525;
-  --ink: #EDEDED;
-  --muted: #666666;
-  --rust: #888888;
-  --rust2: #AAAAAA;
-  --sage: #5A5A5A;
-  --gold: #999999;
-  --cream: #EDEDED;
+  --bg: #080808;
+  --bg2: #0F0F0F;
+  --card: #111111;
+  --border: #1E1E1E;
+  --ink: #F0EDE8;
+  --muted: #5A5A5A;
+  --rust: #8A7A6A;
+  --rust2: #B0A090;
+  --sage: #4A4A4A;
+  --gold: #9A8A78;
+  --cream: #F0EDE8;
+  /* 3D depth system */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.03);
+  --shadow-card-hover: 0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  --shadow-float: 0 20px 60px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.4);
 }
 
 *,
@@ -30,8 +34,10 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .noise {
@@ -61,30 +67,30 @@ body {
 }
 
 .orb-1 {
-  width: 500px;
-  height: 500px;
-  top: 10%;
-  left: 35%;
-  background: radial-gradient(circle, #88888814 0%, transparent 70%);
-  animation: orbFloat 12s ease-in-out infinite;
+  width: 600px;
+  height: 600px;
+  top: 5%;
+  left: 30%;
+  background: radial-gradient(circle, #8A7A6A18 0%, transparent 70%);
+  animation: orbFloat 14s ease-in-out infinite;
 }
 
 .orb-2 {
-  width: 320px;
-  height: 320px;
-  bottom: 15%;
-  right: 10%;
-  background: radial-gradient(circle, #9999990C 0%, transparent 70%);
-  animation: orbFloat 18s ease-in-out infinite reverse;
+  width: 360px;
+  height: 360px;
+  bottom: 10%;
+  right: 5%;
+  background: radial-gradient(circle, #9A8A780E 0%, transparent 70%);
+  animation: orbFloat 20s ease-in-out infinite reverse;
 }
 
 .orb-contact {
-  width: 600px;
-  height: 600px;
-  top: -100px;
-  right: -100px;
-  background: radial-gradient(circle, #88888810 0%, transparent 65%);
-  animation: orbFloat 15s ease-in-out infinite;
+  width: 700px;
+  height: 700px;
+  top: -150px;
+  right: -150px;
+  background: radial-gradient(circle, #8A7A6A12 0%, transparent 65%);
+  animation: orbFloat 17s ease-in-out infinite;
 }
 
 .contact-grid-accent {
@@ -92,8 +98,8 @@ body {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(136, 136, 136, .04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(136, 136, 136, .04) 1px, transparent 1px);
+    linear-gradient(rgba(138, 122, 106, .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(138, 122, 106, .05) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 70% 70% at 80% 20%, black 0%, transparent 70%);
 }
@@ -173,14 +179,14 @@ body {
   font-size: 10px;
   letter-spacing: .09em;
   text-transform: uppercase;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
 }
 
 .section-num {
   font-size: 11px;
   color: var(--rust);
   letter-spacing: .15em;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
 }
 
 .nav-bar {
@@ -193,9 +199,10 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 20px 32px;
-  background: rgba(10, 10, 10, .85);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid #1E1E1E;
+  background: rgba(8, 8, 8, .88);
+  backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid #181818;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02), 0 4px 24px rgba(0,0,0,0.4);
 }
 
 .nav-bar::after {
@@ -255,7 +262,7 @@ body {
   color: var(--muted);
   text-decoration: none;
   transition: color .25s;
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
 }
 
 .nav-link:hover { color: var(--ink); }
@@ -279,7 +286,7 @@ body {
   gap: 8px;
   background: var(--rust);
   color: var(--bg);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -288,8 +295,14 @@ body {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: color .3s;
+  transition: color .3s, box-shadow .3s, transform .2s;
   text-decoration: none;
+  box-shadow: 0 2px 8px rgba(138,122,106,0.2), 0 0 0 1px rgba(138,122,106,0.15);
+}
+
+.btn:hover {
+  box-shadow: 0 6px 20px rgba(138,122,106,0.3), 0 0 0 1px rgba(138,122,106,0.25);
+  transform: translateY(-1px);
 }
 
 .btn::before {
@@ -311,7 +324,7 @@ body {
   gap: 8px;
   background: transparent;
   color: var(--ink);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -319,12 +332,14 @@ body {
   border: 1px solid var(--border);
   cursor: pointer;
   text-decoration: none;
-  transition: border-color .3s, color .3s;
+  transition: border-color .3s, color .3s, box-shadow .3s, transform .2s;
 }
 
 .btn-outline:hover {
   border-color: var(--rust);
   color: var(--rust);
+  box-shadow: inset 0 0 16px rgba(138,122,106,0.06), 0 4px 16px rgba(0,0,0,0.3);
+  transform: translateY(-1px);
 }
 
 .social-icon {
@@ -374,15 +389,16 @@ body {
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--card);
-  transition: border-color .3s;
+  transition: border-color .4s, box-shadow .4s, transform .4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: var(--shadow-card);
+  transform: perspective(1200px) rotateX(0deg) rotateY(0deg);
+  will-change: transform, box-shadow;
 }
 
 .desktop-rail-card:hover {
-  border-color: #303030;
-}
-
-.desktop-rail-card:hover img {
-  opacity: 0.75 !important;
+  border-color: #2A2A2A;
+  box-shadow: var(--shadow-card-hover);
+  transform: perspective(1200px) rotateX(1.5deg) rotateY(0deg) translateY(-4px);
 }
 
 .service-tile {
@@ -408,7 +424,23 @@ body {
   transition: transform .35s cubic-bezier(.23, 1, .32, 1);
 }
 
-.service-tile:hover { background: #1A1A1A; }
+.service-tile {
+  background: var(--card);
+  padding: 32px 28px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: background .3s, box-shadow .35s, transform .35s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  will-change: transform;
+}
+
+.service-tile:hover {
+  background: #161616;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 -2px 20px rgba(0,0,0,0.25);
+  transform: translateY(-2px) translateZ(0);
+}
 
 .service-tile:hover::before { transform: scaleY(1); }
 
@@ -456,15 +488,43 @@ body {
   transition: transform .45s cubic-bezier(.23, 1, .32, 1);
 }
 
-.skill-card:hover { border-color: #303030; }
+.skill-card {
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 28px;
+  background: var(--card);
+  transition: border-color .35s ease, box-shadow .35s ease, transform .35s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  will-change: transform, box-shadow;
+}
+
+.skill-card:hover {
+  border-color: #2A2A2A;
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-3px) translateZ(0);
+}
 
 .skill-card:hover::before { transform: scaleX(1); }
 
 .terminal-card {
   border: 1px solid var(--border);
   border-radius: 3px;
-  background: #0D0D0D;
+  background: #090909;
   overflow: hidden;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.terminal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(138,122,106,0.3), transparent);
 }
 
 .terminal-header {
@@ -570,8 +630,8 @@ body {
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--muted);
-  font-family: 'DM Mono', monospace;
-  background: rgba(10, 10, 10, .7);
+  font-family: 'Geist Mono', monospace;
+  background: rgba(8, 8, 8, .8);
   padding: 4px 10px;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -584,13 +644,15 @@ body {
   padding: 28px 24px;
   background: var(--card);
   overflow: hidden;
-  transition: border-color .3s, transform .3s cubic-bezier(.23, 1, .32, 1), background .3s;
+  transition: border-color .3s, transform .3s cubic-bezier(.23, 1, .32, 1), background .3s, box-shadow .3s;
+  box-shadow: var(--shadow-card);
 }
 
 .contact-card-link:hover {
-  border-color: #303030;
-  transform: translateY(-3px);
-  background: #1A1A1A;
+  border-color: #2A2A2A;
+  transform: translateY(-4px) translateZ(0);
+  background: #161616;
+  box-shadow: var(--shadow-card-hover);
 }
 
 .contact-card-arrow {
@@ -631,7 +693,7 @@ body {
   border-radius: 2px;
   background: transparent;
   color: var(--muted);
-  font-family: 'DM Mono', monospace;
+  font-family: 'Geist Mono', monospace;
   font-size: 10px;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -654,4 +716,57 @@ body {
   border-color: var(--gold);
   color: var(--gold);
   background: #9999990D;
+}
+/* ── Connect cards in Contact section ─────────────────── */
+.connect-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--card);
+  text-decoration: none;
+  transition: border-color .3s, background .3s, transform .3s cubic-bezier(0.23,1,0.32,1), box-shadow .3s;
+  box-shadow: var(--shadow-card);
+  will-change: transform;
+}
+
+.connect-card:hover {
+  border-color: #2A2A2A;
+  background: #161616;
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.connect-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  background: var(--bg2);
+  transition: border-color .3s, color .3s;
+}
+
+.connect-card:hover .connect-card-icon {
+  border-color: var(--rust);
+  color: var(--rust);
+}
+
+/* ── Performance: GPU-accelerate animated elements ─────── */
+.orb, .float-badge, .nav-bar {
+  will-change: transform;
+}
+
+/* ── Smooth scrolling enhancement ─────────────────────── */
+* {
+  backface-visibility: hidden;
+}
+
+.orb, .float-badge {
+  backface-visibility: visible;
 }

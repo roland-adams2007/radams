@@ -52,9 +52,10 @@ function RevealOnScroll({ children, delay = 0 }) {
     return (
         <motion.div
             ref={ref}
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay, ease: [0.23, 1, 0.32, 1] }}
+            transition={{ duration: 0.75, delay, ease: [0.23, 1, 0.32, 1] }}
+            style={{ willChange: "transform, opacity" }}
         >
             {children}
         </motion.div>
@@ -174,10 +175,10 @@ function MobileSwipeDeck() {
                                 <div style={{ position: "absolute", top: 14, left: 14 }}>
                                     <span className="tag" style={{ color: project.tagColor, borderColor: project.tagColor + "55" }}>{project.tag}</span>
                                 </div>
-                                <div style={{ position: "absolute", top: 12, right: 14, fontFamily: "'Fraunces', serif", fontSize: 32, fontWeight: 100, color: "#ffffff07", letterSpacing: "-.05em" }}>{project.id}</div>
+                                <div style={{ position: "absolute", top: 12, right: 14, fontFamily: "'Instrument Serif', serif", fontSize: 32, fontWeight: 100, color: "#ffffff07", letterSpacing: "-.05em" }}>{project.id}</div>
                             </div>
                             <div style={{ padding: "14px 20px 18px" }}>
-                                <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 8, letterSpacing: "-.01em" }}>{project.title}</h3>
+                                <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, fontWeight: 300, color: "var(--ink)", marginBottom: 8, letterSpacing: "-.01em" }}>{project.title}</h3>
                                 <p style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.75, marginBottom: 14 }}>{project.desc}</p>
                                 <div style={{ display: "flex", gap: 8 }}>
                                     {project.github && (
@@ -191,7 +192,7 @@ function MobileSwipeDeck() {
                                         </a>
                                     )}
                                     {!project.github && !project.live && (
-                                        <span style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--border)", fontFamily: "'DM Mono', monospace" }}>Private repo</span>
+                                        <span style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--border)", fontFamily: "'Geist Mono', monospace" }}>Private repo</span>
                                     )}
                                 </div>
                             </div>
@@ -275,10 +276,10 @@ function DesktopScrollRail() {
                             <div style={{ position: "absolute", top: 18, left: 18 }}>
                                 <span className="tag" style={{ color: project.tagColor, borderColor: project.tagColor + "55" }}>{project.tag}</span>
                             </div>
-                            <div style={{ position: "absolute", top: 14, right: 18, fontFamily: "'Fraunces', serif", fontSize: 42, fontWeight: 100, color: "#ffffff06", letterSpacing: "-.05em" }}>{project.id}</div>
+                            <div style={{ position: "absolute", top: 14, right: 18, fontFamily: "'Instrument Serif', serif", fontSize: 42, fontWeight: 100, color: "#ffffff06", letterSpacing: "-.05em" }}>{project.id}</div>
                         </div>
                         <div style={{ padding: "20px 28px 24px" }}>
-                            <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: 26, fontWeight: 300, color: "var(--ink)", marginBottom: 10, letterSpacing: "-.01em" }}>{project.title}</h3>
+                            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 26, fontWeight: 300, color: "var(--ink)", marginBottom: 10, letterSpacing: "-.01em" }}>{project.title}</h3>
                             <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.8, marginBottom: 18 }}>{project.desc}</p>
                             <div style={{ display: "flex", gap: 8 }}>
                                 {project.github && (
@@ -292,7 +293,7 @@ function DesktopScrollRail() {
                                     </a>
                                 )}
                                 {!project.github && !project.live && (
-                                    <span style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--border)", fontFamily: "'DM Mono', monospace" }}>Private repo</span>
+                                    <span style={{ fontSize: 9, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--border)", fontFamily: "'Geist Mono', monospace" }}>Private repo</span>
                                 )}
                             </div>
                         </div>
@@ -375,7 +376,7 @@ function OrbitVisual() {
                             <line x1="230" y1="200" x2={x} y2={y} stroke="#88888818" strokeWidth="1" />
                             <circle cx={x} cy={y} r="3" fill="#88888866" />
                             <rect x={x - 28} y={y - 12} width="56" height="22" rx="11" fill="#0D0D0D" stroke="#252525" strokeWidth="1" />
-                            <text x={x} y={y + 4} textAnchor="middle" fill="#9A9A9A" fontSize="9" fontFamily="'DM Mono', monospace" letterSpacing="1.5" style={{ textTransform: "uppercase" }}>{label.toUpperCase()}</text>
+                            <text x={x} y={y + 4} textAnchor="middle" fill="#9A9A9A" fontSize="9" fontFamily="'Geist Mono', monospace" letterSpacing="1.5" style={{ textTransform: "uppercase" }}>{label.toUpperCase()}</text>
                         </g>
                     );
                 })}
@@ -385,11 +386,11 @@ function OrbitVisual() {
                 <motion.circle cx={230 + 55} cy={200} r="3" fill="#999999" animate={{ rotate: 360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }} style={{ transformOrigin: "230px 200px" }} />
             </svg>
             <div className="about-stat-chip" style={{ top: "10%", left: "6%" }}>
-                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>8+</span>
+                <span style={{ fontSize: 26, fontFamily: "'Instrument Serif', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>8+</span>
                 <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted)", marginTop: 2 }}>Projects</span>
             </div>
             <div className="about-stat-chip" style={{ top: "10%", right: "6%" }}>
-                <span style={{ fontSize: 26, fontFamily: "'Fraunces', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>2yr+</span>
+                <span style={{ fontSize: 26, fontFamily: "'Instrument Serif', serif", fontWeight: 300, color: "var(--ink)", lineHeight: 1 }}>2yr+</span>
                 <span style={{ fontSize: 9, letterSpacing: ".1em", textTransform: "uppercase", color: "var(--muted)", marginTop: 2 }}>Experience</span>
             </div>
             <div className="about-stat-chip" style={{ bottom: "10%", left: "50%", transform: "translateX(-50%)" }}>
@@ -427,9 +428,9 @@ function TerminalCard() {
                     <div key={i} style={{ marginBottom: 10 }}>
                         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                             <span style={{ color: "var(--rust)", fontSize: 11 }}>❯</span>
-                            <span style={{ color: "#7B8EC4", fontSize: 11, fontFamily: "'DM Mono', monospace" }}>{line.cmd}</span>
+                            <span style={{ color: "#7B8EC4", fontSize: 11, fontFamily: "'Geist Mono', monospace" }}>{line.cmd}</span>
                         </div>
-                        <div style={{ marginLeft: 20, fontSize: 11, color: "var(--ink)", fontFamily: "'DM Mono', monospace", lineHeight: 1.8 }}>{line.out}</div>
+                        <div style={{ marginLeft: 20, fontSize: 11, color: "var(--ink)", fontFamily: "'Geist Mono', monospace", lineHeight: 1.8 }}>{line.out}</div>
                     </div>
                 ))}
                 {visible < lines.length && (
@@ -531,7 +532,7 @@ export default function Homepage() {
                                     borderRadius: 10,
                                     textDecoration: "none",
                                     color: "var(--muted)",
-                                    fontFamily: "'DM Mono', monospace",
+                                    fontFamily: "'Geist Mono', monospace",
                                     fontSize: 13,
                                     letterSpacing: ".06em",
                                     transition: "background .2s, color .2s",
@@ -539,7 +540,7 @@ export default function Homepage() {
                                 onMouseEnter={e => { e.currentTarget.style.background = "#88888814"; e.currentTarget.style.color = "var(--ink)"; }}
                                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--muted)"; }}
                             >
-                                <span style={{ fontSize: 9, color: "var(--rust)", letterSpacing: ".12em", fontFamily: "'DM Mono', monospace", minWidth: 20 }}>{link.num}</span>
+                                <span style={{ fontSize: 9, color: "var(--rust)", letterSpacing: ".12em", fontFamily: "'Geist Mono', monospace", minWidth: 20 }}>{link.num}</span>
                                 {link.label}
                             </motion.a>
                         ))}
@@ -578,7 +579,7 @@ export default function Homepage() {
                 }}
                 className="mobile-fab"
             >
-                <span style={{ fontFamily: "'Fraunces', serif", fontSize: 15, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.01em" }}>AR</span>
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 15, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.01em" }}>AR</span>
                 <div style={{ width: 1, height: 14, background: menuOpen ? "#ffffff40" : "var(--border)" }} />
                 <div style={{ display: "flex", flexDirection: "column", gap: menuOpen ? 0 : 4, transition: "gap .3s" }}>
                     <span style={{ display: "block", width: 16, height: 1, background: "var(--ink)", transformOrigin: "center", transform: menuOpen ? "translateY(0.5px) rotate(45deg)" : "none", transition: "transform .3s ease" }} />
@@ -595,7 +596,7 @@ export default function Homepage() {
                             <motion.h1
                                 initial={{ y: "105%" }} animate={{ y: 0 }}
                                 transition={{ duration: 1, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
-                                style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "var(--ink)", margin: 0 }}
+                                style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "var(--ink)", margin: 0 }}
                             >
                                 Adams
                             </motion.h1>
@@ -604,7 +605,7 @@ export default function Homepage() {
                             <motion.h1
                                 initial={{ y: "105%" }} animate={{ y: 0 }}
                                 transition={{ duration: 1, delay: 0.18, ease: [0.23, 1, 0.32, 1] }}
-                                style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "#303030", margin: 0 }}
+                                style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(60px, 9vw, 124px)", fontWeight: 700, letterSpacing: "-.03em", color: "#303030", margin: 0 }}
                             >
                                 Roland
                             </motion.h1>
@@ -616,7 +617,7 @@ export default function Homepage() {
                             style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}
                         >
                             <div style={{ width: 28, height: 1, background: "var(--muted)", flexShrink: 0 }} />
-                            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: "var(--muted)", letterSpacing: ".04em" }}>
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 13, color: "var(--muted)", letterSpacing: ".04em" }}>
                                 Noir_
                                 <span style={{ display: "inline-block", width: 7, height: 13, background: "var(--ink)", marginLeft: 1, verticalAlign: "middle", animation: "blink 1s step-end infinite" }} />
                             </span>
@@ -625,7 +626,7 @@ export default function Homepage() {
                         <motion.p
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                             transition={{ duration: 0.7, delay: 0.52 }}
-                            style={{ fontFamily: "'DM Mono', monospace", fontSize: 13, color: "var(--muted)", lineHeight: 1.8, marginBottom: 28, maxWidth: 400 }}
+                            style={{ fontFamily: "'Geist Mono', monospace", fontSize: 13, color: "var(--muted)", lineHeight: 1.8, marginBottom: 28, maxWidth: 400 }}
                         >
                             I build products, not just pages.
                         </motion.p>
@@ -635,7 +636,7 @@ export default function Homepage() {
                             transition={{ duration: 0.7, delay: 0.62 }}
                             style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 36 }}
                         >
-                            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "var(--muted)", letterSpacing: ".06em" }}>using</span>
+                            <span style={{ fontFamily: "'Geist Mono', monospace", fontSize: 11, color: "var(--muted)", letterSpacing: ".06em" }}>using</span>
                             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
 
                                 <div
@@ -742,7 +743,7 @@ export default function Homepage() {
                                     {i > 0 && <span style={{ color: "#252525", fontSize: 13 }}>/</span>}
                                     <a
                                         href={link.href}
-                                        style={{ fontFamily: "'DM Mono', monospace", fontSize: 12, color: "var(--ink)", textDecoration: "none", letterSpacing: ".04em", transition: "color .2s" }}
+                                        style={{ fontFamily: "'Geist Mono', monospace", fontSize: 12, color: "var(--ink)", textDecoration: "none", letterSpacing: ".04em", transition: "color .2s" }}
                                         onMouseEnter={e => e.currentTarget.style.color = "var(--rust)"}
                                         onMouseLeave={e => e.currentTarget.style.color = "var(--ink)"}
                                     >
@@ -787,7 +788,7 @@ export default function Homepage() {
                         <div style={{ marginBottom: 64 }}>
                             <p className="section-num" style={{ marginBottom: 12 }}>02 — Selected Work</p>
                             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-                                <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(30px, 5vw, 54px)", fontWeight: 300, letterSpacing: "-.025em", lineHeight: 1.1 }}>
+                                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(30px, 5vw, 54px)", fontWeight: 300, letterSpacing: "-.025em", lineHeight: 1.1 }}>
                                     Projects that<br /><em>matter.</em>
                                 </h2>
                                 <a href="https://github.com/roland-adams2007" target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.7, textDecoration: "none", display: "flex", alignItems: "center", gap: 6, transition: "color .25s" }} onMouseEnter={e => e.currentTarget.style.color = "var(--rust)"} onMouseLeave={e => e.currentTarget.style.color = "var(--muted)"}>
@@ -808,7 +809,7 @@ export default function Homepage() {
                 <div style={{ maxWidth: 1152, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 420px), 1fr))", gap: 64, alignItems: "center" }}>
                     <RevealOnScroll>
                         <p className="section-num" style={{ marginBottom: 24 }}>04 — About Me</p>
-                        <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(26px, 4vw, 46px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-.02em", marginBottom: 24 }}>
+                        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(26px, 4vw, 46px)", fontWeight: 300, lineHeight: 1.15, letterSpacing: "-.02em", marginBottom: 24 }}>
                             Design is a conversation<br />between <em style={{ color: "var(--rust)" }}>intent</em> and form.
                         </h2>
                         <p style={{ fontSize: 13, lineHeight: 2, color: "var(--muted)", marginBottom: 16 }}>
@@ -829,7 +830,7 @@ export default function Homepage() {
                 <div style={{ maxWidth: 1152, margin: "0 auto" }}>
                     <RevealOnScroll>
                         <p className="section-num" style={{ marginBottom: 12 }}>05 — Experience</p>
-                        <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: "-.02em", marginBottom: 56 }}>
+                        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: "-.02em", marginBottom: 56 }}>
                             The road<br /><em>so far.</em>
                         </h2>
                     </RevealOnScroll>
@@ -855,7 +856,7 @@ export default function Homepage() {
                                         <div style={{ marginBottom: 8 }}>
                                             <span style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: exp.color }}>{exp.period}</span>
                                         </div>
-                                        <h3 style={{ fontFamily: "'Fraunces', serif", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{exp.title}</h3>
+                                        <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{exp.title}</h3>
                                         <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 12 }}>{exp.sub}</p>
                                         <p style={{ fontSize: 12, lineHeight: 1.9, color: "var(--muted)" }}>{exp.desc}</p>
                                         {exp.tags.length > 0 && (
@@ -877,7 +878,7 @@ export default function Homepage() {
                                         <Code2 size={18} color="var(--rust)" />
                                         <span style={{ fontSize: 10, color: "var(--muted)", letterSpacing: ".1em", textTransform: "uppercase" }}>Highlight</span>
                                     </div>
-                                    <div style={{ fontFamily: "'Fraunces', serif", fontSize: 36, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.02em", lineHeight: 1 }}>8+</div>
+                                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 36, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.02em", lineHeight: 1 }}>8+</div>
                                     <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6, lineHeight: 1.7 }}>Projects shipped across full-stack apps, SaaS platforms, real-time systems, and ticketing infrastructure.</p>
                                 </div>
                                 <div style={{ border: "1px solid var(--border)", borderRadius: 3, padding: 24, background: "var(--card)" }}>
@@ -885,7 +886,7 @@ export default function Homepage() {
                                         <Zap size={18} color="var(--gold)" />
                                         <span style={{ fontSize: 10, color: "var(--muted)", letterSpacing: ".1em", textTransform: "uppercase" }}>Philosophy</span>
                                     </div>
-                                    <p style={{ fontFamily: "'Fraunces', serif", fontSize: 17, fontStyle: "italic", fontWeight: 300, color: "var(--ink)", lineHeight: 1.6 }}>"I learn by shipping. Every project is a classroom."</p>
+                                    <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 17, fontStyle: "italic", fontWeight: 300, color: "var(--ink)", lineHeight: 1.6 }}>"I learn by shipping. Every project is a classroom."</p>
                                     <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 12 }}>— Adams Roland</p>
                                 </div>
                                 <TerminalCard />
@@ -899,7 +900,7 @@ export default function Homepage() {
                 <div style={{ maxWidth: 1152, margin: "0 auto" }}>
                     <RevealOnScroll>
                         <p className="section-num" style={{ marginBottom: 12 }}>06 — Expertise</p>
-                        <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: "-.02em", marginBottom: 48 }}>
+                        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(28px, 4vw, 50px)", fontWeight: 300, lineHeight: 1.1, letterSpacing: "-.02em", marginBottom: 48 }}>
                             What I bring<br />to the <em>table.</em>
                         </h2>
                     </RevealOnScroll>
@@ -941,7 +942,7 @@ export default function Homepage() {
                                 <div style={{ marginTop: 28, padding: 20, border: "1px solid var(--border)", borderRadius: 2, background: "var(--bg)" }}>
                                     <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                                         <Quote size={14} color="var(--rust)" style={{ flexShrink: 0, marginTop: 3 }} />
-                                        <p style={{ fontFamily: "'Fraunces', serif", fontSize: 14, fontStyle: "italic", fontWeight: 300, color: "var(--muted)", lineHeight: 1.8 }}>"Design is not just what it looks like. Design is how it works."</p>
+                                        <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 14, fontStyle: "italic", fontWeight: 300, color: "var(--muted)", lineHeight: 1.8 }}>"Design is not just what it looks like. Design is how it works."</p>
                                     </div>
                                     <p style={{ fontSize: 10, letterSpacing: ".1em", color: "var(--border)", marginTop: 10, textAlign: "right", textTransform: "uppercase" }}>— Steve Jobs</p>
                                 </div>
@@ -961,7 +962,7 @@ export default function Homepage() {
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "clamp(32px, 5vw, 64px)", alignItems: "flex-start", justifyContent: "space-between" }}>
                                 <div style={{ flex: "1 1 340px" }}>
                                     <p className="section-num" style={{ marginBottom: 20 }}>06 — Let's Talk</p>
-                                    <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 300, lineHeight: 1.05, letterSpacing: "-.025em", marginBottom: 16, color: "var(--ink)" }}>
+                                    <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 300, lineHeight: 1.05, letterSpacing: "-.025em", marginBottom: 16, color: "var(--ink)" }}>
                                         Let's Build<br /><em style={{ color: "var(--rust)" }}>Something</em>
                                     </h2>
                                     <p style={{ fontSize: 13, lineHeight: 1.9, color: "var(--muted)", maxWidth: 480, marginBottom: 32 }}>
@@ -1004,7 +1005,7 @@ export default function Homepage() {
 
             <footer style={{ padding: "32px", borderTop: "1px solid var(--border)" }}>
                 <div style={{ maxWidth: 1152, margin: "0 auto", display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center", justifyContent: "space-between", fontSize: 10, color: "var(--muted)", letterSpacing: ".09em", textTransform: "uppercase" }}>
-                    <span style={{ fontFamily: "'Fraunces', serif", fontSize: 16, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.01em", textTransform: "none" }}>Adams Roland</span>
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 16, fontWeight: 300, color: "var(--ink)", letterSpacing: "-.01em", textTransform: "none" }}>Adams Roland</span>
                     <SocialLinks size="30px" />
                     <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
                         <span>© 2026 — All rights reserved</span>
