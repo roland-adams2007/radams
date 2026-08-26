@@ -790,20 +790,24 @@ export default function Homepage() {
                 .footer-cta-left {
                     flex: 1;
                     border-right: 1px solid var(--border);
+                    min-width: 0;
                 }
                 .footer-cta-question {
                     font-family: 'Geist Mono', monospace;
                     font-weight: 700;
-                    font-size: clamp(15px, 2.6vw, 26px);
+                    font-size: clamp(13px, 2.6vw, 26px);
                     letter-spacing: .01em;
                     text-transform: uppercase;
                     color: var(--muted);
                     transition: color .4s;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .footer-cta:hover .footer-cta-question { color: var(--ink); }
                 .footer-cta-right {
                     flex: 0 0 auto;
-                    min-width: 200px;
+                    min-width: 140px;
                     justify-content: center;
                     gap: 8px;
                     background: var(--ink);
@@ -817,7 +821,7 @@ export default function Homepage() {
                 .footer-cta-answer {
                     font-family: 'Geist Mono', monospace;
                     font-weight: 700;
-                    font-size: clamp(15px, 2.6vw, 26px);
+                    font-size: clamp(13px, 2.6vw, 26px);
                     letter-spacing: .01em;
                     text-transform: uppercase;
                     white-space: nowrap;
@@ -828,9 +832,8 @@ export default function Homepage() {
                 }
                 .footer-cta:hover .footer-cta-right svg { transform: translate(3px, -3px); }
                 @media (max-width: 640px) {
-                    .footer-cta { flex-direction: column; }
-                    .footer-cta-left { border-right: none; border-bottom: 1px solid var(--border); padding: 22px 24px; }
-                    .footer-cta-right { padding: 22px 24px; min-width: 0; justify-content: flex-start; }
+                    .footer-cta-left { padding: 20px 16px; }
+                    .footer-cta-right { padding: 20px 16px; min-width: 0; }
                 }
                 .site-footer {
                     position: relative;
@@ -869,12 +872,17 @@ export default function Homepage() {
                     margin: 0;
                     white-space: nowrap;
                     color: transparent;
-                    background-image: linear-gradient(180deg, rgba(240,237,232,.14) 0%, rgba(240,237,232,.05) 45%, rgba(240,237,232,.015) 100%);
+                    background-image: linear-gradient(180deg, rgba(240,237,232,.32) 0%, rgba(240,237,232,.14) 50%, rgba(240,237,232,.04) 100%);
                     -webkit-background-clip: text;
                     background-clip: text;
-                    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 40%, rgba(0,0,0,.35) 72%, rgba(0,0,0,0) 100%);
-                    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 40%, rgba(0,0,0,.35) 72%, rgba(0,0,0,0) 100%);
+                    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.95) 55%, rgba(0,0,0,.5) 80%, rgba(0,0,0,.15) 100%);
+                    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.95) 55%, rgba(0,0,0,.5) 80%, rgba(0,0,0,.15) 100%);
                     transition: opacity .4s ease;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    -webkit-touch-callout: none;
                 }
                 .footer-name-link:hover .footer-name {
                     opacity: .82;
@@ -884,7 +892,13 @@ export default function Homepage() {
                 }
                 @media (max-width: 640px) {
                     .footer-inner { padding: 96px 20px 56px; }
-                    .footer-name { letter-spacing: -.03em !important; font-size: clamp(40px, 17vw, 96px); }
+                    .footer-name {
+                        letter-spacing: -.03em !important;
+                        font-size: clamp(40px, 17vw, 96px);
+                        background-image: linear-gradient(180deg, rgba(240,237,232,.6) 0%, rgba(240,237,232,.32) 50%, rgba(240,237,232,.1) 100%);
+                        -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,.65) 85%, rgba(0,0,0,.3) 100%);
+                        mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,.65) 85%, rgba(0,0,0,.3) 100%);
+                    }
                 }
             `}</style>
 
@@ -2303,7 +2317,13 @@ export default function Homepage() {
         <div className="footer-inner">
           <RevealOnScroll delay={0.08}>
             <a href="#" className="footer-name-link" aria-label="Back to top">
-              <h2 className="footer-name">Adams Roland</h2>
+              <h2
+                className="footer-name"
+                onCopy={(e) => e.preventDefault()}
+                onCut={(e) => e.preventDefault()}
+              >
+                Adams Roland
+              </h2>
             </a>
           </RevealOnScroll>
         </div>
