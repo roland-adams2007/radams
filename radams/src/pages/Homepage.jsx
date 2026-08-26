@@ -485,13 +485,17 @@ function ProjectShowcase({ project, index }) {
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(155deg, transparent 55%, var(--card) 130%)",
+          background:
+            "linear-gradient(155deg, transparent 55%, var(--card) 130%)",
         }}
       />
       <div style={{ position: "absolute", top: 16, left: 16 }}>
         <span
           className="tag"
-          style={{ color: project.tagColor, borderColor: project.tagColor + "55" }}
+          style={{
+            color: project.tagColor,
+            borderColor: project.tagColor + "55",
+          }}
         >
           {project.tag}
         </span>
@@ -511,7 +515,14 @@ function ProjectShowcase({ project, index }) {
 
   const textBlock = (
     <div>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 16,
+          marginBottom: 20,
+        }}
+      >
         <span
           style={{
             fontFamily: "'Instrument Serif', serif",
@@ -548,9 +559,21 @@ function ProjectShowcase({ project, index }) {
       >
         {project.desc}
       </p>
-      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 24,
+          flexWrap: "wrap",
+          alignItems: "center",
+        }}
+      >
         {project.github && (
-          <a href={project.github} target="_blank" rel="noreferrer" className="card-link-btn">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            className="card-link-btn"
+          >
             <GitHubIcon />
             <span>Code</span>
           </a>
@@ -597,7 +620,11 @@ function ProjectShowcase({ project, index }) {
         className="proj-row"
         style={{
           display: "grid",
-          gridTemplateColumns: isMobile ? "1fr" : reversed ? "1fr 1.05fr" : "1.05fr 1fr",
+          gridTemplateColumns: isMobile
+            ? "1fr"
+            : reversed
+              ? "1fr 1.05fr"
+              : "1.05fr 1fr",
           gap: "clamp(32px, 5vw, 80px)",
           alignItems: "center",
           padding: index === 0 ? "0 0 88px" : "88px 0",
@@ -624,7 +651,14 @@ function ProjectIndexRow({ project }) {
   const href = project.live || project.github;
   const content = (
     <>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 20, minWidth: 0 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "baseline",
+          gap: 20,
+          minWidth: 0,
+        }}
+      >
         <span
           style={{
             fontFamily: "'Geist Mono', monospace",
@@ -652,13 +686,22 @@ function ProjectIndexRow({ project }) {
         </h4>
         <span
           className="tag"
-          style={{ color: project.tagColor, borderColor: project.tagColor + "55", flexShrink: 0 }}
+          style={{
+            color: project.tagColor,
+            borderColor: project.tagColor + "55",
+            flexShrink: 0,
+          }}
         >
           {project.tag}
         </span>
       </div>
       {href ? (
-        <ArrowUpRight size={16} color="var(--muted)" className="proj-row-arrow" style={{ flexShrink: 0 }} />
+        <ArrowUpRight
+          size={16}
+          color="var(--muted)"
+          className="proj-row-arrow"
+          style={{ flexShrink: 0 }}
+        />
       ) : (
         <span
           style={{
@@ -686,7 +729,13 @@ function ProjectIndexRow({ project }) {
     color: "inherit",
   };
   return href ? (
-    <a href={href} target="_blank" rel="noreferrer" className="proj-index-list-row" style={rowStyle}>
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="proj-index-list-row"
+      style={rowStyle}
+    >
       {content}
     </a>
   ) : (
@@ -1419,7 +1468,6 @@ export default function Homepage() {
                     </g>
                   </svg>
                 </div>
-
               </div>
             </motion.div>
 
@@ -1500,7 +1548,14 @@ export default function Homepage() {
         </div>
       </section>
 
-      <section id="work" style={{ padding: "140px 32px 40px", position: "relative", overflow: "hidden" }}>
+      <section
+        id="work"
+        style={{
+          padding: "140px 32px 40px",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
         <div
           aria-hidden="true"
           style={{
@@ -1563,8 +1618,12 @@ export default function Homepage() {
                   transition: "color .25s",
                   flexShrink: 0,
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--rust)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.color = "var(--rust)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.color = "var(--muted)")
+                }
               >
                 <GitHubIcon /> All repositories <ArrowUpRight size={12} />
               </a>
@@ -1635,7 +1694,9 @@ export default function Homepage() {
             >
               Most developers pick a layer.
               <br />
-              <em style={{ color: "var(--rust)" }}>Adams builds the whole stack.</em>
+              <em style={{ color: "var(--rust)" }}>
+                Adams builds the whole stack.
+              </em>
             </h2>
           </RevealOnScroll>
 
@@ -1674,8 +1735,8 @@ export default function Homepage() {
                   }}
                 >
                   He also writes and manages content for an ed-tech platform,
-                  which means he's spent about as much time explaining
-                  technical work clearly as he has doing it.
+                  which means he's spent about as much time explaining technical
+                  work clearly as he has doing it.
                 </p>
 
                 <div
@@ -1734,7 +1795,8 @@ export default function Homepage() {
                   },
                   {
                     num: "01",
-                    label: "Person across the entire stack — frontend, backend, deploy",
+                    label:
+                      "Person across the entire stack — frontend, backend, deploy",
                   },
                   {
                     num: "04",
@@ -1847,7 +1909,13 @@ export default function Homepage() {
                 >
                   8+
                 </span>
-                <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.7 }}>
+                <p
+                  style={{
+                    fontSize: 12,
+                    color: "var(--muted)",
+                    lineHeight: 1.7,
+                  }}
+                >
                   Projects shipped across full-stack apps, SaaS platforms,
                   real-time systems, and ticketing infrastructure.
                 </p>
@@ -2042,7 +2110,8 @@ export default function Homepage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
               gap: 48,
               marginBottom: 64,
             }}
@@ -2121,8 +2190,17 @@ export default function Homepage() {
             {
               num: "03",
               label: "Tools",
-              capability: "The workflow that keeps solo builds from falling apart.",
-              items: ["Git & GitHub", "Docker", "CI/CD Pipeline", "VS Code", "npm", "XAMPP", "Postman"],
+              capability:
+                "The workflow that keeps solo builds from falling apart.",
+              items: [
+                "Git & GitHub",
+                "Docker",
+                "CI/CD Pipeline",
+                "VS Code",
+                "npm",
+                "XAMPP",
+                "Postman",
+              ],
             },
           ].map((cat, i) => (
             <RevealOnScroll key={cat.label} delay={0.1 + i * 0.05}>
@@ -2178,7 +2256,14 @@ export default function Homepage() {
                 >
                   {cat.capability}
                 </h3>
-                <p style={{ fontSize: 13, lineHeight: 2.1, color: "var(--muted)", maxWidth: 640 }}>
+                <p
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 2.1,
+                    color: "var(--muted)",
+                    maxWidth: 640,
+                  }}
+                >
                   {cat.items.map((t, idx) => (
                     <span key={t}>
                       <span style={{ color: "var(--ink)" }}>{t}</span>
@@ -2235,7 +2320,11 @@ export default function Homepage() {
           <RevealOnScroll>
             <p
               className="section-num"
-              style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}
+              style={{
+                marginBottom: 24,
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
               05 — Let's Talk
             </p>
@@ -2269,17 +2358,42 @@ export default function Homepage() {
           </RevealOnScroll>
 
           <RevealOnScroll delay={0.1}>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 48 }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: 48,
+              }}
+            >
               <CopyEmail />
             </div>
           </RevealOnScroll>
 
           <RevealOnScroll delay={0.2}>
-            <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 12,
+                flexWrap: "wrap",
+              }}
+            >
               {[
-                { label: "Twitter", href: "https://x.com/R_coredev", Icon: XIcon },
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/roland-adams-045965315", Icon: LinkedInIcon },
-                { label: "GitHub", href: "https://github.com/roland-adams2007", Icon: GitHubIcon },
+                {
+                  label: "Twitter",
+                  href: "https://x.com/R_coredev",
+                  Icon: XIcon,
+                },
+                {
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/in/roland-adams-045965315",
+                  Icon: LinkedInIcon,
+                },
+                {
+                  label: "GitHub",
+                  href: "https://github.com/roland-adams2007",
+                  Icon: GitHubIcon,
+                },
                 { label: "TikTok", href: "#", Icon: TikTokIcon },
                 { label: "Instagram", href: "#", Icon: InstagramIcon },
               ].map((item) => (
@@ -2316,15 +2430,13 @@ export default function Homepage() {
 
         <div className="footer-inner">
           <RevealOnScroll delay={0.08}>
-            <a href="#" className="footer-name-link" aria-label="Back to top">
-              <h2
-                className="footer-name"
-                onCopy={(e) => e.preventDefault()}
-                onCut={(e) => e.preventDefault()}
-              >
-                Adams Roland
-              </h2>
-            </a>
+            <h2
+              className="footer-name"
+              onCopy={(e) => e.preventDefault()}
+              onCut={(e) => e.preventDefault()}
+            >
+              Adams Roland
+            </h2>
           </RevealOnScroll>
         </div>
       </footer>
