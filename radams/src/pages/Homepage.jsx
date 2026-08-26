@@ -1,18 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 import {
   ArrowDown,
   ArrowUpRight,
   Download,
   Mail,
   Clock,
-  PenTool,
-  Code2,
-  Layers,
-  Quote,
-  Zap,
   X,
-  Terminal,
   ExternalLink,
   Copy,
   Check,
@@ -34,6 +29,18 @@ const XIcon = () => (
 const LinkedInIcon = () => (
   <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+  </svg>
+);
+
+const TikTokIcon = () => (
+  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0115.54 3h-3.09v12.4a2.592 2.592 0 01-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 004.3 1.38V7.3s-1.88.09-3.24-1.48z" />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.15-3.23 1.67-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07c-4.35.2-6.78 2.62-6.98 6.98C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 110-8 4 4 0 010 8zm6.41-10.85a1.44 1.44 0 11-1.44-1.44 1.44 1.44 0 011.44 1.44z" />
   </svg>
 );
 
@@ -198,834 +205,6 @@ function useIsMobile() {
   return mobile;
 }
 
-function MobileSwipeDeck() {
-  const [deck, setDeck] = useState(allProjects);
-  const [isDragging, setIsDragging] = useState(false);
-  const [throwDir, setThrowDir] = useState(null);
-  const wrapperRef = useRef(null);
-  const [cardWidth, setCardWidth] = useState(320);
-
-  useEffect(() => {
-    const measure = () => {
-      if (wrapperRef.current) {
-        setCardWidth(wrapperRef.current.offsetWidth);
-      }
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  const throwCard = (dir = 1) => {
-    if (throwDir !== null) return;
-    setThrowDir(dir);
-    setTimeout(() => {
-      setDeck((prev) => {
-        const next = [...prev];
-        const top = next.shift();
-        next.push(top);
-        return next;
-      });
-      setThrowDir(null);
-    }, 340);
-  };
-
-  const visibleCount = Math.min(deck.length, 4);
-  const activeIndex = allProjects.findIndex((p) => p.id === deck[0].id);
-
-  return (
-    <div style={{ width: "100%" }}>
-      <div
-        ref={wrapperRef}
-        style={{ position: "relative", width: "100%", height: 420 }}
-      >
-        {deck.slice(0, visibleCount).map((project, i) => {
-          const isTop = i === 0;
-          const stackIndex = visibleCount - 1 - i;
-          const offsetY = stackIndex * -9;
-          const offsetX = stackIndex * 5;
-          const rotation =
-            stackIndex % 2 === 0 ? stackIndex * 1.6 : -(stackIndex * 1.6);
-          const scale = 1 - stackIndex * 0.032;
-          const brightness = isTop ? 1 : Math.max(0.35, 1 - stackIndex * 0.22);
-
-          return (
-            <motion.div
-              key={project.id}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                zIndex: visibleCount - i,
-                borderRadius: 4,
-                overflow: "hidden",
-                border: isTop ? "1px solid #303030" : "1px solid var(--border)",
-                background: "var(--card)",
-                cursor: isTop ? (isDragging ? "grabbing" : "grab") : "default",
-                transformOrigin: "bottom center",
-                filter: `brightness(${brightness})`,
-                boxShadow: isTop ? "0 8px 40px rgba(0,0,0,0.55)" : "none",
-              }}
-              animate={
-                isTop && throwDir !== null
-                  ? {
-                      x: throwDir * (cardWidth + 100),
-                      rotate: throwDir * 28,
-                      opacity: 0,
-                      scale: 0.88,
-                    }
-                  : {
-                      y: offsetY,
-                      x: offsetX,
-                      rotate: rotation,
-                      scale,
-                      opacity: 1,
-                    }
-              }
-              transition={
-                isTop && throwDir !== null
-                  ? { duration: 0.34, ease: [0.23, 1, 0.32, 1] }
-                  : { type: "spring", stiffness: 260, damping: 28 }
-              }
-              drag={isTop ? "x" : false}
-              dragConstraints={{ left: -10, right: 10 }}
-              dragElastic={0.65}
-              onDragStart={() => setIsDragging(true)}
-              onDragEnd={(_, info) => {
-                setIsDragging(false);
-                if (info.offset.x > 70 || info.velocity.x > 350) throwCard(1);
-                else if (info.offset.x < -70 || info.velocity.x < -350)
-                  throwCard(-1);
-              }}
-            >
-              <div
-                style={{
-                  height: "50%",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                <img
-                  src={project.img}
-                  alt={project.title}
-                  draggable={false}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    opacity: isTop ? 0.65 : 0.5,
-                    userSelect: "none",
-                    transition: "opacity .3s",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      "linear-gradient(to bottom, transparent 20%, var(--card) 100%)",
-                  }}
-                />
-                <div style={{ position: "absolute", top: 14, left: 14 }}>
-                  <span
-                    className="tag"
-                    style={{
-                      color: project.tagColor,
-                      borderColor: project.tagColor + "55",
-                    }}
-                  >
-                    {project.tag}
-                  </span>
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 14,
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: 32,
-                    fontWeight: 100,
-                    color: "#ffffff07",
-                    letterSpacing: "-.05em",
-                  }}
-                >
-                  {project.id}
-                </div>
-              </div>
-              <div style={{ padding: "14px 20px 18px" }}>
-                <h3
-                  style={{
-                    fontFamily: "'Instrument Serif', serif",
-                    fontSize: 22,
-                    fontWeight: 300,
-                    color: "var(--ink)",
-                    marginBottom: 8,
-                    letterSpacing: "-.01em",
-                  }}
-                >
-                  {project.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: 11,
-                    color: "var(--muted)",
-                    lineHeight: 1.75,
-                    marginBottom: 14,
-                  }}
-                >
-                  {project.desc}
-                </p>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="card-link-btn"
-                    >
-                      <GitHubIcon />
-                      <span>Code</span>
-                    </a>
-                  )}
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="card-link-btn card-link-btn-live"
-                    >
-                      <ExternalLink size={12} />
-                      <span>Live</span>
-                    </a>
-                  )}
-                  {!project.github && !project.live && (
-                    <span
-                      style={{
-                        fontSize: 9,
-                        letterSpacing: ".12em",
-                        textTransform: "uppercase",
-                        color: "var(--border)",
-                        fontFamily: "'Geist Mono', monospace",
-                      }}
-                    >
-                      Private repo
-                    </span>
-                  )}
-                </div>
-              </div>
-              {isTop && (
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: 3,
-                    background:
-                      "linear-gradient(90deg, var(--rust), var(--gold))",
-                  }}
-                />
-              )}
-            </motion.div>
-          );
-        })}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-          flexDirection: "column",
-          marginTop: 28,
-        }}
-      >
-        <div style={{ display: "flex", gap: 6 }}>
-          {allProjects.map((_, i) => (
-            <div
-              key={i}
-              style={{
-                width: i === activeIndex ? 20 : 6,
-                height: 6,
-                borderRadius: 3,
-                background: i === activeIndex ? "var(--rust)" : "var(--border)",
-                transition: "all .35s ease",
-              }}
-            />
-          ))}
-        </div>
-        <span
-          style={{
-            fontSize: 10,
-            color: "var(--muted)",
-            letterSpacing: ".12em",
-            textTransform: "uppercase",
-          }}
-        >
-          Swipe to browse — {deck[0].id} /{" "}
-          {String(allProjects.length).padStart(2, "0")}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function DesktopScrollRail() {
-  const railRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragStart = useRef({ x: 0, scrollLeft: 0 });
-
-  const onMouseDown = (e) => {
-    setIsDragging(false);
-    dragStart.current = {
-      x: e.pageX,
-      scrollLeft: railRef.current.scrollLeft,
-      moved: false,
-    };
-    const onMove = (ev) => {
-      const dx = ev.pageX - dragStart.current.x;
-      if (Math.abs(dx) > 4) {
-        setIsDragging(true);
-        dragStart.current.moved = true;
-      }
-      railRef.current.scrollLeft = dragStart.current.scrollLeft - dx;
-    };
-    const onUp = () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onUp);
-      setTimeout(() => setIsDragging(false), 50);
-    };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onUp);
-  };
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const onScroll = () => {
-      const cardW = rail.offsetWidth * 0.72 + 24;
-      setActiveIndex(Math.round(rail.scrollLeft / cardW));
-    };
-    rail.addEventListener("scroll", onScroll, { passive: true });
-    return () => rail.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const scrollTo = (idx) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const cardW = rail.offsetWidth * 0.72 + 24;
-    rail.scrollTo({ left: idx * cardW, behavior: "smooth" });
-  };
-
-  return (
-    <div style={{ width: "100%" }}>
-      <div
-        ref={railRef}
-        className="desktop-rail"
-        onMouseDown={onMouseDown}
-        style={{ cursor: isDragging ? "grabbing" : "grab" }}
-      >
-        {allProjects.map((project, i) => (
-          <div key={project.id} className="desktop-rail-card">
-            <div
-              style={{
-                height: "52%",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src={project.img}
-                alt={project.title}
-                draggable={false}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  opacity: 0.6,
-                  userSelect: "none",
-                  transition: "opacity .4s",
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(to bottom, transparent 20%, var(--card) 100%)",
-                }}
-              />
-              <div style={{ position: "absolute", top: 18, left: 18 }}>
-                <span
-                  className="tag"
-                  style={{
-                    color: project.tagColor,
-                    borderColor: project.tagColor + "55",
-                  }}
-                >
-                  {project.tag}
-                </span>
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 14,
-                  right: 18,
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: 42,
-                  fontWeight: 100,
-                  color: "#ffffff06",
-                  letterSpacing: "-.05em",
-                }}
-              >
-                {project.id}
-              </div>
-            </div>
-            <div style={{ padding: "20px 28px 24px" }}>
-              <h3
-                style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: 26,
-                  fontWeight: 300,
-                  color: "var(--ink)",
-                  marginBottom: 10,
-                  letterSpacing: "-.01em",
-                }}
-              >
-                {project.title}
-              </h3>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "var(--muted)",
-                  lineHeight: 1.8,
-                  marginBottom: 18,
-                }}
-              >
-                {project.desc}
-              </p>
-              <div style={{ display: "flex", gap: 8 }}>
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="card-link-btn"
-                  >
-                    <GitHubIcon />
-                    <span>Code</span>
-                  </a>
-                )}
-                {project.live && (
-                  <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="card-link-btn card-link-btn-live"
-                  >
-                    <ExternalLink size={12} />
-                    <span>Live</span>
-                  </a>
-                )}
-                {!project.github && !project.live && (
-                  <span
-                    style={{
-                      fontSize: 9,
-                      letterSpacing: ".12em",
-                      textTransform: "uppercase",
-                      color: "var(--border)",
-                      fontFamily: "'Geist Mono', monospace",
-                    }}
-                  >
-                    Private repo
-                  </span>
-                )}
-              </div>
-            </div>
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 3,
-                background: "linear-gradient(90deg, var(--rust), var(--gold))",
-                opacity: i === activeIndex ? 1 : 0,
-                transition: "opacity .35s",
-              }}
-            />
-          </div>
-        ))}
-        <div style={{ minWidth: 32, flexShrink: 0 }} />
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 20,
-          marginTop: 32,
-        }}
-      >
-        <div style={{ display: "flex", gap: 6 }}>
-          {allProjects.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              style={{
-                width: i === activeIndex ? 20 : 6,
-                height: 6,
-                borderRadius: 3,
-                background: i === activeIndex ? "var(--rust)" : "var(--border)",
-                transition: "all .35s ease",
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-              }}
-            />
-          ))}
-        </div>
-        <span
-          style={{
-            fontSize: 10,
-            color: "var(--muted)",
-            letterSpacing: ".12em",
-            textTransform: "uppercase",
-          }}
-        >
-          Drag to browse — {String(activeIndex + 1).padStart(2, "0")} /{" "}
-          {String(allProjects.length).padStart(2, "0")}
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function CardDeck() {
-  const isMobile = useIsMobile();
-  return isMobile ? <MobileSwipeDeck /> : <DesktopScrollRail />;
-}
-
-function OrbitVisual() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: false, margin: "-80px" });
-
-  const stackLabels = [
-    { label: "React", angle: 180, radius: 130 },
-    { label: "Laravel", angle: 0, radius: 130 },
-    { label: "PHP", angle: 270, radius: 110 },
-    { label: "MySQL", angle: 90, radius: 110 },
-    { label: "WordPress", angle: 225, radius: 148 },
-  ];
-
-  const [angle, setAngle] = useState(0);
-  const rafRef = useRef(null);
-
-  useEffect(() => {
-    if (!inView) return;
-    let start = null;
-    const tick = (ts) => {
-      if (!start) start = ts;
-      const elapsed = ts - start;
-      setAngle((elapsed / 1000) * 18);
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [inView]);
-
-  return (
-    <div ref={ref} className="about-visual">
-      <div className="about-grid-lines" />
-      <svg
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          overflow: "visible",
-        }}
-        viewBox="0 0 460 400"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <defs>
-          <radialGradient id="orbGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#888888" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#888888" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <circle
-          cx="230"
-          cy="200"
-          r="55"
-          fill="none"
-          stroke="#88888822"
-          strokeWidth="1"
-        />
-        <circle
-          cx="230"
-          cy="200"
-          r="110"
-          fill="none"
-          stroke="#25252044"
-          strokeWidth="1"
-          strokeDasharray="4 6"
-        />
-        <circle
-          cx="230"
-          cy="200"
-          r="148"
-          fill="none"
-          stroke="#25252028"
-          strokeWidth="1"
-        />
-        <motion.circle
-          cx="230"
-          cy="200"
-          r="55"
-          fill="none"
-          stroke="#88888855"
-          strokeWidth="1.5"
-          strokeDasharray="20 180"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "230px 200px" }}
-        />
-        <motion.circle
-          cx="230"
-          cy="200"
-          r="110"
-          fill="none"
-          stroke="#99999933"
-          strokeWidth="1"
-          strokeDasharray="12 80"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "230px 200px" }}
-        />
-        <motion.circle
-          cx="230"
-          cy="200"
-          r="148"
-          fill="none"
-          stroke="#99999922"
-          strokeWidth="1"
-          strokeDasharray="8 60"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "230px 200px" }}
-        />
-        {stackLabels.map(({ label, angle: baseAngle, radius }) => {
-          const totalAngle = ((baseAngle + angle) * Math.PI) / 180;
-          const x = 230 + Math.cos(totalAngle) * radius;
-          const y = 200 + Math.sin(totalAngle) * radius;
-          const labelWidth = label === "WordPress" ? 70 : 56;
-          return (
-            <g key={label}>
-              <line
-                x1="230"
-                y1="200"
-                x2={x}
-                y2={y}
-                stroke="#88888818"
-                strokeWidth="1"
-              />
-              <circle cx={x} cy={y} r="3" fill="#88888866" />
-              <rect
-                x={x - labelWidth / 2}
-                y={y - 12}
-                width={labelWidth}
-                height="22"
-                rx="11"
-                fill="#0D0D0D"
-                stroke="#252525"
-                strokeWidth="1"
-              />
-              <text
-                x={x}
-                y={y + 4}
-                textAnchor="middle"
-                fill="#9A9A9A"
-                fontSize="9"
-                fontFamily="'Geist Mono', monospace"
-                letterSpacing="1.5"
-                style={{ textTransform: "uppercase" }}
-              >
-                {label.toUpperCase()}
-              </text>
-            </g>
-          );
-        })}
-        <circle cx="230" cy="200" r="28" fill="url(#orbGlow)" />
-        <motion.circle
-          cx="230"
-          cy="200"
-          r="6"
-          fill="#888888"
-          animate={{ r: [6, 8, 6], opacity: [1, 0.6, 1] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <circle
-          cx="230"
-          cy="200"
-          r="14"
-          fill="none"
-          stroke="#88888840"
-          strokeWidth="1"
-        />
-        <motion.circle
-          cx={230 + 55}
-          cy={200}
-          r="3"
-          fill="#999999"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          style={{ transformOrigin: "230px 200px" }}
-        />
-      </svg>
-      <div className="about-stat-chip" style={{ top: "10%", left: "6%" }}>
-        <span
-          style={{
-            fontSize: 26,
-            fontFamily: "'Instrument Serif', serif",
-            fontWeight: 300,
-            color: "var(--ink)",
-            lineHeight: 1,
-          }}
-        >
-          8+
-        </span>
-        <span
-          style={{
-            fontSize: 9,
-            letterSpacing: ".1em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginTop: 2,
-          }}
-        >
-          Projects
-        </span>
-      </div>
-      <div className="about-stat-chip" style={{ top: "10%", right: "6%" }}>
-        <span
-          style={{
-            fontSize: 26,
-            fontFamily: "'Instrument Serif', serif",
-            fontWeight: 300,
-            color: "var(--ink)",
-            lineHeight: 1,
-          }}
-        >
-          2yr+
-        </span>
-        <span
-          style={{
-            fontSize: 9,
-            letterSpacing: ".1em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginTop: 2,
-          }}
-        >
-          Experience
-        </span>
-      </div>
-      <div
-        className="about-stat-chip"
-        style={{ bottom: "10%", left: "50%", transform: "translateX(-50%)" }}
-      >
-        <span
-          style={{
-            fontSize: 9,
-            letterSpacing: ".1em",
-            textTransform: "uppercase",
-            color: "#5A8A5A",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-          }}
-        >
-          <span className="avail-dot" />
-          Open to work
-        </span>
-      </div>
-    </div>
-  );
-}
-
-function TerminalCard() {
-  const lines = [
-    { cmd: "whoami", out: "Adams Roland — Full-Stack Developer" },
-    { cmd: "status", out: "✓ Available for new projects" },
-    { cmd: "response_time", out: "< 24 hours" },
-    { cmd: "preferred_stack", out: "React · Laravel · PHP · MySQL · WordPress" },
-  ];
-  const [visible, setVisible] = useState(0);
-  useEffect(() => {
-    if (visible >= lines.length) return;
-    const t = setTimeout(() => setVisible((v) => v + 1), 600 + visible * 180);
-    return () => clearTimeout(t);
-  }, [visible]);
-  return (
-    <div className="terminal-card">
-      <div className="terminal-header">
-        <span className="t-dot" style={{ background: "#FF5F56" }} />
-        <span className="t-dot" style={{ background: "#FFBD2E" }} />
-        <span className="t-dot" style={{ background: "#27C93F" }} />
-        <span
-          style={{
-            fontSize: 10,
-            color: "var(--muted)",
-            marginLeft: 8,
-            letterSpacing: ".1em",
-          }}
-        >
-          adamsroland — zsh
-        </span>
-      </div>
-      <div className="terminal-body">
-        {lines.slice(0, visible).map((line, i) => (
-          <div key={i} style={{ marginBottom: 10 }}>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <span style={{ color: "var(--rust)", fontSize: 11 }}>❯</span>
-              <span
-                style={{
-                  color: "#7B8EC4",
-                  fontSize: 11,
-                  fontFamily: "'Geist Mono', monospace",
-                }}
-              >
-                {line.cmd}
-              </span>
-            </div>
-            <div
-              style={{
-                marginLeft: 20,
-                fontSize: 11,
-                color: "var(--ink)",
-                fontFamily: "'Geist Mono', monospace",
-                lineHeight: 1.8,
-              }}
-            >
-              {line.out}
-            </div>
-          </div>
-        ))}
-        {visible < lines.length && (
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <span style={{ color: "var(--rust)", fontSize: 11 }}>❯</span>
-            <span className="cursor-blink" />
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function CopyEmail() {
   const [copied, setCopied] = useState(false);
   const email = "adamsrolly7@gmail.com";
@@ -1050,11 +229,505 @@ function CopyEmail() {
   );
 }
 
+function WaveTimelineCard({ item }) {
+  return (
+    <>
+      <p
+        style={{
+          fontSize: 9,
+          letterSpacing: ".06em",
+          textTransform: "uppercase",
+          color: item.color,
+          marginBottom: 4,
+          whiteSpace: "nowrap",
+        }}
+      >
+        {item.period}
+      </p>
+      <h3
+        style={{
+          fontSize: 12,
+          fontWeight: 600,
+          color: "var(--ink)",
+          marginBottom: 1,
+          lineHeight: 1.2,
+        }}
+      >
+        {item.title}
+      </h3>
+      <p
+        style={{
+          fontSize: 10,
+          color: "var(--muted)",
+          marginBottom: 6,
+        }}
+      >
+        {item.sub}
+      </p>
+      <p
+        style={{
+          fontSize: 10,
+          lineHeight: 1.45,
+          color: "var(--ink)",
+          opacity: 0.7,
+          marginBottom: item.tags && item.tags.length ? 8 : 0,
+          display: "-webkit-box",
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+        }}
+      >
+        {item.desc}
+      </p>
+      {item.tags && item.tags.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+          {item.tags.slice(0, 3).map((tag, t) => (
+            <span
+              key={t}
+              style={{
+                fontSize: 9,
+                padding: "2px 6px",
+                borderRadius: 3,
+                border: "1px solid var(--border)",
+                background: "var(--bg2)",
+                color: "var(--muted)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+function WaveTimeline({ items = [] }) {
+  const isMobile = useIsMobile();
+
+  // ---- Mobile: simple vertical stack (a wave doesn't read well in a narrow column) ----
+  if (isMobile) {
+    return (
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
+            position: "absolute",
+            left: 5,
+            top: 6,
+            bottom: 6,
+            width: 1,
+            background:
+              "linear-gradient(to bottom, var(--border), var(--border) 85%, transparent)",
+          }}
+        />
+        <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
+          {items.map((item, i) => (
+            <div key={i} style={{ position: "relative", paddingLeft: 28 }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: 6,
+                  width: 12,
+                  height: 12,
+                  borderRadius: "50%",
+                  background: item.active ? item.color : "var(--bg2)",
+                  border: `1px solid ${item.color}`,
+                  boxShadow: item.active ? `0 0 0 3px ${item.color}22` : "none",
+                }}
+              />
+              <WaveTimelineCard item={item} />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ---- Desktop: an actual horizontal sine wave, fixed height, scrolls only sideways ----
+  const n = items.length;
+  const colWidth = 230; // horizontal space per item
+  const width = Math.max(colWidth * n, 800);
+  const amp = 36; // wave amplitude (how far up/down it swings)
+  const cardWidth = colWidth - 30;
+  const cardHeight = 168; // fixed card height so layout never shifts
+  const cardGap = 22; // gap between dot and card
+
+  const topHalfHeight = amp + cardGap + cardHeight; // space above the midline
+  const bottomHalfHeight = amp + cardGap + cardHeight; // space below the midline
+  const containerHeight = topHalfHeight + bottomHalfHeight;
+  const midY = topHalfHeight; // midline sits right at the boundary
+
+  // x position for item i (centered within its column)
+  const xAt = (i) => colWidth * i + colWidth / 2;
+  // y position on the sine curve for item i — alternates up/down
+  const yAt = (i) => midY + (i % 2 === 0 ? -amp : amp);
+
+  // Build a smooth cubic-bezier path through all the points
+  const points = items.map((_, i) => ({ x: xAt(i), y: yAt(i) }));
+  let path = points.length ? `M ${points[0].x} ${points[0].y}` : "";
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[i];
+    const p1 = points[i + 1];
+    const midX = (p0.x + p1.x) / 2;
+    path += ` C ${midX} ${p0.y}, ${midX} ${p1.y}, ${p1.x} ${p1.y}`;
+  }
+
+  return (
+    <div
+      style={{
+        overflowX: "auto",
+        overflowY: "hidden",
+        height: containerHeight + 8,
+      }}
+    >
+      <div style={{ position: "relative", width, height: containerHeight }}>
+        <svg
+          width={width}
+          height={containerHeight}
+          viewBox={`0 0 ${width} ${containerHeight}`}
+          style={{ position: "absolute", top: 0, left: 0 }}
+        >
+          <path d={path} fill="none" stroke="var(--border)" strokeWidth="1.5" />
+        </svg>
+
+        {items.map((item, i) => {
+          const x = xAt(i);
+          const y = yAt(i);
+          const isPeak = i % 2 === 0; // peak = above the line, trough = below
+
+          return (
+            <div key={i}>
+              {/* dot on the wave */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: x,
+                  top: y,
+                  width: 12,
+                  height: 12,
+                  marginLeft: -6,
+                  marginTop: -6,
+                  borderRadius: "50%",
+                  background: item.active ? item.color : "var(--bg2)",
+                  border: `1px solid ${item.color}`,
+                  boxShadow: item.active ? `0 0 0 4px ${item.color}22` : "none",
+                  zIndex: 2,
+                }}
+              />
+              {/* connector stub from dot to card */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: x,
+                  top: isPeak ? y - cardGap : y + 6,
+                  width: 1,
+                  height: cardGap - 6,
+                  background: "var(--border)",
+                }}
+              />
+              {/* card, positioned above (peak) or below (trough) the dot */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: x,
+                  top: isPeak ? y - cardGap : y + cardGap,
+                  transform: isPeak
+                    ? "translate(-50%, -100%)"
+                    : "translate(-50%, 0)",
+                  width: cardWidth,
+                  height: cardHeight,
+                  border: "1px solid var(--border)",
+                  borderRadius: 3,
+                  background: "var(--card)",
+                  padding: 14,
+                  overflow: "hidden",
+                  boxSizing: "border-box",
+                }}
+              >
+                <WaveTimelineCard item={item} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function ProjectShowcase({ project, index }) {
+  const isMobile = useIsMobile();
+  const reversed = !isMobile && index % 2 === 1;
+
+  const imageBlock = (
+    <div
+      className="proj-row-img"
+      style={{
+        position: "relative",
+        aspectRatio: "4 / 3",
+        borderRadius: 4,
+        overflow: "hidden",
+        border: "1px solid var(--border)",
+        background: "var(--card)",
+      }}
+    >
+      <img
+        src={project.img}
+        alt={project.title}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          filter: "grayscale(100%) brightness(0.55) contrast(1.15)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(155deg, transparent 55%, var(--card) 130%)",
+        }}
+      />
+      <div style={{ position: "absolute", top: 16, left: 16 }}>
+        <span
+          className="tag"
+          style={{ color: project.tagColor, borderColor: project.tagColor + "55" }}
+        >
+          {project.tag}
+        </span>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          background: "linear-gradient(90deg, var(--rust), var(--gold))",
+        }}
+      />
+    </div>
+  );
+
+  const textBlock = (
+    <div>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 16, marginBottom: 20 }}>
+        <span
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 20,
+            fontWeight: 300,
+            color: "var(--border)",
+          }}
+        >
+          {project.id}
+        </span>
+        <span style={{ height: 1, flex: 1, background: "var(--border)" }} />
+      </div>
+      <h3
+        style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontSize: "clamp(28px, 4vw, 44px)",
+          fontWeight: 300,
+          letterSpacing: "-.02em",
+          lineHeight: 1.08,
+          marginBottom: 18,
+          color: "var(--ink)",
+        }}
+      >
+        {project.title}
+      </h3>
+      <p
+        style={{
+          fontSize: 13,
+          lineHeight: 1.9,
+          color: "var(--muted)",
+          marginBottom: 32,
+          maxWidth: 440,
+        }}
+      >
+        {project.desc}
+      </p>
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "center" }}>
+        {project.github && (
+          <a href={project.github} target="_blank" rel="noreferrer" className="card-link-btn">
+            <GitHubIcon />
+            <span>Code</span>
+          </a>
+        )}
+        {project.live && (
+          <a
+            href={project.live}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              fontSize: 12,
+              letterSpacing: ".06em",
+              color: "var(--ink)",
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <span>View project</span>
+            <ArrowUpRight size={14} className="proj-row-arrow" />
+          </a>
+        )}
+        {!project.github && !project.live && (
+          <span
+            style={{
+              fontSize: 10,
+              letterSpacing: ".12em",
+              textTransform: "uppercase",
+              color: "var(--border)",
+              fontFamily: "'Geist Mono', monospace",
+            }}
+          >
+            Private repo
+          </span>
+        )}
+      </div>
+    </div>
+  );
+
+  return (
+    <RevealOnScroll delay={0.05}>
+      <div
+        className="proj-row"
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : reversed ? "1fr 1.05fr" : "1.05fr 1fr",
+          gap: "clamp(32px, 5vw, 80px)",
+          alignItems: "center",
+          padding: index === 0 ? "0 0 88px" : "88px 0",
+          borderTop: index === 0 ? "none" : "1px solid var(--border)",
+        }}
+      >
+        {reversed ? (
+          <>
+            {textBlock}
+            {imageBlock}
+          </>
+        ) : (
+          <>
+            {imageBlock}
+            {textBlock}
+          </>
+        )}
+      </div>
+    </RevealOnScroll>
+  );
+}
+
+function ProjectIndexRow({ project }) {
+  const href = project.live || project.github;
+  const content = (
+    <>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 20, minWidth: 0 }}>
+        <span
+          style={{
+            fontFamily: "'Geist Mono', monospace",
+            fontSize: 11,
+            color: "var(--border)",
+            flexShrink: 0,
+          }}
+        >
+          {project.id}
+        </span>
+        <h4
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(18px, 2.4vw, 26px)",
+            fontWeight: 300,
+            color: "var(--ink)",
+            letterSpacing: "-.01em",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            transition: "color .25s",
+          }}
+        >
+          {project.title}
+        </h4>
+        <span
+          className="tag"
+          style={{ color: project.tagColor, borderColor: project.tagColor + "55", flexShrink: 0 }}
+        >
+          {project.tag}
+        </span>
+      </div>
+      {href ? (
+        <ArrowUpRight size={16} color="var(--muted)" className="proj-row-arrow" style={{ flexShrink: 0 }} />
+      ) : (
+        <span
+          style={{
+            fontSize: 9,
+            letterSpacing: ".1em",
+            textTransform: "uppercase",
+            color: "var(--border)",
+            fontFamily: "'Geist Mono', monospace",
+            flexShrink: 0,
+          }}
+        >
+          Private
+        </span>
+      )}
+    </>
+  );
+  const rowStyle = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 16,
+    padding: "22px 4px",
+    borderBottom: "1px solid var(--border)",
+    textDecoration: "none",
+    color: "inherit",
+  };
+  return href ? (
+    <a href={href} target="_blank" rel="noreferrer" className="proj-index-list-row" style={rowStyle}>
+      {content}
+    </a>
+  ) : (
+    <div className="proj-index-list-row" style={rowStyle}>
+      {content}
+    </div>
+  );
+}
+
 export default function Homepage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const lenisRef = useRef(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    lenisRef.current = lenis;
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (menuOpen) {
+      lenisRef.current?.stop();
+    } else {
+      lenisRef.current?.start();
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -1078,6 +751,140 @@ export default function Homepage() {
                     .hero-split { padding-left: 24px !important; padding-right: 24px !important; }
                     .hero-split > div { grid-template-columns: 1fr !important; }
                     .hero-image-col { display: none !important; }
+                    .about-grid { grid-template-columns: 1fr !important; }
+                }
+                .proj-row-img img { transition: transform .7s cubic-bezier(.23,1,.32,1); }
+                .proj-row:hover .proj-row-img img { transform: scale(1.045); }
+                .proj-row-arrow { transition: transform .35s cubic-bezier(.23,1,.32,1); }
+                .proj-row a:hover .proj-row-arrow,
+                .proj-index-list-row:hover .proj-row-arrow { transform: translate(4px, -4px); }
+                .proj-index-list-row { transition: padding-left .3s ease; }
+                .proj-index-list-row:hover { padding-left: 14px; }
+                .proj-index-list-row:hover h4 { color: var(--rust) !important; }
+                .contact-dark-transition {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 340px;
+                    pointer-events: none;
+                    z-index: 1;
+                    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.4) 55%, rgba(0,0,0,.72) 100%);
+                }
+                .footer-cta {
+                    position: relative;
+                    z-index: 2;
+                    display: flex;
+                    width: 100%;
+                    text-decoration: none;
+                    border-top: 1px solid var(--border);
+                    border-bottom: 1px solid var(--border);
+                    overflow: hidden;
+                }
+                .footer-cta-left,
+                .footer-cta-right {
+                    display: flex;
+                    align-items: center;
+                    padding: 30px 6vw;
+                }
+                .footer-cta-left {
+                    flex: 1;
+                    border-right: 1px solid var(--border);
+                }
+                .footer-cta-question {
+                    font-family: 'Geist Mono', monospace;
+                    font-weight: 700;
+                    font-size: clamp(15px, 2.6vw, 26px);
+                    letter-spacing: .01em;
+                    text-transform: uppercase;
+                    color: var(--muted);
+                    transition: color .4s;
+                }
+                .footer-cta:hover .footer-cta-question { color: var(--ink); }
+                .footer-cta-right {
+                    flex: 0 0 auto;
+                    min-width: 200px;
+                    justify-content: center;
+                    gap: 8px;
+                    background: var(--ink);
+                    color: var(--bg);
+                    transition: background .45s ease, gap .35s ease;
+                }
+                .footer-cta:hover .footer-cta-right {
+                    background: var(--rust);
+                    gap: 16px;
+                }
+                .footer-cta-answer {
+                    font-family: 'Geist Mono', monospace;
+                    font-weight: 700;
+                    font-size: clamp(15px, 2.6vw, 26px);
+                    letter-spacing: .01em;
+                    text-transform: uppercase;
+                    white-space: nowrap;
+                }
+                .footer-cta-right svg {
+                    flex-shrink: 0;
+                    transition: transform .35s ease;
+                }
+                .footer-cta:hover .footer-cta-right svg { transform: translate(3px, -3px); }
+                @media (max-width: 640px) {
+                    .footer-cta { flex-direction: column; }
+                    .footer-cta-left { border-right: none; border-bottom: 1px solid var(--border); padding: 22px 24px; }
+                    .footer-cta-right { padding: 22px 24px; min-width: 0; justify-content: flex-start; }
+                }
+                .site-footer {
+                    position: relative;
+                    width: 100%;
+                    overflow: hidden;
+                    background: var(--bg);
+                }
+                .footer-vignette {
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    z-index: 1;
+                    background: radial-gradient(120% 70% at 50% 10%, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 100%);
+                }
+                .footer-inner {
+                    position: relative;
+                    z-index: 2;
+                    width: 100%;
+                    padding: 160px 6vw 88px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+                .footer-name-link {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    text-decoration: none;
+                }
+                .footer-name {
+                    font-family: 'Instrument Serif', serif;
+                    font-weight: 300;
+                    font-size: clamp(48px, 15vw, 288px);
+                    line-height: 0.82;
+                    letter-spacing: -.04em;
+                    margin: 0;
+                    white-space: nowrap;
+                    color: transparent;
+                    background-image: linear-gradient(180deg, rgba(240,237,232,.14) 0%, rgba(240,237,232,.05) 45%, rgba(240,237,232,.015) 100%);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 40%, rgba(0,0,0,.35) 72%, rgba(0,0,0,0) 100%);
+                    mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 40%, rgba(0,0,0,.35) 72%, rgba(0,0,0,0) 100%);
+                    transition: opacity .4s ease;
+                }
+                .footer-name-link:hover .footer-name {
+                    opacity: .82;
+                }
+                @media (max-width: 768px) {
+                    .footer-inner { padding: 120px 24px 64px; }
+                }
+                @media (max-width: 640px) {
+                    .footer-inner { padding: 96px 20px 56px; }
+                    .footer-name { letter-spacing: -.03em !important; font-size: clamp(40px, 17vw, 96px); }
                 }
             `}</style>
 
@@ -1599,64 +1406,6 @@ export default function Homepage() {
                   </svg>
                 </div>
 
-                <div
-                  title="WordPress"
-                  style={{
-                    width: 25,
-                    height: 25,
-                    borderRadius: 6,
-                    background: "#777BB312",
-                    border: "1px solid #777BB330",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#337BA2"
-                      d="M43.257 121.233c.079 1.018.029 2.071.299 3.037.115.408.9.629 1.381.935l.625.401c-.235.137-.469.389-.707.392a165.82 165.82 0 01-5.598.002c-.248-.004-.491-.237-.735-.364.198-.143.388-.391.597-.408 1.251-.105 1.632-.865 1.626-1.989-.011-2.066-.006-4.134.003-6.202.005-1.152-.322-1.993-1.679-2.045-.188-.008-.366-.296-.548-.453.182-.111.366-.321.546-.318 2.39.029 4.79-.024 7.167.177 1.873.159 3.107 1.455 3.234 2.949.138 1.639-.703 2.764-2.605 3.486l-.729.272c1.225 1.158 2.31 2.29 3.516 3.272.535.437 1.293.697 1.989.817 1.393.238 2.149-.361 2.187-1.742.061-2.229.032-4.461.011-6.691-.01-1.022-.449-1.697-1.589-1.753-.215-.01-.42-.253-.629-.388.239-.14.478-.4.715-.399 2.432.02 4.875-.055 7.291.161 4.123.366 6.42 3.797 5.214 7.588-.735 2.312-2.495 3.619-4.759 3.773-3.958.27-7.938.215-11.909.243-.316.002-.706-.341-.944-.623-.914-1.085-1.776-2.213-2.668-3.316-.27-.334-.571-.641-.858-.961l-.444.147zm13.119-5.869c0 2.785-.034 5.484.036 8.18.011.414.41 1.039.78 1.187 1.457.581 3.812-.368 4.47-1.842.881-1.973.988-4.05-.203-5.922-1.175-1.847-3.132-1.663-5.083-1.603zm-13.021 4.561c1.262.032 2.653.313 3.192-1.073.302-.777.234-1.982-.183-2.69-.633-1.076-1.906-.888-3.01-.752l.001 4.515z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#515151"
-                      d="M96.77 119.35c.834-.18 1.661-.154 2.198-.537.451-.32.563-1.116.908-1.886.199.357.386.539.39.724.025 1.38.03 2.761 0 4.141-.005.216-.226.427-.347.641-.136-.114-.339-.2-.399-.346-.733-1.771-.729-1.772-2.843-1.583.309 1.382-.763 3.149.89 4.058.843.463 2.203.371 3.189.068.841-.256 1.48-1.171 2.212-1.798v3.096c-.405.036-.712.086-1.021.086-4.141.006-8.282-.012-12.422.019-.714.006-1.197-.174-1.633-.773-.857-1.182-1.799-2.302-2.725-3.432-.232-.283-.534-.508-1.021-.962 0 1.154-.042 1.981.012 2.802.056.858.469 1.427 1.418 1.534.279.032.529.325.792.5-.271.105-.54.298-.812.303-1.827.026-3.653.025-5.48.001-.28-.004-.558-.173-.866-.275l.156-.303c2.244-.906 2.25-.906 2.248-3.508a343.88 343.88 0 00-.039-4.87c-.017-1.121-.321-2.01-1.689-2.058-.197-.007-.384-.287-.577-.441.226-.113.453-.325.678-.323 2.311.022 4.635-.054 6.93.16 2.512.234 4.065 2.329 3.132 4.257-.51 1.053-1.688 1.783-2.725 2.818.984.9 2.117 2.194 3.491 3.135 1.941 1.33 3.268.571 3.317-1.748.041-1.947-.007-3.896-.015-5.845-.004-1.155-.361-1.994-1.717-2.013-.185-.003-.367-.2-.586-.33.705-.52 7.499-.709 10.448-.332l.19 3.214-.333.136c-.686-.717-.601-2.199-2.02-2.204-1.084-.005-2.168-.119-3.332-.189.003 1.356.003 2.59.003 4.063zm-12.647.566c2.61.105 3.646-.603 3.584-2.364-.061-1.698-1.195-2.383-3.584-2.121v4.485z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#3179A1"
-                      d="M11.555 120.682c.996-2.947 1.979-5.897 3.003-8.834.141-.404.486-.737.737-1.104.248.378.587.725.729 1.14.931 2.719 1.817 5.451 2.722 8.179.072.219.165.43.375.969.928-2.813 1.787-5.308 2.564-7.829.27-.873-.081-1.504-1.097-1.618-.335-.039-.66-.17-1.051-.274.676-.749 5.957-.804 6.827-.108-.236.112-.424.271-.618.279-1.65.064-2.414 1.097-2.884 2.521-1.258 3.81-2.54 7.611-3.817 11.415-.133.395-.3.778-.452 1.166l-.421.03-3.579-10.821-3.619 10.788-.354.022c-.185-.401-.412-.79-.547-1.207-1.167-3.581-2.319-7.167-3.474-10.751-.495-1.539-.99-3.069-3.012-3.167-.132-.006-.253-.229-.38-.35.158-.13.316-.373.476-.375 2.272-.024 4.546-.024 6.818.001.158.001.313.247.47.379-.169.126-.319.309-.508.367-1.82.55-1.951.761-1.378 2.526.723 2.233 1.468 4.457 2.204 6.686l.266-.03z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#4D4D4D"
-                      d="M65.484 111.25c.279-.241.435-.494.587-.491 2.957.044 5.938-.093 8.864.247 2.768.321 4.301 2.919 3.466 5.359-.748 2.189-2.593 2.874-4.68 3.064-.881.081-1.776.013-2.824.013.093 1.453.14 2.78.275 4.098.113 1.114.863 1.56 1.923 1.65.239.021.457.288.684.442-.25.126-.498.36-.75.363-2.191.029-4.384.028-6.575.002-.263-.003-.523-.219-.784-.336.218-.165.432-.463.656-.472 1.463-.056 2.012-.964 2.03-2.235.044-3.081.04-6.162.002-9.243-.016-1.31-.649-2.148-2.072-2.206-.212-.008-.422-.13-.802-.255zm5.523 6.706c2.682.278 3.703.022 4.349-1.167.648-1.192.65-2.439-.116-3.566-1.059-1.559-2.679-1.098-4.233-1.154v5.887z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#3279A1"
-                      d="M31.076 126.463c-2.396-.104-4.348-.856-5.794-2.647-2.053-2.542-1.741-5.994.711-8.192 2.645-2.37 7.018-2.472 9.733-.171 1.838 1.559 2.709 3.533 2.111 5.953-.675 2.73-2.601 4.192-5.218 4.856-.546.137-1.122.149-1.543.201zm4.544-6.249l-.224-.147c-.149-.709-.236-1.439-.458-2.125-.642-1.971-1.986-2.945-3.963-2.949-1.97-.004-3.295.975-3.939 2.967-.572 1.771-.498 3.526.383 5.18 1.315 2.468 4.829 2.931 6.549.736.802-1.023 1.116-2.43 1.652-3.662z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#505050"
-                      d="M122.748 114.317l.893-.782v4.376l-.259.195c-.209-.295-.498-.562-.615-.891-.591-1.655-1.865-2.553-3.319-2.117-.499.149-1.099.649-1.232 1.11-.109.376.285 1.12.671 1.374 1.008.664 2.131 1.156 3.214 1.703 2.356 1.192 3.198 2.845 2.401 4.736-.809 1.921-3.263 2.915-5.462 2.173-.606-.206-1.167-.544-1.728-.811l-.857 1.126-.379-.116c0-1.477-.009-2.954.015-4.431.002-.143.215-.282.33-.423.18.218.448.41.527.66.523 1.656 1.53 2.756 3.325 2.94 1.023.105 2.023-.021 2.378-1.187.324-1.067-.42-1.669-1.219-2.124-.879-.5-1.808-.909-2.708-1.37-.395-.203-.798-.404-1.153-.665-1.257-.927-1.753-2.263-1.381-3.618.332-1.211 1.523-2.237 2.997-2.28 1.091-.031 2.195.25 3.561.422zm-16.269 11.027c-.166.33-.258.607-.429.821-.103.128-.356.25-.49.208-.127-.04-.262-.294-.265-.456-.021-1.299-.021-2.599.001-3.896.002-.159.178-.314.274-.471.184.117.446.193.537.362.169.314.208.696.356 1.024.668 1.482 2.021 2.409 3.573 2.184.649-.093 1.45-.586 1.772-1.138.434-.741-.086-1.504-.814-1.925-.979-.566-1.993-1.075-3.009-1.571-2.297-1.121-3.266-2.972-2.443-4.719.818-1.737 3.33-2.46 5.429-1.556.256.11.499.25.7.354l1.078-.886c.113.317.185.426.186.535.008 1.216.005 2.431.005 3.646l-.317.212c-.211-.27-.504-.509-.619-.814-.573-1.532-1.48-2.381-2.81-2.219-.624.075-1.419.504-1.726 1.018-.45.755.2 1.361.885 1.729.963.519 1.949.992 2.926 1.483 2.418 1.213 3.269 2.898 2.434 4.824-.813 1.876-3.346 2.847-5.517 2.077-.564-.199-1.087-.52-1.717-.826z"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      fill="#494949"
-                      d="M65.261 1.395C38.48.917 16.103 22.648 16.096 49c-.008 27.11 21.338 48.739 48.077 48.699 26.49-.039 47.932-21.587 47.932-48.167C112.104 23.384 90.76 1.85 65.261 1.395zm-1.148 93.887c-25.326.006-45.694-20.529-45.693-46.067.001-24.88 20.685-45.48 45.674-45.489 25.432-.008 45.695 20.654 45.687 46.587-.008 24.483-20.807 44.964-45.668 44.969zm24.395-59.347c-.994-1.638-2.216-3.227-2.778-5.013-.64-2.032-1.171-4.345-.832-6.382.576-3.454 3.225-5.169 6.812-5.497C72.086.83 41.248 7.349 29.885 27.138c4.374-.203 8.55-.468 12.729-.524.791-.011 2.1.657 2.286 1.277.416 1.385-.748 1.868-1.986 1.963-1.301.102-2.604.199-4.115.314l14.935 44.494c.359-.587.507-.752.572-.945 2.762-8.255 5.54-16.505 8.232-24.784.246-.755.124-1.755-.146-2.531-1.424-4.111-3.13-8.133-4.379-12.294-.855-2.849-1.988-4.692-5.355-4.362-.574.056-1.273-1.178-1.916-1.816.777-.463 1.548-1.316 2.332-1.328a659.24 659.24 0 0120.572.006c.786.013 1.557.889 2.335 1.364-.681.622-1.267 1.554-2.063 1.794-1.276.385-2.691.312-4.218.448l14.953 44.484c2.266-7.524 4.374-14.434 6.422-21.36 1.83-6.182.74-11.957-2.567-17.403zM52.719 88.149c-.092.267-.097.563-.168 1.007 8.458 2.344 16.75 2.175 25.24-.685l-12.968-35.52c-4.151 12.064-8.131 23.63-12.104 35.198zm-6.535-1.606L26.646 32.947c-8.814 17.217-2.109 43.486 19.538 53.596zm54.452-55.403c-.27 2.994-.082 6.327-.941 9.362-2.023 7.152-4.496 14.181-6.877 21.229-2.588 7.66-5.28 15.286-7.927 22.927 12.437-7.372 19.271-18.253 20.359-32.555.62-8.14-2.188-19.412-4.614-20.963z"
-                    />
-                  </svg>
-                </div>
               </div>
             </motion.div>
 
@@ -1737,461 +1486,274 @@ export default function Homepage() {
         </div>
       </section>
 
-      <section id="work" style={{ padding: "96px 32px" }}>
-        <div style={{ maxWidth: 1152, margin: "0 auto" }}>
+      <section id="work" style={{ padding: "140px 32px 40px", position: "relative", overflow: "hidden" }}>
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 24,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(140px, 20vw, 280px)",
+            fontWeight: 100,
+            color: "#ffffff05",
+            letterSpacing: "-.05em",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          01
+        </div>
+        <div style={{ maxWidth: 1152, margin: "0 auto", position: "relative" }}>
           <RevealOnScroll>
-            <div style={{ marginBottom: 64 }}>
-              <p className="section-num" style={{ marginBottom: 12 }}>
-                02 — Selected Work
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  gap: 16,
-                }}
-              >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: 24,
+                marginBottom: 96,
+              }}
+            >
+              <div>
+                <p className="section-num" style={{ marginBottom: 16 }}>
+                  01 — Selected Work
+                </p>
                 <h2
                   style={{
                     fontFamily: "'Instrument Serif', serif",
-                    fontSize: "clamp(30px, 5vw, 54px)",
+                    fontSize: "clamp(40px, 8vw, 92px)",
                     fontWeight: 300,
-                    letterSpacing: "-.025em",
-                    lineHeight: 1.1,
+                    letterSpacing: "-.03em",
+                    lineHeight: 0.98,
                   }}
                 >
                   Projects that
                   <br />
-                  <em>matter.</em>
+                  <em style={{ color: "var(--rust)" }}>matter.</em>
                 </h2>
-                <a
-                  href="https://github.com/roland-adams2007"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    fontSize: 12,
-                    color: "var(--muted)",
-                    lineHeight: 1.7,
-                    textDecoration: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    transition: "color .25s",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.color = "var(--rust)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "var(--muted)")
-                  }
-                >
-                  <GitHubIcon /> View all on GitHub <ArrowUpRight size={12} />
-                </a>
               </div>
+              <a
+                href="https://github.com/roland-adams2007"
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  fontSize: 12,
+                  color: "var(--muted)",
+                  textDecoration: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  transition: "color .25s",
+                  flexShrink: 0,
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--rust)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
+              >
+                <GitHubIcon /> All repositories <ArrowUpRight size={12} />
+              </a>
             </div>
           </RevealOnScroll>
 
+          {allProjects.slice(0, 4).map((project, i) => (
+            <ProjectShowcase key={project.id} project={project} index={i} />
+          ))}
+
           <RevealOnScroll delay={0.1}>
-            <CardDeck />
+            <p className="section-num" style={{ margin: "16px 0 8px" }}>
+              More builds
+            </p>
+          </RevealOnScroll>
+          <RevealOnScroll delay={0.15}>
+            <div style={{ borderTop: "1px solid var(--border)" }}>
+              {allProjects.slice(4).map((project) => (
+                <ProjectIndexRow key={project.id} project={project} />
+              ))}
+            </div>
           </RevealOnScroll>
         </div>
       </section>
 
       <section
         id="about"
-        style={{ padding: "96px 32px", borderTop: "1px solid var(--border)" }}
-      >
-        <div
-          style={{
-            maxWidth: 1152,
-            margin: "0 auto",
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 420px), 1fr))",
-            gap: 64,
-            alignItems: "center",
-          }}
-        >
-          <RevealOnScroll>
-            <p className="section-num" style={{ marginBottom: 24 }}>
-              04 — About Me
-            </p>
-            <h2
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "clamp(26px, 4vw, 46px)",
-                fontWeight: 300,
-                lineHeight: 1.15,
-                letterSpacing: "-.02em",
-                marginBottom: 24,
-              }}
-            >
-              Design is a conversation
-              <br />
-              between <em style={{ color: "var(--rust)" }}>intent</em> and form.
-            </h2>
-            <p
-              style={{
-                fontSize: 13,
-                lineHeight: 2,
-                color: "var(--muted)",
-                marginBottom: 16,
-              }}
-            >
-              Hi, I'm Adams Roland, a Full Stack Developer with 2+ years of
-              hands-on experience. I enjoy building real-world web applications
-              that are simple, functional, and user-focused. I like turning
-              ideas into clean, working systems that solve real problems and get
-              things done.
-            </p>
-            <div
-              style={{
-                display: "flex",
-                gap: 12,
-                marginTop: 32,
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              <a href="#" className="btn">
-                <span>Download CV</span>
-                <Download size={13} />
-              </a>
-              <SocialLinks />
-            </div>
-          </RevealOnScroll>
-          <RevealOnScroll delay={0.2}>
-            <OrbitVisual />
-          </RevealOnScroll>
-        </div>
-      </section>
-
-      <section
-        id="experience"
         style={{
-          padding: "96px 32px",
+          padding: "140px 32px",
           borderTop: "1px solid var(--border)",
-          background: "var(--bg2)",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
-        <div style={{ maxWidth: 1152, margin: "0 auto" }}>
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            right: 24,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(140px, 20vw, 280px)",
+            fontWeight: 100,
+            color: "#ffffff05",
+            letterSpacing: "-.05em",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          02
+        </div>
+        <div style={{ maxWidth: 1152, margin: "0 auto", position: "relative" }}>
           <RevealOnScroll>
-            <p className="section-num" style={{ marginBottom: 12 }}>
-              05 — Experience
+            <p className="section-num" style={{ marginBottom: 20 }}>
+              02 — About Me
             </p>
             <h2
               style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: "clamp(28px, 4vw, 50px)",
+                fontSize: "clamp(32px, 6vw, 68px)",
                 fontWeight: 300,
                 lineHeight: 1.1,
-                letterSpacing: "-.02em",
-                marginBottom: 56,
+                letterSpacing: "-.03em",
+                maxWidth: 820,
+                marginBottom: 96,
               }}
             >
-              The road
+              Most developers pick a layer.
               <br />
-              <em>so far.</em>
+              <em style={{ color: "var(--rust)" }}>Adams builds the whole stack.</em>
             </h2>
           </RevealOnScroll>
 
           <div
             style={{
               display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(min(100%, 420px), 1fr))",
-              gap: "0 64px",
+              gridTemplateColumns: "1.5fr 1fr",
+              gap: "clamp(48px, 6vw, 96px)",
+              alignItems: "start",
             }}
+            className="about-grid"
           >
             <RevealOnScroll delay={0.1}>
-              {[
-                {
-                  period: "Dec 2025 — Present",
-                  color: "var(--rust)",
-                  dotType: "filled",
-                  title: "Founder & Full-Stack Developer",
-                  sub: "Tixkarios · Full-time",
-                  desc: "Founded and built Tixkarios, a digital ticketing platform enabling event organizers to create, manage, and sell tickets online. Handled end-to-end development — frontend, backend, system architecture, and payment integration. Led product decisions, improved UX, and supported early users through onboarding and iteration.",
-                  tags: [
-                    "React",
-                    "Laravel",
-                    "Node.js",
-                    "MySQL",
-                    "Payment Integration",
-                  ],
-                },
-                {
-                  period: "Nov 2025 — Present",
-                  color: "var(--rust)",
-                  dotType: "filled",
-                  title: "Junior Community & Content Specialist",
-                  sub: "Apodissi · Part-time",
-                  desc: "Managing community engagement and creating content strategies. Developing and implementing content plans across various platforms. Fostering community growth and maintaining brand presence through effective communication and engagement initiatives.",
-                  tags: [
-                    "Community Management",
-                    "Content Strategy",
-                    "Social Media",
-                    "Brand Engagement",
-                  ],
-                },
-                {
-                  period: "Feb 2025 — Feb 2026",
-                  color: "var(--muted)",
-                  dotType: "outline",
-                  title: "Team Leader",
-                  sub: "3jstech",
-                  desc: "Led development teams and managed project deliveries. Responsible for code reviews, team coordination, and ensuring best practices across multiple projects. Mentored junior developers and drove technical decisions. Successfully completed tenure after delivering key projects and building strong team processes.",
-                  tags: [
-                    "Team Leadership",
-                    "Project Management",
-                    "Code Review",
-                    "Mentoring",
-                  ],
-                },
-                {
-                  period: "2024 — Present",
-                  color: "var(--muted)",
-                  dotType: "outline",
-                  title: "University Student",
-                  sub: "University of Ilorin",
-                  desc: "Pursuing a degree while balancing academic excellence with professional growth. Applying theoretical knowledge to real-world projects and continuously expanding understanding of computer science fundamentals.",
-                  tags: [
-                    "Computer Science",
-                    "Software Engineering",
-                    "Data Structures",
-                  ],
-                },
-                {
-                  period: "Feb 2024 — Jun 2024",
-                  color: "var(--muted)",
-                  dotType: "outline",
-                  title: "Full-Stack Development Bootcamp",
-                  sub: "MOAT Academy · Certificate Earned",
-                  desc: "Intensive bootcamp focusing on modern web development technologies starting February 12th, 2024. Gained hands-on experience with front-end and back-end development, working on real-world projects and learning industry best practices.",
-                  tags: [
-                    "JavaScript",
-                    "React",
-                    "Node.js",
-                    "PHP",
-                    "Laravel",
-                    "MySQL",
-                  ],
-                },
-                {
-                  period: "2023",
-                  color: "var(--muted)",
-                  dotType: "outline",
-                  title: "Programming Journey Begins",
-                  sub: "Self-Learning & Exploration",
-                  desc: "Started the journey into programming and web development through self-study. Discovered a passion for creating digital solutions and built foundational knowledge that prepared for formal training and professional opportunities.",
-                  tags: [],
-                },
-              ].map((exp, i, arr) => (
-                <div key={i} style={{ display: "flex", gap: 24 }}>
-                  <div
+              <div style={{ maxWidth: 540 }}>
+                <p
+                  style={{
+                    fontSize: 15,
+                    lineHeight: 1.95,
+                    color: "var(--muted)",
+                    marginBottom: 24,
+                  }}
+                >
+                  For the past two years that's meant taking projects from an
+                  empty repo to something people actually use — a ticketing
+                  platform for real event organizers, a practicum system for a
+                  university faculty, a social app, and a run of client sites.
+                  React and React Native up front, Laravel and PHP behind it,
+                  one person deciding what gets built and how.
+                </p>
+                <p
+                  style={{
+                    fontSize: 15,
+                    lineHeight: 1.95,
+                    color: "var(--muted)",
+                    marginBottom: 40,
+                  }}
+                >
+                  He also writes and manages content for an ed-tech platform,
+                  which means he's spent about as much time explaining
+                  technical work clearly as he has doing it.
+                </p>
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginBottom: 32,
+                  }}
+                >
+                  <span className="avail-dot" />
+                  <span
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
+                      fontFamily: "'Geist Mono', monospace",
+                      fontSize: 11,
+                      letterSpacing: ".08em",
+                      textTransform: "uppercase",
+                      color: "#5A8A5A",
                     }}
                   >
-                    {exp.dotType === "filled" ? (
-                      <div className="exp-dot" />
-                    ) : (
-                      <div
-                        style={{
-                          width: 8,
-                          height: 8,
-                          borderRadius: "50%",
-                          border: "1px solid var(--border)",
-                          flexShrink: 0,
-                          marginTop: 5,
-                          background: "var(--bg2)",
-                        }}
-                      />
-                    )}
-                    {i < arr.length - 1 && <div className="exp-line" />}
-                  </div>
-                  <div style={{ paddingBottom: 40 }}>
-                    <div style={{ marginBottom: 8 }}>
-                      <span
-                        style={{
-                          fontSize: 10,
-                          letterSpacing: ".12em",
-                          textTransform: "uppercase",
-                          color: exp.color,
-                        }}
-                      >
-                        {exp.period}
-                      </span>
-                    </div>
-                    <h3
-                      style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontSize: 20,
-                        fontWeight: 300,
-                        color: "var(--ink)",
-                        marginBottom: 4,
-                      }}
-                    >
-                      {exp.title}
-                    </h3>
-                    <p
-                      style={{
-                        fontSize: 12,
-                        color: "var(--muted)",
-                        marginBottom: 12,
-                      }}
-                    >
-                      {exp.sub}
-                    </p>
-                    <p
-                      style={{
-                        fontSize: 12,
-                        lineHeight: 1.9,
-                        color: "var(--muted)",
-                      }}
-                    >
-                      {exp.desc}
-                    </p>
-                    {exp.tags.length > 0 && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: 8,
-                          marginTop: 16,
-                        }}
-                      >
-                        {exp.tags.map((t) => (
-                          <span
-                            key={t}
-                            className="tag"
-                            style={{
-                              color: "var(--muted)",
-                              borderColor: "var(--border)",
-                              fontSize: 9,
-                            }}
-                          >
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                    Open to freelance and full-time work
+                  </span>
                 </div>
-              ))}
+
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                  }}
+                >
+                  <a href="#" className="btn">
+                    <span>Download CV</span>
+                    <Download size={13} />
+                  </a>
+                  <SocialLinks />
+                </div>
+              </div>
             </RevealOnScroll>
 
-            <RevealOnScroll delay={0.2}>
+            <RevealOnScroll delay={0.25}>
               <div
-                style={{ display: "flex", flexDirection: "column", gap: 20 }}
+                style={{
+                  borderLeft: "1px solid var(--border)",
+                  paddingLeft: "clamp(24px, 3vw, 40px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 40,
+                }}
               >
-                <div
-                  style={{
-                    border: "1px solid var(--border)",
-                    borderRadius: 3,
-                    padding: 24,
-                    background: "var(--card)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 16,
-                    }}
-                  >
-                    <Code2 size={18} color="var(--rust)" />
+                {[
+                  {
+                    num: "02+",
+                    label: "Years building production software",
+                  },
+                  {
+                    num: "01",
+                    label: "Person across the entire stack — frontend, backend, deploy",
+                  },
+                  {
+                    num: "04",
+                    label: "Live products currently in rotation",
+                  },
+                ].map((signal) => (
+                  <div key={signal.label}>
                     <span
                       style={{
-                        fontSize: 10,
-                        color: "var(--muted)",
-                        letterSpacing: ".1em",
-                        textTransform: "uppercase",
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: "clamp(36px, 4vw, 52px)",
+                        fontWeight: 300,
+                        color: "var(--ink)",
+                        letterSpacing: "-.02em",
+                        lineHeight: 1,
+                        display: "block",
+                        marginBottom: 8,
                       }}
                     >
-                      Highlight
+                      {signal.num}
                     </span>
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: 36,
-                      fontWeight: 300,
-                      color: "var(--ink)",
-                      letterSpacing: "-.02em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    8+
-                  </div>
-                  <p
-                    style={{
-                      fontSize: 12,
-                      color: "var(--muted)",
-                      marginTop: 6,
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    Projects shipped across full-stack apps, SaaS platforms,
-                    real-time systems, and ticketing infrastructure.
-                  </p>
-                </div>
-                <div
-                  style={{
-                    border: "1px solid var(--border)",
-                    borderRadius: 3,
-                    padding: 24,
-                    background: "var(--card)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: 16,
-                    }}
-                  >
-                    <Zap size={18} color="var(--gold)" />
-                    <span
+                    <p
                       style={{
-                        fontSize: 10,
+                        fontSize: 12.5,
+                        lineHeight: 1.6,
                         color: "var(--muted)",
-                        letterSpacing: ".1em",
-                        textTransform: "uppercase",
+                        maxWidth: 220,
                       }}
                     >
-                      Philosophy
-                    </span>
+                      {signal.label}
+                    </p>
                   </div>
-                  <p
-                    style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: 17,
-                      fontStyle: "italic",
-                      fontWeight: 300,
-                      color: "var(--ink)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    "I learn by shipping. Every project is a classroom."
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      marginTop: 12,
-                    }}
-                  >
-                    — Adams Roland
-                  </p>
-                </div>
-                <TerminalCard />
+                ))}
               </div>
             </RevealOnScroll>
           </div>
@@ -2199,445 +1761,551 @@ export default function Homepage() {
       </section>
 
       <section
-        id="skills"
-        style={{ padding: "96px 32px", borderTop: "1px solid var(--border)" }}
+        id="experience"
+        style={{
+          padding: "140px 32px",
+          borderTop: "1px solid var(--border)",
+          background: "var(--bg2)",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
-        <div style={{ maxWidth: 1152, margin: "0 auto" }}>
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 24,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(140px, 20vw, 280px)",
+            fontWeight: 100,
+            color: "#ffffff05",
+            letterSpacing: "-.05em",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          03
+        </div>
+        <div style={{ maxWidth: 1152, margin: "0 auto", position: "relative" }}>
           <RevealOnScroll>
-            <p className="section-num" style={{ marginBottom: 12 }}>
-              06 — Expertise
-            </p>
-            <h2
-              style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: "clamp(28px, 4vw, 50px)",
-                fontWeight: 300,
-                lineHeight: 1.1,
-                letterSpacing: "-.02em",
-                marginBottom: 48,
-              }}
-            >
-              What I bring
-              <br />
-              to the <em>table.</em>
-            </h2>
-          </RevealOnScroll>
-
-          <RevealOnScroll delay={0.1}>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
-                gap: 40,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                flexWrap: "wrap",
+                gap: 32,
+                marginBottom: 72,
               }}
             >
-              <div className="skill-card">
-                <div
+              <div>
+                <p className="section-num" style={{ marginBottom: 12 }}>
+                  03 — Experience
+                </p>
+                <h2
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    marginBottom: 28,
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: "clamp(28px, 4vw, 50px)",
+                    fontWeight: 300,
+                    lineHeight: 1.1,
+                    letterSpacing: "-.02em",
                   }}
                 >
-                  <PenTool size={18} color="var(--rust)" />
-                  <h3
-                    style={{
-                      fontSize: 11,
-                      letterSpacing: ".12em",
-                      textTransform: "uppercase",
-                      color: "var(--ink)",
-                    }}
-                  >
-                    Frontend
-                  </h3>
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {[
-                    "React",
-                    "JavaScript",
-                    "Tailwind CSS",
-                    "HTML & CSS",
-                    "Bootstrap",
-                    "Framer Motion",
-                    "Vite",
-                    "Zustand",
-                  ].map((t) => (
-                    <span
-                      key={t}
-                      className="tag"
-                      style={{
-                        color: "var(--muted)",
-                        borderColor: "var(--border)",
-                        fontSize: 9,
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                  The road
+                  <br />
+                  <em>so far.</em>
+                </h2>
               </div>
-              <div className="skill-card">
-                <div
+              <div style={{ maxWidth: 300, textAlign: "right" }}>
+                <span
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    marginBottom: 28,
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: 44,
+                    fontWeight: 300,
+                    color: "var(--ink)",
+                    letterSpacing: "-.02em",
+                    lineHeight: 1,
+                    display: "block",
+                    marginBottom: 8,
                   }}
                 >
-                  <Code2 size={18} color="var(--rust)" />
-                  <h3
-                    style={{
-                      fontSize: 11,
-                      letterSpacing: ".12em",
-                      textTransform: "uppercase",
-                      color: "var(--ink)",
-                    }}
-                  >
-                    Backend
-                  </h3>
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {[
-                    "PHP",
-                    "Laravel",
-                    "WordPress",
-                    "MySQL",
-                    "Node.js",
-                    "Express",
-                    "Prisma",
-                    "Firebase",
-                    "Supabase",
-                    "PostgreSQL",
-                    "REST APIs",
-                    "MVC Architecture",
-                    "WebSockets",
-                    "Composer",
-                  ].map((t) => (
-                    <span
-                      key={t}
-                      className="tag"
-                      style={{
-                        color: "var(--muted)",
-                        borderColor: "var(--border)",
-                        fontSize: 9,
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="skill-card">
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    marginBottom: 28,
-                  }}
-                >
-                  <Layers size={18} color="var(--rust)" />
-                  <h3
-                    style={{
-                      fontSize: 11,
-                      letterSpacing: ".12em",
-                      textTransform: "uppercase",
-                      color: "var(--ink)",
-                    }}
-                  >
-                    Tools
-                  </h3>
-                </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {[
-                    "Git & GitHub",
-                    "Docker",
-                    "CI/CD Pipeline",
-                    "VS Code",
-                    "npm",
-                    "XAMPP",
-                    "Postman",
-                  ].map((t) => (
-                    <span
-                      key={t}
-                      className="tag"
-                      style={{
-                        color: "var(--muted)",
-                        borderColor: "var(--border)",
-                        fontSize: 9,
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div
-                  style={{
-                    marginTop: 28,
-                    padding: 20,
-                    border: "1px solid var(--border)",
-                    borderRadius: 2,
-                    background: "var(--bg)",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: 12,
-                    }}
-                  >
-                    <Quote
-                      size={14}
-                      color="var(--rust)"
-                      style={{ flexShrink: 0, marginTop: 3 }}
-                    />
-                    <p
-                      style={{
-                        fontFamily: "'Instrument Serif', serif",
-                        fontSize: 14,
-                        fontStyle: "italic",
-                        fontWeight: 300,
-                        color: "var(--muted)",
-                        lineHeight: 1.8,
-                      }}
-                    >
-                      "Design is not just what it looks like. Design is how it
-                      works."
-                    </p>
-                  </div>
-                  <p
-                    style={{
-                      fontSize: 10,
-                      letterSpacing: ".1em",
-                      color: "var(--border)",
-                      marginTop: 10,
-                      textAlign: "right",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    — Steve Jobs
-                  </p>
-                </div>
+                  8+
+                </span>
+                <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.7 }}>
+                  Projects shipped across full-stack apps, SaaS platforms,
+                  real-time systems, and ticketing infrastructure.
+                </p>
               </div>
             </div>
           </RevealOnScroll>
+
+          <RevealOnScroll delay={0.1}>
+            <WaveTimeline
+              items={[
+                {
+                  period: "Dec 2025 — Present",
+                  color: "var(--rust)",
+                  active: true,
+                  title: "Founder & Full-Stack Developer",
+                  sub: "Tixkarios · Full-time",
+                  desc: "Founded and built Tixkarios, a digital ticketing platform enabling event organizers to create, manage, and sell tickets online. Handled end-to-end development, frontend, backend, system architecture, and payment integration.",
+                  tags: ["React", "Laravel", "Node.js", "MySQL"],
+                },
+                {
+                  period: "Nov 2025 — Present",
+                  color: "var(--rust)",
+                  active: true,
+                  title: "Junior Community & Content Specialist",
+                  sub: "Apodissi · Part-time",
+                  desc: "Managing community engagement and creating content strategies across platforms, fostering growth and maintaining brand presence.",
+                  tags: ["Community", "Content Strategy", "Social Media"],
+                },
+                {
+                  period: "Feb 2025 — Feb 2026",
+                  color: "var(--muted)",
+                  active: false,
+                  title: "Team Leader",
+                  sub: "3jstech",
+                  desc: "Led development teams and managed project deliveries. Handled code reviews, team coordination, and mentoring across multiple projects.",
+                  tags: ["Leadership", "Code Review", "Mentoring"],
+                },
+                {
+                  period: "2024 — Present",
+                  color: "var(--muted)",
+                  active: false,
+                  title: "University Student",
+                  sub: "University of Ilorin",
+                  desc: "Pursuing a computer science degree while applying theoretical knowledge to real-world projects.",
+                  tags: ["Computer Science", "Data Structures"],
+                },
+                {
+                  period: "Feb 2024 — Jun 2024",
+                  color: "var(--muted)",
+                  active: false,
+                  title: "Full-Stack Development Bootcamp",
+                  sub: "MOAT Academy · Certificate Earned",
+                  desc: "Intensive bootcamp in modern web development. Built real-world projects across the front end and back end.",
+                  tags: ["JavaScript", "React", "PHP", "Laravel"],
+                },
+                {
+                  period: "2023",
+                  color: "var(--muted)",
+                  active: false,
+                  title: "Programming Journey Begins",
+                  sub: "Self-Learning & Exploration",
+                  desc: "Started learning programming through self-study, building the foundation for everything after.",
+                  tags: [],
+                },
+              ]}
+            />
+          </RevealOnScroll>
+
+          <RevealOnScroll delay={0.2}>
+            <div
+              style={{
+                marginTop: 96,
+                paddingTop: 56,
+                borderTop: "1px solid var(--border)",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "'Geist Mono', monospace",
+                  fontSize: 11,
+                  letterSpacing: ".12em",
+                  textTransform: "uppercase",
+                  color: "var(--muted)",
+                  marginBottom: 32,
+                }}
+              >
+                How the work actually happens
+              </p>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                  gap: 32,
+                }}
+              >
+                {[
+                  {
+                    num: "01",
+                    title: "Scope",
+                    desc: "Work out what the product needs, not what's easiest to build first.",
+                  },
+                  {
+                    num: "02",
+                    title: "Build",
+                    desc: "Frontend and backend together, so nothing gets designed in a vacuum.",
+                  },
+                  {
+                    num: "03",
+                    title: "Ship",
+                    desc: "Get it in front of real users instead of polishing it in isolation.",
+                  },
+                  {
+                    num: "04",
+                    title: "Iterate",
+                    desc: "Fix what breaks, cut what doesn't matter, keep moving.",
+                  },
+                ].map((step, i) => (
+                  <div
+                    key={step.num}
+                    style={{
+                      borderLeft: "1px solid var(--border)",
+                      paddingLeft: 20,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "'Geist Mono', monospace",
+                        fontSize: 11,
+                        color: "var(--rust)",
+                        letterSpacing: ".08em",
+                      }}
+                    >
+                      {step.num}
+                    </span>
+                    <h4
+                      style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: 24,
+                        fontWeight: 300,
+                        color: "var(--ink)",
+                        margin: "6px 0 10px",
+                        letterSpacing: "-.01em",
+                      }}
+                    >
+                      {step.title}
+                    </h4>
+                    <p
+                      style={{
+                        fontSize: 12.5,
+                        lineHeight: 1.7,
+                        color: "var(--muted)",
+                      }}
+                    >
+                      {step.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      <section
+        id="skills"
+        style={{
+          padding: "140px 32px",
+          borderTop: "1px solid var(--border)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            right: 24,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(140px, 20vw, 280px)",
+            fontWeight: 100,
+            color: "#ffffff05",
+            letterSpacing: "-.05em",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          04
+        </div>
+        <div style={{ maxWidth: 1152, margin: "0 auto", position: "relative" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+              gap: 48,
+              marginBottom: 64,
+            }}
+          >
+            <RevealOnScroll>
+              <p className="section-num" style={{ marginBottom: 12 }}>
+                04 — Expertise
+              </p>
+              <h2
+                style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: "clamp(28px, 4vw, 50px)",
+                  fontWeight: 300,
+                  lineHeight: 1.1,
+                  letterSpacing: "-.02em",
+                }}
+              >
+                What I bring
+                <br />
+                to the <em>table.</em>
+              </h2>
+            </RevealOnScroll>
+            <RevealOnScroll delay={0.1}>
+              <p
+                style={{
+                  fontSize: 13,
+                  lineHeight: 1.9,
+                  color: "var(--muted)",
+                  alignSelf: "end",
+                  maxWidth: 420,
+                }}
+              >
+                A working stack built for shipping full products end to end —
+                interfaces, servers, data, and everything that connects them.
+              </p>
+            </RevealOnScroll>
+          </div>
+
+          {[
+            {
+              num: "01",
+              label: "Frontend",
+              capability: "Interfaces people actually want to use.",
+              items: [
+                "React",
+                "JavaScript",
+                "Tailwind CSS",
+                "HTML & CSS",
+                "Bootstrap",
+                "Framer Motion",
+                "Vite",
+                "Zustand",
+              ],
+            },
+            {
+              num: "02",
+              label: "Backend",
+              capability: "APIs, auth, and databases that hold up.",
+              items: [
+                "PHP",
+                "Laravel",
+                "WordPress",
+                "MySQL",
+                "Node.js",
+                "Express",
+                "Prisma",
+                "Firebase",
+                "Supabase",
+                "PostgreSQL",
+                "REST APIs",
+                "MVC Architecture",
+                "WebSockets",
+                "Composer",
+              ],
+            },
+            {
+              num: "03",
+              label: "Tools",
+              capability: "The workflow that keeps solo builds from falling apart.",
+              items: ["Git & GitHub", "Docker", "CI/CD Pipeline", "VS Code", "npm", "XAMPP", "Postman"],
+            },
+          ].map((cat, i) => (
+            <RevealOnScroll key={cat.label} delay={0.1 + i * 0.05}>
+              <div
+                style={{
+                  padding: "40px 0",
+                  borderTop: "1px solid var(--border)",
+                  marginLeft: i === 1 ? "clamp(0px, 8vw, 96px)" : 0,
+                  transition: "margin .3s",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 14,
+                    marginBottom: 16,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Geist Mono', monospace",
+                      fontSize: 10,
+                      color: "var(--rust)",
+                      letterSpacing: ".1em",
+                    }}
+                  >
+                    {cat.num}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Geist Mono', monospace",
+                      fontSize: 11,
+                      letterSpacing: ".1em",
+                      textTransform: "uppercase",
+                      color: "var(--muted)",
+                    }}
+                  >
+                    {cat.label}
+                  </span>
+                </div>
+                <h3
+                  style={{
+                    fontFamily: "'Instrument Serif', serif",
+                    fontSize: "clamp(24px, 3.4vw, 36px)",
+                    fontWeight: 300,
+                    color: "var(--ink)",
+                    letterSpacing: "-.01em",
+                    lineHeight: 1.15,
+                    maxWidth: 520,
+                    marginBottom: 20,
+                  }}
+                >
+                  {cat.capability}
+                </h3>
+                <p style={{ fontSize: 13, lineHeight: 2.1, color: "var(--muted)", maxWidth: 640 }}>
+                  {cat.items.map((t, idx) => (
+                    <span key={t}>
+                      <span style={{ color: "var(--ink)" }}>{t}</span>
+                      {idx < cat.items.length - 1 && (
+                        <span style={{ color: "var(--border)" }}> · </span>
+                      )}
+                    </span>
+                  ))}
+                </p>
+              </div>
+            </RevealOnScroll>
+          ))}
         </div>
       </section>
 
       <section
         id="contact"
         style={{
-          padding: "96px 32px",
+          padding: "160px 32px 120px",
           borderTop: "1px solid var(--border)",
           position: "relative",
           overflow: "hidden",
         }}
       >
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: 8,
+            left: 24,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: "clamp(140px, 20vw, 280px)",
+            fontWeight: 100,
+            color: "#ffffff05",
+            letterSpacing: "-.05em",
+            lineHeight: 1,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          05
+        </div>
         <div className="orb orb-contact" />
         <div className="contact-grid-accent" />
         <div
           style={{
-            maxWidth: 1152,
+            maxWidth: 860,
             margin: "0 auto",
             position: "relative",
             zIndex: 2,
+            textAlign: "center",
           }}
         >
           <RevealOnScroll>
-            <div
+            <p
+              className="section-num"
+              style={{ marginBottom: 24, display: "flex", justifyContent: "center" }}
+            >
+              05 — Let's Talk
+            </p>
+            <h2
               style={{
-                border: "1px solid var(--border)",
-                borderRadius: 3,
-                padding: "clamp(32px, 6vw, 72px)",
-                background: "var(--card)",
-                position: "relative",
-                overflow: "hidden",
+                fontFamily: "'Instrument Serif', serif",
+                fontSize: "clamp(36px, 7vw, 84px)",
+                fontWeight: 300,
+                lineHeight: 1.02,
+                letterSpacing: "-.03em",
+                marginBottom: 28,
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 2,
-                  background:
-                    "linear-gradient(90deg, var(--rust), var(--gold), transparent)",
-                }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "clamp(32px, 5vw, 64px)",
-                  alignItems: "flex-start",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div style={{ flex: "1 1 340px" }}>
-                  <p className="section-num" style={{ marginBottom: 20 }}>
-                    06 — Let's Talk
-                  </p>
-                  <h2
-                    style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: "clamp(32px, 5vw, 64px)",
-                      fontWeight: 300,
-                      lineHeight: 1.05,
-                      letterSpacing: "-.025em",
-                      marginBottom: 16,
-                      color: "var(--ink)",
-                    }}
-                  >
-                    Let's Build
-                    <br />
-                    <em style={{ color: "var(--rust)" }}>Something</em>
-                  </h2>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      lineHeight: 1.9,
-                      color: "var(--muted)",
-                      maxWidth: 480,
-                      marginBottom: 32,
-                    }}
-                  >
-                    Open to freelance projects, full-time opportunities, and
-                    collaborations. If you have an idea or need help bringing
-                    your vision to life, let's talk.
-                  </p>
-                  <a href="mailto:adamsrolly7@gmail.com" className="btn">
-                    <Mail size={14} />
-                    <span>Get In Touch</span>
-                    <ArrowUpRight size={14} />
-                  </a>
-                </div>
+              Let's build
+              <br />
+              <em style={{ color: "var(--rust)" }}>something.</em>
+            </h2>
+            <p
+              style={{
+                fontSize: 14,
+                lineHeight: 1.9,
+                color: "var(--muted)",
+                maxWidth: 460,
+                margin: "0 auto 56px",
+              }}
+            >
+              Open to freelance projects, full-time opportunities, and
+              collaborations. If you have an idea or need help bringing your
+              vision to life, let's talk.
+            </p>
+          </RevealOnScroll>
 
-                <div style={{ flex: "1 1 260px" }}>
-                  <p
-                    style={{
-                      fontSize: 10,
-                      letterSpacing: ".15em",
-                      textTransform: "uppercase",
-                      color: "var(--muted)",
-                      marginBottom: 20,
-                    }}
-                  >
-                    Connect Online
-                  </p>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(2, 1fr)",
-                      gap: 12,
-                    }}
-                  >
-                    {[
-                      {
-                        icon: <XIcon />,
-                        label: "Twitter",
-                        href: "https://x.com/R_coredev",
-                      },
-                      {
-                        icon: <LinkedInIcon />,
-                        label: "LinkedIn",
-                        href: "https://www.linkedin.com/in/roland-adams-045965315",
-                      },
-                      {
-                        icon: <GitHubIcon />,
-                        label: "GitHub",
-                        href: "https://github.com/roland-adams2007",
-                      },
-                      {
-                        icon: <Mail size={16} />,
-                        label: "Email",
-                        href: "mailto:adamsrolly7@gmail.com",
-                      },
-                    ].map((item) => (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        target={
-                          item.href.startsWith("mailto") ? undefined : "_blank"
-                        }
-                        rel="noreferrer"
-                        className="connect-card"
-                      >
-                        <span className="connect-card-icon">{item.icon}</span>
-                        <span
-                          style={{
-                            fontSize: 11,
-                            letterSpacing: ".08em",
-                            color: "var(--muted)",
-                            marginTop: 10,
-                            display: "block",
-                          }}
-                        >
-                          {item.label}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
+          <RevealOnScroll delay={0.1}>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 48 }}>
+              <CopyEmail />
+            </div>
+          </RevealOnScroll>
+
+          <RevealOnScroll delay={0.2}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+              {[
+                { label: "Twitter", href: "https://x.com/R_coredev", Icon: XIcon },
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/roland-adams-045965315", Icon: LinkedInIcon },
+                { label: "GitHub", href: "https://github.com/roland-adams2007", Icon: GitHubIcon },
+                { label: "TikTok", href: "#", Icon: TikTokIcon },
+                { label: "Instagram", href: "#", Icon: InstagramIcon },
+              ].map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="social-icon"
+                  aria-label={item.label}
+                >
+                  <item.Icon />
+                </a>
+              ))}
             </div>
           </RevealOnScroll>
         </div>
       </section>
 
-      <footer style={{ padding: "32px", borderTop: "1px solid var(--border)" }}>
-        <div
-          style={{
-            maxWidth: 1152,
-            margin: "0 auto",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 16,
-            alignItems: "center",
-            justifyContent: "space-between",
-            fontSize: 10,
-            color: "var(--muted)",
-            letterSpacing: ".09em",
-            textTransform: "uppercase",
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: 16,
-              fontWeight: 300,
-              color: "var(--ink)",
-              letterSpacing: "-.01em",
-              textTransform: "none",
-            }}
-          >
-            Adams Roland
-          </span>
-          <SocialLinks size="30px" />
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            <span>© 2026 — All rights reserved</span>
-            <a
-              href="#"
-              style={{
-                color: "var(--muted)",
-                textDecoration: "none",
-                letterSpacing: ".12em",
-                transition: "color .25s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = "var(--rust)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = "var(--muted)")
-              }
-            >
-              ↑ Back to top
+      <footer className="site-footer">
+        <div className="footer-vignette" />
+
+        <RevealOnScroll>
+          <a href="mailto:adamsrolly7@gmail.com" className="footer-cta">
+            <span className="footer-cta-left">
+              <span className="footer-cta-question">Got a project?</span>
+            </span>
+            <span className="footer-cta-right">
+              <span className="footer-cta-answer">Say hello</span>
+              <ArrowUpRight size={22} strokeWidth={2.25} />
+            </span>
+          </a>
+        </RevealOnScroll>
+
+        <div className="footer-inner">
+          <RevealOnScroll delay={0.08}>
+            <a href="#" className="footer-name-link" aria-label="Back to top">
+              <h2 className="footer-name">Adams Roland</h2>
             </a>
-          </div>
+          </RevealOnScroll>
         </div>
       </footer>
     </>
